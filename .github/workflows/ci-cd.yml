@@ -19,7 +19,7 @@ env:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
@@ -40,7 +40,7 @@ jobs:
 
   test:
     name: Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: lint
 
     steps:
@@ -62,7 +62,7 @@ jobs:
 
   build-apk:
     name: Build Android APK
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: test
 
     steps:
@@ -75,6 +75,9 @@ jobs:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
 
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -86,7 +89,22 @@ jobs:
         run: flutter pub get
 
       - name: Build release APK
-        run: flutter build apk --release
+        run: |
+          for attempt in 1 2 3; do
+            echo "APK build attempt ${attempt}/3"
+
+            if flutter build apk --release; then
+              exit 0
+            fi
+
+            if [ "${attempt}" -eq 3 ]; then
+              echo "APK build failed after ${attempt} attempts."
+              exit 1
+            fi
+
+            echo "APK build failed. Retrying in 30 seconds..."
+            sleep 30
+          done
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
