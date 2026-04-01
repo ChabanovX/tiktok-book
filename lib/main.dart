@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rsvp_flutter_app/rsvpEngine.dart';
 import 'package:rsvp_flutter_app/rsvpTokenModel.dart';
 import 'package:rsvp_flutter_app/rsvpTokenizer.dart';
-import 'package:rsvp_flutter_app/rsvpEngine.dart';
 
 void main() {
   runApp(const MainApp());
@@ -12,19 +12,18 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RsvpReaderScreen(
-      text: "Это пример текста для RSVP режима чтения",
+    return const RsvpReaderScreen(
+      text: 'Это пример текста для RSVP режима чтения',
     );
   }
 }
 
 class RsvpReaderScreen extends StatefulWidget {
-  final String text;
 
   const RsvpReaderScreen({
-    super.key,
-    required this.text,
+    required this.text, super.key,
   });
+  final String text;
 
   @override
   State<RsvpReaderScreen> createState() => _RsvpReaderScreenState();

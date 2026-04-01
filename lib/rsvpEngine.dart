@@ -2,13 +2,6 @@ import 'dart:async';
 import 'package:rsvp_flutter_app/rsvpTokenModel.dart';
 
 class RsvpEngine {
-  final List<RsvpToken> tokens;
-  final int wpm;
-  final void Function(RsvpToken token) onTokenChanged;
-  final void Function()? onCompleted;
-
-  Timer? _timer;
-  int _currentIndex = 0;
 
   RsvpEngine({
     required this.tokens,
@@ -16,6 +9,13 @@ class RsvpEngine {
     required this.onTokenChanged,
     this.onCompleted,
   });
+  final List<RsvpToken> tokens;
+  final int wpm;
+  final void Function(RsvpToken token) onTokenChanged;
+  final void Function()? onCompleted;
+
+  Timer? _timer;
+  int _currentIndex = 0;
 
   int get currentIndex => _currentIndex;
   bool get isPlaying => _timer?.isActive ?? false;
