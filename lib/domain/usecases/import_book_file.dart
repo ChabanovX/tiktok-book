@@ -13,8 +13,6 @@ class ImportBookFile {
       throw Exception('No file selected');
     }
     
-    await _fileRepository.saveFileToLocal(bookFile);
-    
     return bookFile;
   }
 }

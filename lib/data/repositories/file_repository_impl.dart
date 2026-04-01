@@ -30,19 +30,6 @@ class FileRepositoryImpl implements FileRepository {
   }
   
   @override
-  Future<String?> saveFileToLocal(BookFile file) async {
-    try {
-      final sourceFile = File(file.path);
-      if (sourceFile.existsSync()) {
-        return await _loaderService.saveToAppDirectory(sourceFile);
-      }
-      return null;
-    } catch (e) {
-      throw Exception('Failed to save file: $e');
-    }
-  }
-  
-  @override
   Future<BookFile?> loadFileFromLocal(String path) async {
     try {
       if (await _loaderService.fileExists(path)) {
