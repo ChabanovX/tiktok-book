@@ -7,7 +7,7 @@ class FileLoaderService {
   Future<BookFile> loadFile(String path) async {
     final file = File(path);
     
-    if (!await file.exists()) {
+    if (!file.existsSync()) {
       throw Exception('File not found: $path');
     }
     
@@ -27,7 +27,7 @@ class FileLoaderService {
     final appDir = await getApplicationDocumentsDirectory();
     final booksDir = Directory('${appDir.path}/books');
     
-    if (!await booksDir.exists()) {
+    if (!booksDir.existsSync()) {
       await booksDir.create(recursive: true);
     }
     
@@ -38,7 +38,7 @@ class FileLoaderService {
     return savedFile.path;
   }
   
-  Future<bool> fileExists(String path) async {
-    return File(path).exists();
+  Future<bool> fileExists(String path) {
+    return Future.value(File(path).existsSync());
   }
 }

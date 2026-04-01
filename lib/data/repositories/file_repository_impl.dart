@@ -33,7 +33,7 @@ class FileRepositoryImpl implements FileRepository {
   Future<String?> saveFileToLocal(BookFile file) async {
     try {
       final sourceFile = File(file.path);
-      if (await sourceFile.exists()) {
+      if (sourceFile.existsSync()) {
         return await _loaderService.saveToAppDirectory(sourceFile);
       }
       return null;

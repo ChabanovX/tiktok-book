@@ -14,7 +14,7 @@ class NewBookButton extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         try {
-          showDialog(
+          await showDialog<void>(
             context: context,
             barrierDismissible: false,
             builder: (context) => const Center(child: CircularProgressIndicator()),
@@ -34,7 +34,7 @@ class NewBookButton extends StatelessWidget {
               ),
             );
           }
-        } catch (e) {
+        } on Exception catch (e) {
           //TODO: Страница ошибки загрузки
           if (context.mounted) {
             Navigator.pop(context);
