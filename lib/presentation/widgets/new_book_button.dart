@@ -1,17 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:rsvp_flutter_app/domain/usecases/import_book_file.dart';
 
-class NewBookButton extends StatefulWidget {
-  const NewBookButton({super.key});
+class NewBookButton extends StatelessWidget {
+  const NewBookButton({
+    required this.importBookFile,
+    super.key,
+  });
 
-  @override
-  State<NewBookButton> createState() => _NewBookButtonState();
-}
+  final ImportBookFile importBookFile;
 
-class _NewBookButtonState extends State<NewBookButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () async {
+        try {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const Center(child: CircularProgressIndicator()),
+          );
+          
+          final loadedBook = await importBookFile();
+          
+          // TODO: Страница загруженного файла
+          if (context.mounted) {
+            Navigator.pop(context);
+            
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Success! Loaded ${loadedBook.name}, size: ${loadedBook.size}'
+                ),
+              ),
+            );
+          }
+        } catch (e) {
+          //TODO: Страница ошибки загрузки
+          if (context.mounted) {
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+            );
+          }
+        }
+      },
+
       child: SizedBox(
         height: 74,
         width: double.infinity,
