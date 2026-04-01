@@ -19,7 +19,6 @@ class _NewBookButtonState extends State<NewBookButton> {
           borderColor: const Color(0x4C0043C8),
           backgroundColor: const Color(0x0C0057FF),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
@@ -85,13 +84,6 @@ class DashedBorderContainer extends StatelessWidget {
 }
 
 class _DashedBorderPainter extends CustomPainter {
-  final Color borderColor;
-  final double borderWidth;
-  final double borderRadius;
-  final Color backgroundColor;
-  final double dashWidth;
-  final double dashSpace;
-
   _DashedBorderPainter({
     required this.borderColor,
     required this.borderWidth,
@@ -100,6 +92,13 @@ class _DashedBorderPainter extends CustomPainter {
     required this.dashWidth,
     required this.dashSpace,
   });
+
+  final Color borderColor;
+  final double borderWidth;
+  final double borderRadius;
+  final Color backgroundColor;
+  final double dashWidth;
+  final double dashSpace;
 
   @override
   void paint(Canvas canvas, Size size) {

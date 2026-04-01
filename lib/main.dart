@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'presentation/pages/main_page.dart';
+import 'package:rsvp_flutter_app/presentation/pages/main_page.dart';
 
 void main() {
   runApp(const MainApp());

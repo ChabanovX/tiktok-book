@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/new_book_button.dart';
+import 'package:rsvp_flutter_app/presentation/widgets/new_book_button.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -27,4 +27,3 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-
