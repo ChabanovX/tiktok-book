@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  syncfusion_flutter_pdf: ^33.1.46
 
 dev_dependencies:
   flutter_lints: ^6.0.0
