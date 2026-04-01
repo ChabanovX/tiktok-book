@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'package:rsvp_flutter_app/rsvpTokenModel.dart';
+import 'package:rsvp_flutter_app/rsvp_token_model.dart';
 
 class RsvpEngine {
-
   RsvpEngine({
     required this.tokens,
     required this.wpm,

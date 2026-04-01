@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rsvp_flutter_app/rsvpEngine.dart';
-import 'package:rsvp_flutter_app/rsvpTokenModel.dart';
-import 'package:rsvp_flutter_app/rsvpTokenizer.dart';
+import 'package:rsvp_flutter_app/rsvp_engine.dart';
+import 'package:rsvp_flutter_app/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/rsvp_tokenizer.dart';
 
 void main() {
   runApp(const MainApp());
@@ -19,9 +19,9 @@ class MainApp extends StatelessWidget {
 }
 
 class RsvpReaderScreen extends StatefulWidget {
-
   const RsvpReaderScreen({
-    required this.text, super.key,
+    required this.text,
+    super.key,
   });
   final String text;
 

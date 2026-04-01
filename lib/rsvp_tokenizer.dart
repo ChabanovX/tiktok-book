@@ -1,11 +1,8 @@
-import 'package:rsvp_flutter_app/rsvpTokenModel.dart';
+import 'package:rsvp_flutter_app/rsvp_token_model.dart';
 
 class RsvpTokenizer {
   List<RsvpToken> tokenize(String text) {
-    final words = text
-        .split(RegExp(r'\s+'))
-        .where((word) => word.trim().isNotEmpty)
-        .toList();
+    final words = text.split(RegExp(r'\s+')).where((word) => word.trim().isNotEmpty).toList();
 
     return List.generate(
       words.length,
