@@ -14,12 +14,6 @@ class NewBookButton extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         try {
-          await showDialog<void>(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => const Center(child: CircularProgressIndicator()),
-          );
-          
           final loadedBook = await importBookFile();
           
           // TODO: Страница загруженного файла
