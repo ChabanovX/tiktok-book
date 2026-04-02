@@ -21,6 +21,8 @@ import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_
     as _i69;
 import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart'
     as _i749;
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart'
+    as _i422;
 import 'package:rsvp_flutter_app/services/book_converter.dart' as _i216;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -38,6 +40,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i749.ImportBookFile>(
       () => _i749.ImportBookFile(gh<_i69.FileRepository>()),
+    );
+    gh.factory<_i422.RsvpBloc>(
+      () => _i422.RsvpBloc(
+        fileRepository: gh<_i69.FileRepository>(),
+        bookConverter: gh<_i216.BookConverter>(),
+      ),
     );
     return this;
   }

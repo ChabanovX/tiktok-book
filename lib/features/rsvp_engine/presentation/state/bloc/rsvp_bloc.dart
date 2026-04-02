@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/core/logger/logger.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
@@ -11,6 +12,7 @@ part 'rsvp_event.dart';
 part 'rsvp_state.dart';
 part 'rsvp_bloc.freezed.dart';
 
+@injectable
 class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
   RsvpBloc({
     required FileRepository fileRepository,
