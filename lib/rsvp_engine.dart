@@ -13,6 +13,8 @@ class RsvpEngine {
   final void Function(RsvpToken token) onTokenChanged;
   final void Function()? onCompleted;
 
+  late final delay = Duration(milliseconds: (60000 / wpm).round());
+
   Timer? _timer;
   int _currentIndex = 0;
 
@@ -22,19 +24,17 @@ class RsvpEngine {
   void start({int startIndex = 0}) {
     if (tokens.isEmpty) return;
 
-    stop();
+    dispose();
 
     _currentIndex = startIndex.clamp(0, tokens.length - 1);
     onTokenChanged(tokens[_currentIndex]);
 
-    final delay = Duration(milliseconds: (60000 / wpm).round());
-
-    _timer = Timer.periodic(delay, (timer) {
+    _timer = Timer.periodic(delay, (_) {
       _currentIndex++;
 
       if (_currentIndex >= tokens.length) {
-        stop();
         onCompleted?.call();
+        dispose();
         return;
       }
 
@@ -52,7 +52,7 @@ class RsvpEngine {
     start(startIndex: _currentIndex);
   }
 
-  void stop() {
+  void dispose() {
     _timer?.cancel();
     _timer = null;
   }
