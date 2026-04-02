@@ -14,9 +14,7 @@ Widget startStopButtonStoppedUseCase(BuildContext context) {
     padding: const EdgeInsets.all(24),
     child: StartStopButton(
       isRunning: false,
-      onTap: () {
-        print("Tap");
-      },
+      onTap: () {},
     ),
   );
 }
@@ -33,9 +31,7 @@ Widget startStopButtonRunningUseCase(BuildContext context) {
     padding: const EdgeInsets.all(24),
     child: StartStopButton(
       isRunning: true,
-      onTap: () {
-        print("Tap");
-      },
+      onTap: () {},
     ),
   );
 }

@@ -18,9 +18,7 @@ Widget bookItemReadingUseCase(BuildContext context) {
         title: 'Fahrenheit 451',
         author: 'Ray Bradbury',
         progress: 0.82,
-        onTap: () {
-          print("Tap");
-        },
+        onTap: () {},
       ),
     ),
   );
@@ -42,9 +40,7 @@ Widget bookItemFinishedUseCase(BuildContext context) {
         title: 'The Great Gatsby',
         author: 'F. Scott Fitzgerald',
         progress: 1,
-        onTap: () {
-          print("Tap");
-        },
+        onTap: () {},
       ),
     ),
   );
