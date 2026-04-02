@@ -1,8 +1,9 @@
 import 'dart:io';
+import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/domain/entities/book_file.dart';
 
+@singleton
 class FileLoaderService {
-  
   Future<BookFile> loadFile(String path) async {
     final file = File(path);
     

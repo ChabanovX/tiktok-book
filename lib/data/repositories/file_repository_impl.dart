@@ -1,8 +1,10 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/data/services/file_loader_service.dart';
 import 'package:rsvp_flutter_app/domain/entities/book_file.dart';
 import 'package:rsvp_flutter_app/domain/repositories/file_repository.dart';
 
+@LazySingleton(as: FileRepository)
 class FileRepositoryImpl implements FileRepository {
   FileRepositoryImpl(this._loaderService);
 
