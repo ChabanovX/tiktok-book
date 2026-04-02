@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/logger/logger.dart';
-import 'package:rsvp_flutter_app/domain/usecases/import_book_file.dart';
+import 'package:rsvp_flutter_app/domain/file_picking/usecases/import_book_file.dart';
 
 class NewBookButton extends StatelessWidget {
   const NewBookButton({
