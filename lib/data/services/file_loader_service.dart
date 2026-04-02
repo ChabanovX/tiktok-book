@@ -12,13 +12,13 @@ class FileLoaderService {
     }
     
     final name = file.path.split('/').last;
-    final extension = name.split('.').last;
+    final fileExtension = name.split('.').last;
     final size = await file.length();
     
     return BookFile(
       name: name,
       path: path,
-      extension: extension,
+      fileExtension: fileExtension,
       size: size,
     );
   }

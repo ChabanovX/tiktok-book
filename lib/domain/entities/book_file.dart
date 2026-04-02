@@ -2,15 +2,15 @@ class BookFile {
   BookFile({
     required this.name,
     required this.path,
-    required this.extension,
+    required this.fileExtension,
     required this.size,
   });
 
   final String name;
   final String path;
-  final String extension;
+  final String fileExtension;
   final int size;
   
-  bool get isPdf => extension.toLowerCase() == 'pdf';
-  bool get isTxt => extension.toLowerCase() == 'txt';
+  bool get isPdf => fileExtension.toLowerCase() == 'pdf';
+  bool get isTxt => fileExtension.toLowerCase() == 'txt';
 }
