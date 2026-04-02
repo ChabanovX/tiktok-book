@@ -16,9 +16,7 @@ Widget primaryButtonDefaultUseCase(BuildContext context) {
       width: 330,
       child: PrimaryButton(
         text: 'Upload a book',
-        onTap: () {
-          print('1234');
-        },
+        onTap: () {},
       ),
     ),
   );
