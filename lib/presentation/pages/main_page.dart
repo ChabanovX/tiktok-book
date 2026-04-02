@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rsvp_flutter_app/di/service_locator.dart';
+import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/domain/usecases/import_book_file.dart';
 import 'package:rsvp_flutter_app/presentation/widgets/new_book_button.dart';
 
@@ -11,11 +11,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
-
   @override
   Widget build(BuildContext context) {
-    final importBookFile = ServiceLocator().get<ImportBookFile>();
+    final importBookFile = getIt<ImportBookFile>();
 
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               NewBookButton(importBookFile: importBookFile),
             ],
-          )
+          ),
         ),
       ),
     );
