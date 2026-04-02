@@ -3,10 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-<<<<<<< HEAD
   sqlite3_flutter_libs
-=======
->>>>>>> ec15a21 (add start stop button)
   url_launcher_windows
 )
 
