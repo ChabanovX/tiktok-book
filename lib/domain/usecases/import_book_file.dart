@@ -8,13 +8,7 @@ class ImportBookFile {
 
   final FileRepository _fileRepository;
   
-  Future<BookFile> call() async {
-    final bookFile = await _fileRepository.pickAndLoadFile();
-    
-    if (bookFile == null) {
-      throw Exception('No file selected');
-    }
-    
-    return bookFile;
+  Future<BookFile?> call() async {
+    return _fileRepository.pickAndLoadFile();
   }
 }
