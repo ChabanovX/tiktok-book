@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/logger/logger.dart';
-import 'package:rsvp_flutter_app/domain/entities/book_file.dart';
 import 'package:rsvp_flutter_app/domain/usecases/import_book_file.dart';
 
 class NewBookButton extends StatelessWidget {
@@ -18,14 +17,6 @@ class NewBookButton extends StatelessWidget {
         try {
           final loadedBook = await importBookFile();
           logger.i('Success! Loaded ${loadedBook?.name}, size: ${loadedBook?.size}');
-
-          if (context.mounted && loadedBook != null) {
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => _LoadedBookPage(book: loadedBook),
-              ),
-            );
-          }
         } on Exception catch (e) {
           logger.e(e);
         }
@@ -54,53 +45,6 @@ class NewBookButton extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _LoadedBookPage extends StatelessWidget {
-  const _LoadedBookPage({required this.book});
-
-  final BookFile book;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Loaded File')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(book.name, style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: 24),
-            _BookInfoTile(label: 'Path', value: book.path),
-            _BookInfoTile(label: 'Extension', value: book.fileExtension),
-            _BookInfoTile(label: 'Size', value: '${book.size} bytes'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _BookInfoTile extends StatelessWidget {
-  const _BookInfoTile({
-    required this.label,
-    required this.value,
-  });
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
-        title: Text(label),
-        subtitle: Text(value),
       ),
     );
   }
