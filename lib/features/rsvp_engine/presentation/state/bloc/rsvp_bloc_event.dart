@@ -1,0 +1,6 @@
+part of 'rsvp_bloc_bloc.dart';
+
+@freezed
+class RsvpBlocEvent with _$RsvpBlocEvent {
+  const factory RsvpBlocEvent.started() = _Started;
+}
