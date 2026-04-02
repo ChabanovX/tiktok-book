@@ -11,15 +11,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:rsvp_flutter_app/data/datasources/file_picker_datasource.dart'
+import 'package:rsvp_flutter_app/features/file_picking/data/datasources/file_picker_datasource.dart'
     as _i486;
-import 'package:rsvp_flutter_app/data/repositories/file_repository_impl.dart'
+import 'package:rsvp_flutter_app/features/file_picking/data/repositories/file_repository_impl.dart'
     as _i389;
-import 'package:rsvp_flutter_app/data/services/file_loader_service.dart'
+import 'package:rsvp_flutter_app/features/file_picking/data/services/file_loader_service.dart'
     as _i934;
-import 'package:rsvp_flutter_app/domain/repositories/file_repository.dart'
+import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart'
     as _i861;
-import 'package:rsvp_flutter_app/domain/usecases/import_book_file.dart'
+import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart'
     as _i661;
 
 extension GetItInjectableX on _i174.GetIt {

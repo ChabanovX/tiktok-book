@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:rsvp_flutter_app/domain/entities/book_file.dart';
-import 'package:rsvp_flutter_app/domain/repositories/file_repository.dart';
+import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file.dart';
+import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
 
 @singleton
 class ImportBookFile {

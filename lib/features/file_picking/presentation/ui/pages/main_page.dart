@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
-import 'package:rsvp_flutter_app/domain/usecases/import_book_file.dart';
-import 'package:rsvp_flutter_app/presentation/widgets/new_book_button.dart';
+import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart';
+import 'package:rsvp_flutter_app/features/file_picking/presentation/ui/widgets/new_book_button.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
