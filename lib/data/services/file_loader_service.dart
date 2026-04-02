@@ -23,7 +23,7 @@ class FileLoaderService {
     );
   }
   
-  Future<bool> fileExists(String path) {
-    return Future.value(File(path).existsSync());
+  bool fileExists(String path) {
+    return File(path).existsSync();
   }
 }

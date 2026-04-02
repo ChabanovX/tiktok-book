@@ -33,7 +33,7 @@ class FileRepositoryImpl implements FileRepository {
   @override
   Future<BookFile?> loadFileFromLocal(String path) async {
     try {
-      if (await _loaderService.fileExists(path)) {
+      if (_loaderService.fileExists(path)) {
         return await _loaderService.loadFile(path);
       }
       return null;
