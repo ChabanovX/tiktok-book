@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:rsvp_flutter_app/domain/rsvp_engine/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 
 class RsvpEngine {
   RsvpEngine({
