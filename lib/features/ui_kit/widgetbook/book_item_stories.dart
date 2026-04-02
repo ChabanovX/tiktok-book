@@ -12,12 +12,15 @@ Widget bookItemReadingUseCase(BuildContext context) {
     color: const Color(0xFFF7F9FC),
     alignment: Alignment.center,
     padding: const EdgeInsets.all(24),
-    child: const SizedBox(
+    child: SizedBox(
       width: 342,
       child: BookItem(
         title: 'Fahrenheit 451',
         author: 'Ray Bradbury',
         progress: 0.82,
+        onTap: () {
+          print("Tap");
+        },
       ),
     ),
   );
@@ -33,12 +36,15 @@ Widget bookItemFinishedUseCase(BuildContext context) {
     color: const Color(0xFFF7F9FC),
     alignment: Alignment.center,
     padding: const EdgeInsets.all(24),
-    child: const SizedBox(
+    child: SizedBox(
       width: 342,
       child: BookItem(
         title: 'The Great Gatsby',
         author: 'F. Scott Fitzgerald',
         progress: 1,
+        onTap: () {
+          print("Tap");
+        },
       ),
     ),
   );
