@@ -20,6 +20,7 @@ class FileLoaderService {
       path: path,
       fileExtension: fileExtension,
       size: size,
+      file: file
     );
   }
   
