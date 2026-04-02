@@ -4,11 +4,7 @@ publish_to: 'none'
 version: 0.1.0+1
 
 environment:
-<<<<<<< HEAD
-  sdk: '^3.11.4'
-=======
   sdk: ^3.11.4
->>>>>>> dfb9351 (fix ci/cd)
 
 dependencies:
   bloc: ^9.2.0
