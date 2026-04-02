@@ -12,40 +12,40 @@ part of 'book_model.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$BookModel {
+mixin _$BookMetaModel {
 
- String get name; List<RsvpToken> get tokens;
-/// Create a copy of BookModel
+ BookFile get bookFile; String? get name; List<RsvpToken> get tokens;
+/// Create a copy of BookMetaModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$BookModelCopyWith<BookModel> get copyWith => _$BookModelCopyWithImpl<BookModel>(this as BookModel, _$identity);
+$BookMetaModelCopyWith<BookMetaModel> get copyWith => _$BookMetaModelCopyWithImpl<BookMetaModel>(this as BookMetaModel, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookModel&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.tokens, tokens));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookMetaModel&&(identical(other.bookFile, bookFile) || other.bookFile == bookFile)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.tokens, tokens));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,const DeepCollectionEquality().hash(tokens));
+int get hashCode => Object.hash(runtimeType,bookFile,name,const DeepCollectionEquality().hash(tokens));
 
 @override
 String toString() {
-  return 'BookModel(name: $name, tokens: $tokens)';
+  return 'BookMetaModel(bookFile: $bookFile, name: $name, tokens: $tokens)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $BookModelCopyWith<$Res>  {
-  factory $BookModelCopyWith(BookModel value, $Res Function(BookModel) _then) = _$BookModelCopyWithImpl;
+abstract mixin class $BookMetaModelCopyWith<$Res>  {
+  factory $BookMetaModelCopyWith(BookMetaModel value, $Res Function(BookMetaModel) _then) = _$BookMetaModelCopyWithImpl;
 @useResult
 $Res call({
- String name, List<RsvpToken> tokens
+ BookFile bookFile, String? name, List<RsvpToken> tokens
 });
 
 
@@ -53,19 +53,20 @@ $Res call({
 
 }
 /// @nodoc
-class _$BookModelCopyWithImpl<$Res>
-    implements $BookModelCopyWith<$Res> {
-  _$BookModelCopyWithImpl(this._self, this._then);
+class _$BookMetaModelCopyWithImpl<$Res>
+    implements $BookMetaModelCopyWith<$Res> {
+  _$BookMetaModelCopyWithImpl(this._self, this._then);
 
-  final BookModel _self;
-  final $Res Function(BookModel) _then;
+  final BookMetaModel _self;
+  final $Res Function(BookMetaModel) _then;
 
-/// Create a copy of BookModel
+/// Create a copy of BookMetaModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? tokens = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? bookFile = null,Object? name = freezed,Object? tokens = null,}) {
   return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,tokens: null == tokens ? _self.tokens : tokens // ignore: cast_nullable_to_non_nullable
+bookFile: null == bookFile ? _self.bookFile : bookFile // ignore: cast_nullable_to_non_nullable
+as BookFile,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,tokens: null == tokens ? _self.tokens : tokens // ignore: cast_nullable_to_non_nullable
 as List<RsvpToken>,
   ));
 }
@@ -73,8 +74,8 @@ as List<RsvpToken>,
 }
 
 
-/// Adds pattern-matching-related methods to [BookModel].
-extension BookModelPatterns on BookModel {
+/// Adds pattern-matching-related methods to [BookMetaModel].
+extension BookMetaModelPatterns on BookMetaModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -87,10 +88,10 @@ extension BookModelPatterns on BookModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _BookModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _BookMetaModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _BookModel() when $default != null:
+case _BookMetaModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -109,10 +110,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _BookModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _BookMetaModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _BookModel():
+case _BookMetaModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -130,10 +131,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _BookModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _BookMetaModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _BookModel() when $default != null:
+case _BookMetaModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  List<RsvpToken> tokens)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BookFile bookFile,  String? name,  List<RsvpToken> tokens)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _BookModel() when $default != null:
-return $default(_that.name,_that.tokens);case _:
+case _BookMetaModel() when $default != null:
+return $default(_that.bookFile,_that.name,_that.tokens);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.name,_that.tokens);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  List<RsvpToken> tokens)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BookFile bookFile,  String? name,  List<RsvpToken> tokens)  $default,) {final _that = this;
 switch (_that) {
-case _BookModel():
-return $default(_that.name,_that.tokens);case _:
+case _BookMetaModel():
+return $default(_that.bookFile,_that.name,_that.tokens);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.name,_that.tokens);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  List<RsvpToken> tokens)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BookFile bookFile,  String? name,  List<RsvpToken> tokens)?  $default,) {final _that = this;
 switch (_that) {
-case _BookModel() when $default != null:
-return $default(_that.name,_that.tokens);case _:
+case _BookMetaModel() when $default != null:
+return $default(_that.bookFile,_that.name,_that.tokens);case _:
   return null;
 
 }
@@ -206,11 +207,12 @@ return $default(_that.name,_that.tokens);case _:
 /// @nodoc
 
 
-class _BookModel implements BookModel {
-  const _BookModel({required this.name, final  List<RsvpToken> tokens = const []}): _tokens = tokens;
+class _BookMetaModel implements BookMetaModel {
+  const _BookMetaModel({required this.bookFile, this.name, final  List<RsvpToken> tokens = const []}): _tokens = tokens;
   
 
-@override final  String name;
+@override final  BookFile bookFile;
+@override final  String? name;
  final  List<RsvpToken> _tokens;
 @override@JsonKey() List<RsvpToken> get tokens {
   if (_tokens is EqualUnmodifiableListView) return _tokens;
@@ -219,37 +221,37 @@ class _BookModel implements BookModel {
 }
 
 
-/// Create a copy of BookModel
+/// Create a copy of BookMetaModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$BookModelCopyWith<_BookModel> get copyWith => __$BookModelCopyWithImpl<_BookModel>(this, _$identity);
+_$BookMetaModelCopyWith<_BookMetaModel> get copyWith => __$BookMetaModelCopyWithImpl<_BookMetaModel>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookModel&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._tokens, _tokens));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookMetaModel&&(identical(other.bookFile, bookFile) || other.bookFile == bookFile)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._tokens, _tokens));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,const DeepCollectionEquality().hash(_tokens));
+int get hashCode => Object.hash(runtimeType,bookFile,name,const DeepCollectionEquality().hash(_tokens));
 
 @override
 String toString() {
-  return 'BookModel(name: $name, tokens: $tokens)';
+  return 'BookMetaModel(bookFile: $bookFile, name: $name, tokens: $tokens)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$BookModelCopyWith<$Res> implements $BookModelCopyWith<$Res> {
-  factory _$BookModelCopyWith(_BookModel value, $Res Function(_BookModel) _then) = __$BookModelCopyWithImpl;
+abstract mixin class _$BookMetaModelCopyWith<$Res> implements $BookMetaModelCopyWith<$Res> {
+  factory _$BookMetaModelCopyWith(_BookMetaModel value, $Res Function(_BookMetaModel) _then) = __$BookMetaModelCopyWithImpl;
 @override @useResult
 $Res call({
- String name, List<RsvpToken> tokens
+ BookFile bookFile, String? name, List<RsvpToken> tokens
 });
 
 
@@ -257,19 +259,20 @@ $Res call({
 
 }
 /// @nodoc
-class __$BookModelCopyWithImpl<$Res>
-    implements _$BookModelCopyWith<$Res> {
-  __$BookModelCopyWithImpl(this._self, this._then);
+class __$BookMetaModelCopyWithImpl<$Res>
+    implements _$BookMetaModelCopyWith<$Res> {
+  __$BookMetaModelCopyWithImpl(this._self, this._then);
 
-  final _BookModel _self;
-  final $Res Function(_BookModel) _then;
+  final _BookMetaModel _self;
+  final $Res Function(_BookMetaModel) _then;
 
-/// Create a copy of BookModel
+/// Create a copy of BookMetaModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? tokens = null,}) {
-  return _then(_BookModel(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,tokens: null == tokens ? _self._tokens : tokens // ignore: cast_nullable_to_non_nullable
+@override @pragma('vm:prefer-inline') $Res call({Object? bookFile = null,Object? name = freezed,Object? tokens = null,}) {
+  return _then(_BookMetaModel(
+bookFile: null == bookFile ? _self.bookFile : bookFile // ignore: cast_nullable_to_non_nullable
+as BookFile,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,tokens: null == tokens ? _self._tokens : tokens // ignore: cast_nullable_to_non_nullable
 as List<RsvpToken>,
   ));
 }
