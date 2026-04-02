@@ -21,6 +21,7 @@ import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_
     as _i69;
 import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart'
     as _i749;
+import 'package:rsvp_flutter_app/services/book_converter.dart' as _i216;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -31,6 +32,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.singleton<_i51.FilePickerDataSource>(() => _i51.FilePickerDataSource());
     gh.singleton<_i303.FileLoaderService>(() => _i303.FileLoaderService());
+    gh.singleton<_i216.BookConverter>(() => _i216.BookConverter());
     gh.lazySingleton<_i69.FileRepository>(
       () => _i542.FileRepositoryImpl(gh<_i303.FileLoaderService>()),
     );

@@ -4,5 +4,5 @@ part of 'rsvp_bloc_bloc.dart';
 class RsvpBlocEvent with _$RsvpBlocEvent {
   const factory RsvpBlocEvent.started() = _Started;
   const factory RsvpBlocEvent.addBook() = _AddBook;
-  const factory RsvpBlocEvent.startAnimation() = _StartAnimation;
+  const factory RsvpBlocEvent.startAnimation({required int bookID}) = _StartAnimation;
 }

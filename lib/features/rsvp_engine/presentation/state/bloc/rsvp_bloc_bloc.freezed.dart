@@ -125,12 +125,12 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  addBook,TResult Function()?  startAnimation,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  addBook,TResult Function( int bookID)?  startAnimation,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddBook() when addBook != null:
 return addBook();case _StartAnimation() when startAnimation != null:
-return startAnimation();case _:
+return startAnimation(_that.bookID);case _:
   return orElse();
 
 }
@@ -148,12 +148,12 @@ return startAnimation();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  addBook,required TResult Function()  startAnimation,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  addBook,required TResult Function( int bookID)  startAnimation,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _AddBook():
 return addBook();case _StartAnimation():
-return startAnimation();case _:
+return startAnimation(_that.bookID);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -170,12 +170,12 @@ return startAnimation();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  addBook,TResult? Function()?  startAnimation,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  addBook,TResult? Function( int bookID)?  startAnimation,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddBook() when addBook != null:
 return addBook();case _StartAnimation() when startAnimation != null:
-return startAnimation();case _:
+return startAnimation(_that.bookID);case _:
   return null;
 
 }
@@ -251,38 +251,72 @@ String toString() {
 
 
 class _StartAnimation implements RsvpBlocEvent {
-  const _StartAnimation();
+  const _StartAnimation({required this.bookID});
   
 
+ final  int bookID;
 
-
+/// Create a copy of RsvpBlocEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$StartAnimationCopyWith<_StartAnimation> get copyWith => __$StartAnimationCopyWithImpl<_StartAnimation>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StartAnimation);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StartAnimation&&(identical(other.bookID, bookID) || other.bookID == bookID));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,bookID);
 
 @override
 String toString() {
-  return 'RsvpBlocEvent.startAnimation()';
+  return 'RsvpBlocEvent.startAnimation(bookID: $bookID)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$StartAnimationCopyWith<$Res> implements $RsvpBlocEventCopyWith<$Res> {
+  factory _$StartAnimationCopyWith(_StartAnimation value, $Res Function(_StartAnimation) _then) = __$StartAnimationCopyWithImpl;
+@useResult
+$Res call({
+ int bookID
+});
 
 
+
+
+}
+/// @nodoc
+class __$StartAnimationCopyWithImpl<$Res>
+    implements _$StartAnimationCopyWith<$Res> {
+  __$StartAnimationCopyWithImpl(this._self, this._then);
+
+  final _StartAnimation _self;
+  final $Res Function(_StartAnimation) _then;
+
+/// Create a copy of RsvpBlocEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? bookID = null,}) {
+  return _then(_StartAnimation(
+bookID: null == bookID ? _self.bookID : bookID // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
 
 /// @nodoc
 mixin _$RsvpBlocState {
 
- BookModel? get selectedBook;
+ BookMetaModel? get selectedBook; bool get isParsing; RSVPError? get lastParsingError;
 /// Create a copy of RsvpBlocState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -293,16 +327,16 @@ $RsvpBlocStateCopyWith<RsvpBlocState> get copyWith => _$RsvpBlocStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RsvpBlocState&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RsvpBlocState&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isParsing, isParsing) || other.isParsing == isParsing)&&(identical(other.lastParsingError, lastParsingError) || other.lastParsingError == lastParsingError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,selectedBook);
+int get hashCode => Object.hash(runtimeType,selectedBook,isParsing,lastParsingError);
 
 @override
 String toString() {
-  return 'RsvpBlocState(selectedBook: $selectedBook)';
+  return 'RsvpBlocState(selectedBook: $selectedBook, isParsing: $isParsing, lastParsingError: $lastParsingError)';
 }
 
 
@@ -313,11 +347,11 @@ abstract mixin class $RsvpBlocStateCopyWith<$Res>  {
   factory $RsvpBlocStateCopyWith(RsvpBlocState value, $Res Function(RsvpBlocState) _then) = _$RsvpBlocStateCopyWithImpl;
 @useResult
 $Res call({
- BookModel? selectedBook
+ BookMetaModel? selectedBook, bool isParsing, RSVPError? lastParsingError
 });
 
 
-$BookModelCopyWith<$Res>? get selectedBook;
+$BookMetaModelCopyWith<$Res>? get selectedBook;$RSVPErrorCopyWith<$Res>? get lastParsingError;
 
 }
 /// @nodoc
@@ -330,23 +364,37 @@ class _$RsvpBlocStateCopyWithImpl<$Res>
 
 /// Create a copy of RsvpBlocState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? selectedBook = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? selectedBook = freezed,Object? isParsing = null,Object? lastParsingError = freezed,}) {
   return _then(_self.copyWith(
 selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
-as BookModel?,
+as BookMetaModel?,isParsing: null == isParsing ? _self.isParsing : isParsing // ignore: cast_nullable_to_non_nullable
+as bool,lastParsingError: freezed == lastParsingError ? _self.lastParsingError : lastParsingError // ignore: cast_nullable_to_non_nullable
+as RSVPError?,
   ));
 }
 /// Create a copy of RsvpBlocState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$BookModelCopyWith<$Res>? get selectedBook {
+$BookMetaModelCopyWith<$Res>? get selectedBook {
     if (_self.selectedBook == null) {
     return null;
   }
 
-  return $BookModelCopyWith<$Res>(_self.selectedBook!, (value) {
+  return $BookMetaModelCopyWith<$Res>(_self.selectedBook!, (value) {
     return _then(_self.copyWith(selectedBook: value));
+  });
+}/// Create a copy of RsvpBlocState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$RSVPErrorCopyWith<$Res>? get lastParsingError {
+    if (_self.lastParsingError == null) {
+    return null;
+  }
+
+  return $RSVPErrorCopyWith<$Res>(_self.lastParsingError!, (value) {
+    return _then(_self.copyWith(lastParsingError: value));
   });
 }
 }
@@ -430,10 +478,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BookModel? selectedBook)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BookMetaModel? selectedBook,  bool isParsing,  RSVPError? lastParsingError)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RsvpBlocState() when $default != null:
-return $default(_that.selectedBook);case _:
+return $default(_that.selectedBook,_that.isParsing,_that.lastParsingError);case _:
   return orElse();
 
 }
@@ -451,10 +499,10 @@ return $default(_that.selectedBook);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BookModel? selectedBook)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BookMetaModel? selectedBook,  bool isParsing,  RSVPError? lastParsingError)  $default,) {final _that = this;
 switch (_that) {
 case _RsvpBlocState():
-return $default(_that.selectedBook);case _:
+return $default(_that.selectedBook,_that.isParsing,_that.lastParsingError);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -471,10 +519,10 @@ return $default(_that.selectedBook);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BookModel? selectedBook)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BookMetaModel? selectedBook,  bool isParsing,  RSVPError? lastParsingError)?  $default,) {final _that = this;
 switch (_that) {
 case _RsvpBlocState() when $default != null:
-return $default(_that.selectedBook);case _:
+return $default(_that.selectedBook,_that.isParsing,_that.lastParsingError);case _:
   return null;
 
 }
@@ -486,10 +534,12 @@ return $default(_that.selectedBook);case _:
 
 
 class _RsvpBlocState implements RsvpBlocState {
-  const _RsvpBlocState({this.selectedBook});
+  const _RsvpBlocState({this.selectedBook, this.isParsing = false, this.lastParsingError});
   
 
-@override final  BookModel? selectedBook;
+@override final  BookMetaModel? selectedBook;
+@override@JsonKey() final  bool isParsing;
+@override final  RSVPError? lastParsingError;
 
 /// Create a copy of RsvpBlocState
 /// with the given fields replaced by the non-null parameter values.
@@ -501,16 +551,16 @@ _$RsvpBlocStateCopyWith<_RsvpBlocState> get copyWith => __$RsvpBlocStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RsvpBlocState&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RsvpBlocState&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isParsing, isParsing) || other.isParsing == isParsing)&&(identical(other.lastParsingError, lastParsingError) || other.lastParsingError == lastParsingError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,selectedBook);
+int get hashCode => Object.hash(runtimeType,selectedBook,isParsing,lastParsingError);
 
 @override
 String toString() {
-  return 'RsvpBlocState(selectedBook: $selectedBook)';
+  return 'RsvpBlocState(selectedBook: $selectedBook, isParsing: $isParsing, lastParsingError: $lastParsingError)';
 }
 
 
@@ -521,11 +571,11 @@ abstract mixin class _$RsvpBlocStateCopyWith<$Res> implements $RsvpBlocStateCopy
   factory _$RsvpBlocStateCopyWith(_RsvpBlocState value, $Res Function(_RsvpBlocState) _then) = __$RsvpBlocStateCopyWithImpl;
 @override @useResult
 $Res call({
- BookModel? selectedBook
+ BookMetaModel? selectedBook, bool isParsing, RSVPError? lastParsingError
 });
 
 
-@override $BookModelCopyWith<$Res>? get selectedBook;
+@override $BookMetaModelCopyWith<$Res>? get selectedBook;@override $RSVPErrorCopyWith<$Res>? get lastParsingError;
 
 }
 /// @nodoc
@@ -538,10 +588,12 @@ class __$RsvpBlocStateCopyWithImpl<$Res>
 
 /// Create a copy of RsvpBlocState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? selectedBook = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? selectedBook = freezed,Object? isParsing = null,Object? lastParsingError = freezed,}) {
   return _then(_RsvpBlocState(
 selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
-as BookModel?,
+as BookMetaModel?,isParsing: null == isParsing ? _self.isParsing : isParsing // ignore: cast_nullable_to_non_nullable
+as bool,lastParsingError: freezed == lastParsingError ? _self.lastParsingError : lastParsingError // ignore: cast_nullable_to_non_nullable
+as RSVPError?,
   ));
 }
 
@@ -549,13 +601,25 @@ as BookModel?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$BookModelCopyWith<$Res>? get selectedBook {
+$BookMetaModelCopyWith<$Res>? get selectedBook {
     if (_self.selectedBook == null) {
     return null;
   }
 
-  return $BookModelCopyWith<$Res>(_self.selectedBook!, (value) {
+  return $BookMetaModelCopyWith<$Res>(_self.selectedBook!, (value) {
     return _then(_self.copyWith(selectedBook: value));
+  });
+}/// Create a copy of RsvpBlocState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$RSVPErrorCopyWith<$Res>? get lastParsingError {
+    if (_self.lastParsingError == null) {
+    return null;
+  }
+
+  return $RSVPErrorCopyWith<$Res>(_self.lastParsingError!, (value) {
+    return _then(_self.copyWith(lastParsingError: value));
   });
 }
 }
