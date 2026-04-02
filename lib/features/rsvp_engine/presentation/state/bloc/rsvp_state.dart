@@ -1,4 +1,4 @@
-part of 'rsvp_bloc_bloc.dart';
+part of 'rsvp_bloc.dart';
 
 @freezed
 abstract class RsvpBlocState with _$RsvpBlocState {

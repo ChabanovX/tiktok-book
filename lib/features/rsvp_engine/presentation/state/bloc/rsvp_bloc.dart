@@ -7,12 +7,12 @@ import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_error.dart';
 import 'package:rsvp_flutter_app/services/book_converter.dart';
 
-part 'rsvp_bloc_event.dart';
-part 'rsvp_bloc_state.dart';
-part 'rsvp_bloc_bloc.freezed.dart';
+part 'rsvp_event.dart';
+part 'rsvp_state.dart';
+part 'rsvp_bloc.freezed.dart';
 
-class RsvpBlocBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
-  RsvpBlocBloc({
+class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
+  RsvpBloc({
     required FileRepository fileRepository,
     required BookConverter bookConverter,
   }) : _fileRepository = fileRepository,
