@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
@@ -7,8 +8,9 @@ class NewBookButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => context.read<RsvpBloc>().add(const RsvpBlocEvent.addBook()),
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () => context.read<RsvpBloc>().add(const RsvpBlocEvent.addBook()),
       child: SizedBox(
         height: 74,
         width: double.infinity,
@@ -70,7 +72,6 @@ class DashedBorderContainer extends StatelessWidget {
       ),
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-        constraints: const BoxConstraints(minWidth: 200, minHeight: 100),
         child: child,
       ),
     );
