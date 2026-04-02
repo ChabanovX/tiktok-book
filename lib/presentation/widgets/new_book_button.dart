@@ -17,9 +17,9 @@ class NewBookButton extends StatelessWidget {
       onTap: () async {
         try {
           final loadedBook = await importBookFile();
-          logger.i('Success! Loaded ${loadedBook.name}, size: ${loadedBook.size}');
+          logger.i('Success! Loaded ${loadedBook?.name}, size: ${loadedBook?.size}');
 
-          if (context.mounted) {
+          if (context.mounted && loadedBook != null) {
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => _LoadedBookPage(book: loadedBook),
