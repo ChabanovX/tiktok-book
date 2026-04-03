@@ -12,10 +12,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/book_item_stories.dart'
     as _rsvp_flutter_app_features_ui_kit_widgetbook_book_item_stories;
+import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/exit_button_stories.dart'
+    as _rsvp_flutter_app_features_ui_kit_widgetbook_exit_button_stories;
 import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/library_main_screen_stories.dart'
     as _rsvp_flutter_app_features_ui_kit_widgetbook_library_main_screen_stories;
 import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/primary_button_stories.dart'
     as _rsvp_flutter_app_features_ui_kit_widgetbook_primary_button_stories;
+import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/reading_screen_stories.dart'
+    as _rsvp_flutter_app_features_ui_kit_widgetbook_reading_screen_stories;
 import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/start_stop_button_stories.dart'
     as _rsvp_flutter_app_features_ui_kit_widgetbook_start_stop_button_stories;
 import 'package:widgetbook/widgetbook.dart' as _widgetbook;
@@ -38,6 +42,17 @@ final directories = <_widgetbook.WidgetbookNode>[
             builder:
                 _rsvp_flutter_app_features_ui_kit_widgetbook_book_item_stories
                     .bookItemReadingUseCase,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'ExitButton',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder:
+                _rsvp_flutter_app_features_ui_kit_widgetbook_exit_button_stories
+                    .exitButtonDefaultUseCase,
           ),
         ],
       ),
@@ -72,6 +87,23 @@ final directories = <_widgetbook.WidgetbookNode>[
             builder:
                 _rsvp_flutter_app_features_ui_kit_widgetbook_primary_button_stories
                     .primaryButtonDefaultUseCase,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'ReadingScreen',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Paused',
+            builder:
+                _rsvp_flutter_app_features_ui_kit_widgetbook_reading_screen_stories
+                    .readingScreenPausedUseCase,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Reading',
+            builder:
+                _rsvp_flutter_app_features_ui_kit_widgetbook_reading_screen_stories
+                    .readingScreenReadingUseCase,
           ),
         ],
       ),
