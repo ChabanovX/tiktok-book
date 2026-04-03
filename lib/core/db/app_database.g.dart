@@ -190,9 +190,7 @@ class Book extends DataClass implements Insertable<Book> {
   BooksCompanion toCompanion(bool nullToAbsent) {
     return BooksCompanion(
       documentId: Value(documentId),
-      authorName: authorName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(authorName),
+      authorName: authorName == null && nullToAbsent ? const Value.absent() : Value(authorName),
       bookTitle: Value(bookTitle),
       currentIndex: Value(currentIndex),
       totalWords: Value(totalWords),
@@ -239,19 +237,11 @@ class Book extends DataClass implements Insertable<Book> {
   );
   Book copyWithCompanion(BooksCompanion data) {
     return Book(
-      documentId: data.documentId.present
-          ? data.documentId.value
-          : this.documentId,
-      authorName: data.authorName.present
-          ? data.authorName.value
-          : this.authorName,
+      documentId: data.documentId.present ? data.documentId.value : this.documentId,
+      authorName: data.authorName.present ? data.authorName.value : this.authorName,
       bookTitle: data.bookTitle.present ? data.bookTitle.value : this.bookTitle,
-      currentIndex: data.currentIndex.present
-          ? data.currentIndex.value
-          : this.currentIndex,
-      totalWords: data.totalWords.present
-          ? data.totalWords.value
-          : this.totalWords,
+      currentIndex: data.currentIndex.present ? data.currentIndex.value : this.currentIndex,
+      totalWords: data.totalWords.present ? data.totalWords.value : this.totalWords,
     );
   }
 
@@ -268,8 +258,7 @@ class Book extends DataClass implements Insertable<Book> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(documentId, authorName, bookTitle, currentIndex, totalWords);
+  int get hashCode => Object.hash(documentId, authorName, bookTitle, currentIndex, totalWords);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -385,8 +374,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $BooksTable books = $BooksTable(this);
   @override
-  Iterable<TableInfo<Table, Object?>> get allTables =>
-      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+  Iterable<TableInfo<Table, Object?>> get allTables => allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [books];
 }
@@ -444,8 +432,7 @@ class $$BooksTableFilterComposer extends Composer<_$AppDatabase, $BooksTable> {
   );
 }
 
-class $$BooksTableOrderingComposer
-    extends Composer<_$AppDatabase, $BooksTable> {
+class $$BooksTableOrderingComposer extends Composer<_$AppDatabase, $BooksTable> {
   $$BooksTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -479,8 +466,7 @@ class $$BooksTableOrderingComposer
   );
 }
 
-class $$BooksTableAnnotationComposer
-    extends Composer<_$AppDatabase, $BooksTable> {
+class $$BooksTableAnnotationComposer extends Composer<_$AppDatabase, $BooksTable> {
   $$BooksTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -498,8 +484,7 @@ class $$BooksTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get bookTitle =>
-      $composableBuilder(column: $table.bookTitle, builder: (column) => column);
+  GeneratedColumn<String> get bookTitle => $composableBuilder(column: $table.bookTitle, builder: (column) => column);
 
   GeneratedColumn<int> get currentIndex => $composableBuilder(
     column: $table.currentIndex,
@@ -532,12 +517,9 @@ class $$BooksTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              $$BooksTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$BooksTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$BooksTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () => $$BooksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () => $$BooksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () => $$BooksTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<String> documentId = const Value.absent(),
@@ -570,9 +552,7 @@ class $$BooksTableTableManager
                 totalWords: totalWords,
                 rowid: rowid,
               ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
+          withReferenceMapper: (p0) => p0.map((e) => (e.readTable(table), BaseReferences(db, table, e))).toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -596,6 +576,5 @@ typedef $$BooksTableProcessedTableManager =
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$BooksTableTableManager get books =>
-      $$BooksTableTableManager(_db, _db.books);
+  $$BooksTableTableManager get books => $$BooksTableTableManager(_db, _db.books);
 }
