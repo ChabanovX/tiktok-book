@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:injectable/injectable.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
+@lazySingleton
 class PdfParser {
   Future<String> parse(File file) async {
     final bytes = await file.readAsBytes();
