@@ -21,8 +21,7 @@ import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_
     as _i69;
 import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart'
     as _i749;
-import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart'
-    as _i422;
+
 import 'package:rsvp_flutter_app/services/book_converter.dart' as _i216;
 import 'package:rsvp_flutter_app/services/cache_service.dart' as _i332;
 import 'package:rsvp_flutter_app/services/pdf_parser.dart' as _i500;
@@ -53,12 +52,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i500.PdfParser>(),
         gh<_i91.TxtParser>(),
         gh<_i1019.TextProcessor>(),
-      ),
-    );
-    gh.factory<_i422.RsvpBloc>(
-      () => _i422.RsvpBloc(
-        fileRepository: gh<_i69.FileRepository>(),
-        bookConverter: gh<_i216.BookConverter>(),
       ),
     );
     return this;
