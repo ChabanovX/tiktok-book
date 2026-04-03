@@ -1,0 +1,147 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'theme.dart';
+
+// **************************************************************************
+// TailorAnnotationsGenerator
+// **************************************************************************
+
+mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
+  Color get backgroundColor;
+  Color get backgroundColor2;
+  Color get primaryColor;
+  Color get secondaryColor;
+  TextStyle get titleTextStyle;
+  TextStyle get appBarTitleTextStyle;
+  TextStyle get mainTextStyle;
+  TextStyle get subTextStyle;
+  TextStyle get buttonTextStyle;
+
+  @override
+  AppTheme copyWith({
+    Color? backgroundColor,
+    Color? backgroundColor2,
+    Color? primaryColor,
+    Color? secondaryColor,
+    TextStyle? titleTextStyle,
+    TextStyle? appBarTitleTextStyle,
+    TextStyle? mainTextStyle,
+    TextStyle? subTextStyle,
+    TextStyle? buttonTextStyle,
+  }) {
+    return AppTheme(
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      backgroundColor2: backgroundColor2 ?? this.backgroundColor2,
+      primaryColor: primaryColor ?? this.primaryColor,
+      secondaryColor: secondaryColor ?? this.secondaryColor,
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      appBarTitleTextStyle: appBarTitleTextStyle ?? this.appBarTitleTextStyle,
+      mainTextStyle: mainTextStyle ?? this.mainTextStyle,
+      subTextStyle: subTextStyle ?? this.subTextStyle,
+      buttonTextStyle: buttonTextStyle ?? this.buttonTextStyle,
+    );
+  }
+
+  @override
+  AppTheme lerp(covariant ThemeExtension<AppTheme>? other, double t) {
+    if (other is! AppTheme) return this as AppTheme;
+    return AppTheme(
+      backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t)!,
+      backgroundColor2: Color.lerp(
+        backgroundColor2,
+        other.backgroundColor2,
+        t,
+      )!,
+      primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
+      secondaryColor: Color.lerp(secondaryColor, other.secondaryColor, t)!,
+      titleTextStyle: TextStyle.lerp(titleTextStyle, other.titleTextStyle, t)!,
+      appBarTitleTextStyle: TextStyle.lerp(
+        appBarTitleTextStyle,
+        other.appBarTitleTextStyle,
+        t,
+      )!,
+      mainTextStyle: TextStyle.lerp(mainTextStyle, other.mainTextStyle, t)!,
+      subTextStyle: TextStyle.lerp(subTextStyle, other.subTextStyle, t)!,
+      buttonTextStyle: TextStyle.lerp(
+        buttonTextStyle,
+        other.buttonTextStyle,
+        t,
+      )!,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is AppTheme &&
+            const DeepCollectionEquality().equals(
+              backgroundColor,
+              other.backgroundColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              backgroundColor2,
+              other.backgroundColor2,
+            ) &&
+            const DeepCollectionEquality().equals(
+              primaryColor,
+              other.primaryColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              secondaryColor,
+              other.secondaryColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              titleTextStyle,
+              other.titleTextStyle,
+            ) &&
+            const DeepCollectionEquality().equals(
+              appBarTitleTextStyle,
+              other.appBarTitleTextStyle,
+            ) &&
+            const DeepCollectionEquality().equals(
+              mainTextStyle,
+              other.mainTextStyle,
+            ) &&
+            const DeepCollectionEquality().equals(
+              subTextStyle,
+              other.subTextStyle,
+            ) &&
+            const DeepCollectionEquality().equals(
+              buttonTextStyle,
+              other.buttonTextStyle,
+            ));
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      runtimeType.hashCode,
+      const DeepCollectionEquality().hash(backgroundColor),
+      const DeepCollectionEquality().hash(backgroundColor2),
+      const DeepCollectionEquality().hash(primaryColor),
+      const DeepCollectionEquality().hash(secondaryColor),
+      const DeepCollectionEquality().hash(titleTextStyle),
+      const DeepCollectionEquality().hash(appBarTitleTextStyle),
+      const DeepCollectionEquality().hash(mainTextStyle),
+      const DeepCollectionEquality().hash(subTextStyle),
+      const DeepCollectionEquality().hash(buttonTextStyle),
+    );
+  }
+}
+
+extension AppThemeBuildContextProps on BuildContext {
+  AppTheme get appTheme => Theme.of(this).extension<AppTheme>()!;
+  Color get backgroundColor => appTheme.backgroundColor;
+  Color get backgroundColor2 => appTheme.backgroundColor2;
+  Color get primaryColor => appTheme.primaryColor;
+  Color get secondaryColor => appTheme.secondaryColor;
+  TextStyle get titleTextStyle => appTheme.titleTextStyle;
+  TextStyle get appBarTitleTextStyle => appTheme.appBarTitleTextStyle;
+  TextStyle get mainTextStyle => appTheme.mainTextStyle;
+  TextStyle get subTextStyle => appTheme.subTextStyle;
+  TextStyle get buttonTextStyle => appTheme.buttonTextStyle;
+}
