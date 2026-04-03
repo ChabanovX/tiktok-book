@@ -9,7 +9,7 @@ class FileRepositoryImpl implements FileRepository {
   FileRepositoryImpl(this._loaderService);
 
   final FileLoaderService _loaderService;
-  
+
   @override
   Future<BookFile?> pickAndLoadFile() async {
     try {
@@ -18,18 +18,18 @@ class FileRepositoryImpl implements FileRepository {
         allowedExtensions: ['pdf', 'txt'],
         type: FileType.custom,
       );
-      
+
       if (result != null && result.files.single.path != null) {
         final path = result.files.single.path!;
         return await _loaderService.loadFile(path);
       }
-      
+
       return null;
     } catch (e) {
       throw Exception('Failed to pick file: $e');
     }
   }
-  
+
   @override
   Future<BookFile?> loadFileFromLocal(String path) async {
     try {

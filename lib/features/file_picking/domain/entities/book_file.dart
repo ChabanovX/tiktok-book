@@ -10,7 +10,7 @@ class BookFile {
   final String path;
   final String fileExtension;
   final int size;
-  
+
   bool get isPdf => fileExtension.toLowerCase() == 'pdf';
   bool get isTxt => fileExtension.toLowerCase() == 'txt';
 }

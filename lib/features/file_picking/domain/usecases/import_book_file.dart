@@ -7,7 +7,7 @@ class ImportBookFile {
   ImportBookFile(this._fileRepository);
 
   final FileRepository _fileRepository;
-  
+
   Future<BookFile?> call() async {
     return _fileRepository.pickAndLoadFile();
   }
