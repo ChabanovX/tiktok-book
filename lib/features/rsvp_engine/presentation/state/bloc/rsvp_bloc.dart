@@ -48,7 +48,11 @@ class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
     logger.d('Successfully picked file. Starting the parsing...');
     try {
       final tokens = await _bookConverter.convert(bookFile.file);
-      emit(state.copyWith(selectedBook: BookMetaModel(bookFile: bookFile, tokens: tokens)));
+      emit(
+        state.copyWith(
+          selectedBook: BookMetaModel(bookFile: bookFile, tokens: tokens),
+        ),
+      );
       logger.d('File is successfully parsed.');
     } on Exception catch (e) {
       logger.e(e);
