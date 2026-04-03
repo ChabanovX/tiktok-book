@@ -15,7 +15,16 @@ class FileLoaderService {
     final fileExtension = name.split('.').last;
     final size = await file.length();
 
+<<<<<<< HEAD
     return BookFile(name: name, path: path, fileExtension: fileExtension, size: size, file: file);
+=======
+    return BookFile(
+      name: name,
+      path: path,
+      fileExtension: fileExtension,
+      size: size,
+    );
+>>>>>>> ff2880a (Add format step inside lint job (#24))
   }
 
   bool fileExists(String path) {

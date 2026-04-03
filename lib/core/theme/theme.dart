@@ -9,6 +9,7 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     // fields...
     required this.backgroundColor,
 <<<<<<< HEAD
+<<<<<<< HEAD
     required this.backgroundColor2,
     required this.primaryColor,
     required this.secondaryColor,
@@ -19,14 +20,21 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     required this.buttonTextStyle,
 =======
     required this.backgroundColor2, 
+=======
+    required this.backgroundColor2,
+>>>>>>> ff2880a (Add format step inside lint job (#24))
     required this.primaryColor,
     required this.secondaryColor,
     required this.titleTextStyle,
-    required this.appBarTitleTextStyle, 
+    required this.appBarTitleTextStyle,
     required this.mainTextStyle,
     required this.subTextStyle,
+<<<<<<< HEAD
     required this.buttonTextStyle ,
 >>>>>>> 8986a3f (Add custom app theme (#23))
+=======
+    required this.buttonTextStyle,
+>>>>>>> ff2880a (Add format step inside lint job (#24))
   });
 
   // factory AppTheme.dark() {
@@ -59,10 +67,14 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
         color: Color.fromRGBO(25, 28, 29, 1),
         fontFamily: 'SpaceGrotesk',
 <<<<<<< HEAD
+<<<<<<< HEAD
       ),
 =======
       ), 
 >>>>>>> 8986a3f (Add custom app theme (#23))
+=======
+      ),
+>>>>>>> ff2880a (Add format step inside lint job (#24))
       subTextStyle: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
@@ -75,10 +87,14 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
         color: Color.fromRGBO(0, 67, 200, 1),
         fontFamily: 'Manrope',
 <<<<<<< HEAD
+<<<<<<< HEAD
       ),
 =======
       )
 >>>>>>> 8986a3f (Add custom app theme (#23))
+=======
+      ),
+>>>>>>> ff2880a (Add format step inside lint job (#24))
       // light mode values
     );
   }
