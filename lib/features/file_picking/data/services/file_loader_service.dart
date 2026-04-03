@@ -15,12 +15,7 @@ class FileLoaderService {
     final fileExtension = name.split('.').last;
     final size = await file.length();
 
-    return BookFile(
-      name: name,
-      path: path,
-      fileExtension: fileExtension,
-      size: size,
-    );
+    return BookFile(name: name, path: path, fileExtension: fileExtension, size: size, file: file);
   }
 
   bool fileExists(String path) {
