@@ -15,18 +15,18 @@ class MainApp extends StatelessWidget {
 
   ThemeData _buildLightTheme() {
     final appTheme = AppTheme.light();
-    
+
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      
+
       primaryColor: appTheme.primaryColor,
       colorScheme: ColorScheme.light(
         primary: appTheme.primaryColor,
         secondary: appTheme.secondaryColor,
         surface: appTheme.backgroundColor,
       ),
-      
+
       textTheme: TextTheme(
         displayLarge: appTheme.titleTextStyle,
         displayMedium: appTheme.appBarTitleTextStyle,
@@ -41,7 +41,7 @@ class MainApp extends StatelessWidget {
         foregroundColor: appTheme.primaryColor,
         elevation: 0,
       ),
-      
+
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: appTheme.primaryColor,
@@ -49,16 +49,16 @@ class MainApp extends StatelessWidget {
           textStyle: appTheme.buttonTextStyle,
         ),
       ),
-      
+
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: appTheme.primaryColor,
           textStyle: appTheme.buttonTextStyle,
         ),
       ),
-      
+
       scaffoldBackgroundColor: appTheme.backgroundColor,
-      
+
       extensions: [appTheme],
     );
   }
