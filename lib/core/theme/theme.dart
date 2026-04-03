@@ -8,14 +8,14 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   const AppTheme({
     // fields...
     required this.backgroundColor,
-    required this.backgroundColor2, 
+    required this.backgroundColor2,
     required this.primaryColor,
     required this.secondaryColor,
     required this.titleTextStyle,
-    required this.appBarTitleTextStyle, 
+    required this.appBarTitleTextStyle,
     required this.mainTextStyle,
     required this.subTextStyle,
-    required this.buttonTextStyle ,
+    required this.buttonTextStyle,
   });
 
   // factory AppTheme.dark() {
@@ -47,7 +47,7 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
         fontWeight: FontWeight.bold,
         color: Color.fromRGBO(25, 28, 29, 1),
         fontFamily: 'SpaceGrotesk',
-      ), 
+      ),
       subTextStyle: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
@@ -59,7 +59,7 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
         fontWeight: FontWeight.bold,
         color: Color.fromRGBO(0, 67, 200, 1),
         fontFamily: 'Manrope',
-      )
+      ),
       // light mode values
     );
   }
