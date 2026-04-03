@@ -29,22 +29,21 @@ class CacheService {
   }
 
   Future<List<String>> loadBook(String id) async {
-  final dir = await getApplicationDocumentsDirectory();
-  final path = '${dir.path}/cache/$id.json';
+    final dir = await getApplicationDocumentsDirectory();
+    final path = '${dir.path}/cache/$id.json';
 
-  final file = File(path);
+    final file = File(path);
 
-  if (!file.existsSync()) {
-    throw Exception('Book file not found');
+    if (!file.existsSync()) {
+      throw Exception('Book file not found');
+    }
+
+    final content = await file.readAsString();
+
+    final List<dynamic> decoded = jsonDecode(content) as List;
+
+    final List<String> words = decoded.map((e) => e.toString()).toList();
+
+    return words;
   }
-
-  final content = await file.readAsString();
-
-  final List<dynamic> decoded = jsonDecode(content) as List;
-
-  final List<String> words = decoded.map((e) => e.toString()).toList();
-
-  return words;
-  }
-
 }
