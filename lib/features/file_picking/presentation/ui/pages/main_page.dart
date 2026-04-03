@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart';
 import 'package:rsvp_flutter_app/features/file_picking/presentation/ui/widgets/new_book_button.dart';
-import 'package:rsvp_flutter_app/services/book_converter.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,7 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final importBookFile = getIt<ImportBookFile>();
-    final bookConverter = getIt<BookConverter>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('TikTok-book'),
