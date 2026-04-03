@@ -12,6 +12,14 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     required this.backgroundColor2,
     required this.primaryColor,
     required this.secondaryColor,
+    required this.dividerColorMuted,
+    required this.addBookCardBorderColor,
+    required this.addBookCardBackgroundColor,
+    required this.stateDescriptionColor,
+    required this.stateCardShadowColor,
+    required this.emptyStateAccentBackgroundColor,
+    required this.emptyStateAccentColor,
+    required this.errorStateAccentColor,
     required this.titleTextStyle,
     required this.appBarTitleTextStyle,
     required this.mainTextStyle,
@@ -27,6 +35,14 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
       backgroundColor2: Color.fromRGBO(250, 250, 254, 1),
       primaryColor: Color.fromRGBO(0, 67, 200, 1),
       secondaryColor: Color.fromRGBO(0, 87, 255, 1),
+      dividerColorMuted: Color.fromRGBO(15, 23, 42, 0.18),
+      addBookCardBorderColor: Color.fromRGBO(0, 87, 255, 0.28),
+      addBookCardBackgroundColor: Color.fromRGBO(0, 87, 255, 0.06),
+      stateDescriptionColor: Color.fromRGBO(25, 28, 29, 0.82),
+      stateCardShadowColor: Color(0x14000000),
+      emptyStateAccentBackgroundColor: Color(0xFFFFDED4),
+      emptyStateAccentColor: Color(0xFFD66C42),
+      errorStateAccentColor: Color(0xFFB44716),
       titleTextStyle: TextStyle(
         fontSize: 36,
         fontWeight: FontWeight.bold,
@@ -69,6 +85,22 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   @override
   final Color secondaryColor;
   @override
+  final Color dividerColorMuted;
+  @override
+  final Color addBookCardBorderColor;
+  @override
+  final Color addBookCardBackgroundColor;
+  @override
+  final Color stateDescriptionColor;
+  @override
+  final Color stateCardShadowColor;
+  @override
+  final Color emptyStateAccentBackgroundColor;
+  @override
+  final Color emptyStateAccentColor;
+  @override
+  final Color errorStateAccentColor;
+  @override
   final TextStyle titleTextStyle;
   @override
   final TextStyle appBarTitleTextStyle;
@@ -90,6 +122,8 @@ ThemeData buildLightTheme() {
     scaffoldBackgroundColor: appTheme.backgroundColor,
     canvasColor: appTheme.backgroundColor,
     cardColor: appTheme.backgroundColor2,
+    dividerColor: appTheme.dividerColorMuted,
+    shadowColor: appTheme.stateCardShadowColor,
     colorScheme: ColorScheme.light(
       primary: appTheme.primaryColor,
       secondary: appTheme.secondaryColor,

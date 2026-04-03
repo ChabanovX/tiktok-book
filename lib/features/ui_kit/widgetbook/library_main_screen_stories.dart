@@ -12,6 +12,7 @@ Widget libraryMainScreenNonEmptyUseCase(BuildContext context) {
   return ColoredBox(
     color: context.appTheme.backgroundColor2,
     child: LibraryMainScreen(
+      state: LibraryMainScreenState.nonEmpty,
       onAddBookTap: () {
         debugPrint('Add book');
       },
@@ -37,6 +38,36 @@ Widget libraryMainScreenNonEmptyUseCase(BuildContext context) {
           progress: 1,
         ),
       ],
+    ),
+  );
+}
+
+@widgetbook.UseCase(
+  name: 'Empty',
+  type: LibraryMainScreen,
+  path: '[UI Kit]',
+)
+Widget libraryMainScreenEmptyUseCase(BuildContext context) {
+  return ColoredBox(
+    color: context.appTheme.backgroundColor2,
+    child: LibraryMainScreen(
+      state: LibraryMainScreenState.empty,
+      onStateActionTap: () {},
+    ),
+  );
+}
+
+@widgetbook.UseCase(
+  name: 'Import Error',
+  type: LibraryMainScreen,
+  path: '[UI Kit]',
+)
+Widget libraryMainScreenImportErrorUseCase(BuildContext context) {
+  return ColoredBox(
+    color: context.appTheme.backgroundColor2,
+    child: LibraryMainScreen(
+      state: LibraryMainScreenState.importError,
+      onStateActionTap: () {},
     ),
   );
 }

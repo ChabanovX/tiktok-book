@@ -45,6 +45,18 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'LibraryMainScreen',
         useCases: [
           _widgetbook.WidgetbookUseCase(
+            name: 'Empty',
+            builder:
+                _rsvp_flutter_app_features_ui_kit_widgetbook_library_main_screen_stories
+                    .libraryMainScreenEmptyUseCase,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Import Error',
+            builder:
+                _rsvp_flutter_app_features_ui_kit_widgetbook_library_main_screen_stories
+                    .libraryMainScreenImportErrorUseCase,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'Non Empty',
             builder:
                 _rsvp_flutter_app_features_ui_kit_widgetbook_library_main_screen_stories

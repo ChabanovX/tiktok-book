@@ -14,6 +14,14 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
   Color get backgroundColor2;
   Color get primaryColor;
   Color get secondaryColor;
+  Color get dividerColorMuted;
+  Color get addBookCardBorderColor;
+  Color get addBookCardBackgroundColor;
+  Color get stateDescriptionColor;
+  Color get stateCardShadowColor;
+  Color get emptyStateAccentBackgroundColor;
+  Color get emptyStateAccentColor;
+  Color get errorStateAccentColor;
   TextStyle get titleTextStyle;
   TextStyle get appBarTitleTextStyle;
   TextStyle get mainTextStyle;
@@ -26,6 +34,14 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
     Color? backgroundColor2,
     Color? primaryColor,
     Color? secondaryColor,
+    Color? dividerColorMuted,
+    Color? addBookCardBorderColor,
+    Color? addBookCardBackgroundColor,
+    Color? stateDescriptionColor,
+    Color? stateCardShadowColor,
+    Color? emptyStateAccentBackgroundColor,
+    Color? emptyStateAccentColor,
+    Color? errorStateAccentColor,
     TextStyle? titleTextStyle,
     TextStyle? appBarTitleTextStyle,
     TextStyle? mainTextStyle,
@@ -37,6 +53,14 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       backgroundColor2: backgroundColor2 ?? this.backgroundColor2,
       primaryColor: primaryColor ?? this.primaryColor,
       secondaryColor: secondaryColor ?? this.secondaryColor,
+      dividerColorMuted: dividerColorMuted ?? this.dividerColorMuted,
+      addBookCardBorderColor: addBookCardBorderColor ?? this.addBookCardBorderColor,
+      addBookCardBackgroundColor: addBookCardBackgroundColor ?? this.addBookCardBackgroundColor,
+      stateDescriptionColor: stateDescriptionColor ?? this.stateDescriptionColor,
+      stateCardShadowColor: stateCardShadowColor ?? this.stateCardShadowColor,
+      emptyStateAccentBackgroundColor: emptyStateAccentBackgroundColor ?? this.emptyStateAccentBackgroundColor,
+      emptyStateAccentColor: emptyStateAccentColor ?? this.emptyStateAccentColor,
+      errorStateAccentColor: errorStateAccentColor ?? this.errorStateAccentColor,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       appBarTitleTextStyle: appBarTitleTextStyle ?? this.appBarTitleTextStyle,
       mainTextStyle: mainTextStyle ?? this.mainTextStyle,
@@ -57,6 +81,46 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       )!,
       primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
       secondaryColor: Color.lerp(secondaryColor, other.secondaryColor, t)!,
+      dividerColorMuted: Color.lerp(
+        dividerColorMuted,
+        other.dividerColorMuted,
+        t,
+      )!,
+      addBookCardBorderColor: Color.lerp(
+        addBookCardBorderColor,
+        other.addBookCardBorderColor,
+        t,
+      )!,
+      addBookCardBackgroundColor: Color.lerp(
+        addBookCardBackgroundColor,
+        other.addBookCardBackgroundColor,
+        t,
+      )!,
+      stateDescriptionColor: Color.lerp(
+        stateDescriptionColor,
+        other.stateDescriptionColor,
+        t,
+      )!,
+      stateCardShadowColor: Color.lerp(
+        stateCardShadowColor,
+        other.stateCardShadowColor,
+        t,
+      )!,
+      emptyStateAccentBackgroundColor: Color.lerp(
+        emptyStateAccentBackgroundColor,
+        other.emptyStateAccentBackgroundColor,
+        t,
+      )!,
+      emptyStateAccentColor: Color.lerp(
+        emptyStateAccentColor,
+        other.emptyStateAccentColor,
+        t,
+      )!,
+      errorStateAccentColor: Color.lerp(
+        errorStateAccentColor,
+        other.errorStateAccentColor,
+        t,
+      )!,
       titleTextStyle: TextStyle.lerp(titleTextStyle, other.titleTextStyle, t)!,
       appBarTitleTextStyle: TextStyle.lerp(
         appBarTitleTextStyle,
@@ -95,6 +159,38 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
               other.secondaryColor,
             ) &&
             const DeepCollectionEquality().equals(
+              dividerColorMuted,
+              other.dividerColorMuted,
+            ) &&
+            const DeepCollectionEquality().equals(
+              addBookCardBorderColor,
+              other.addBookCardBorderColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              addBookCardBackgroundColor,
+              other.addBookCardBackgroundColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              stateDescriptionColor,
+              other.stateDescriptionColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              stateCardShadowColor,
+              other.stateCardShadowColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              emptyStateAccentBackgroundColor,
+              other.emptyStateAccentBackgroundColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              emptyStateAccentColor,
+              other.emptyStateAccentColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              errorStateAccentColor,
+              other.errorStateAccentColor,
+            ) &&
+            const DeepCollectionEquality().equals(
               titleTextStyle,
               other.titleTextStyle,
             ) &&
@@ -124,6 +220,14 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       const DeepCollectionEquality().hash(backgroundColor2),
       const DeepCollectionEquality().hash(primaryColor),
       const DeepCollectionEquality().hash(secondaryColor),
+      const DeepCollectionEquality().hash(dividerColorMuted),
+      const DeepCollectionEquality().hash(addBookCardBorderColor),
+      const DeepCollectionEquality().hash(addBookCardBackgroundColor),
+      const DeepCollectionEquality().hash(stateDescriptionColor),
+      const DeepCollectionEquality().hash(stateCardShadowColor),
+      const DeepCollectionEquality().hash(emptyStateAccentBackgroundColor),
+      const DeepCollectionEquality().hash(emptyStateAccentColor),
+      const DeepCollectionEquality().hash(errorStateAccentColor),
       const DeepCollectionEquality().hash(titleTextStyle),
       const DeepCollectionEquality().hash(appBarTitleTextStyle),
       const DeepCollectionEquality().hash(mainTextStyle),
@@ -139,6 +243,14 @@ extension AppThemeBuildContextProps on BuildContext {
   Color get backgroundColor2 => appTheme.backgroundColor2;
   Color get primaryColor => appTheme.primaryColor;
   Color get secondaryColor => appTheme.secondaryColor;
+  Color get dividerColorMuted => appTheme.dividerColorMuted;
+  Color get addBookCardBorderColor => appTheme.addBookCardBorderColor;
+  Color get addBookCardBackgroundColor => appTheme.addBookCardBackgroundColor;
+  Color get stateDescriptionColor => appTheme.stateDescriptionColor;
+  Color get stateCardShadowColor => appTheme.stateCardShadowColor;
+  Color get emptyStateAccentBackgroundColor => appTheme.emptyStateAccentBackgroundColor;
+  Color get emptyStateAccentColor => appTheme.emptyStateAccentColor;
+  Color get errorStateAccentColor => appTheme.errorStateAccentColor;
   TextStyle get titleTextStyle => appTheme.titleTextStyle;
   TextStyle get appBarTitleTextStyle => appTheme.appBarTitleTextStyle;
   TextStyle get mainTextStyle => appTheme.mainTextStyle;
