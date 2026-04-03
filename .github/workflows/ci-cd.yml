@@ -38,6 +38,11 @@ jobs:
       - name: Run analyzer
         run: flutter analyze
 
+      - name: Run formatter
+        run: |
+          dart format .
+          git diff --exit-code
+
   test:
     name: Test
     runs-on: ubuntu-22.04
