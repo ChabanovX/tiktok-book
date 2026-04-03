@@ -12,6 +12,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/book_item_stories.dart'
     as _rsvp_flutter_app_features_ui_kit_widgetbook_book_item_stories;
+import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/library_main_screen_stories.dart'
+    as _rsvp_flutter_app_features_ui_kit_widgetbook_library_main_screen_stories;
 import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/primary_button_stories.dart'
     as _rsvp_flutter_app_features_ui_kit_widgetbook_primary_button_stories;
 import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/start_stop_button_stories.dart'
@@ -36,6 +38,17 @@ final directories = <_widgetbook.WidgetbookNode>[
             builder:
                 _rsvp_flutter_app_features_ui_kit_widgetbook_book_item_stories
                     .bookItemReadingUseCase,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'LibraryMainScreen',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Non Empty',
+            builder:
+                _rsvp_flutter_app_features_ui_kit_widgetbook_library_main_screen_stories
+                    .libraryMainScreenNonEmptyUseCase,
           ),
         ],
       ),
