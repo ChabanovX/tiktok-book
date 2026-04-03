@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 env:
-  FLUTTER_VERSION: 3.41.1
+  FLUTTER_VERSION: 3.41.6
   JAVA_VERSION: '17'
 
 jobs:
@@ -37,6 +37,11 @@ jobs:
 
       - name: Run analyzer
         run: flutter analyze
+
+      - name: Run formatter
+        run: |
+          dart format .
+          git diff --exit-code
 
   test:
     name: Test

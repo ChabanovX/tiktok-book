@@ -10,7 +10,7 @@ class FilePickerDataSource {
       type: FileType.custom,
     );
   }
-  
+
   File getFileFromResult(FilePickerResult result) {
     return File(result.files.single.path!);
   }

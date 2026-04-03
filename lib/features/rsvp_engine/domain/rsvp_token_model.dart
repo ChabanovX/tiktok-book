@@ -1,5 +1,4 @@
 class RsvpToken {
-
   const RsvpToken({
     required this.text,
     required this.index,
