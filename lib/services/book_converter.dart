@@ -8,9 +8,11 @@ import 'package:rsvp_flutter_app/services/txt_parser.dart';
 
 @singleton
 class BookConverter {
-  final PdfParser pdfParser = PdfParser();
-  final TxtParser txtParser = TxtParser();
-  final TextProcessor textProcessor = TextProcessor();
+  BookConverter(this.pdfParser, this.txtParser, this.textProcessor);
+
+  final PdfParser pdfParser;
+  final TxtParser txtParser;
+  final TextProcessor textProcessor;
 
   Future<List<RsvpToken>> convert(File file) async {
     String? text;
