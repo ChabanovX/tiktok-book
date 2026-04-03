@@ -11,12 +11,9 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 Widget libraryMainScreenNonEmptyUseCase(BuildContext context) {
   return ColoredBox(
     color: context.appTheme.backgroundColor2,
-    child: LibraryMainScreen(
+    child: const LibraryMainScreen(
       state: LibraryMainScreenState.nonEmpty,
-      onAddBookTap: () {
-        debugPrint('Add book');
-      },
-      bookItems: const [
+      bookItems: [
         BookItem(
           title: 'Fahrenheit 451',
           author: 'Ray Bradbury',
