@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -9,7 +10,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 )
 Widget bookItemReadingUseCase(BuildContext context) {
   return Container(
-    color: const Color(0xFFF7F9FC),
+    color: context.appTheme.backgroundColor,
     alignment: Alignment.center,
     padding: const EdgeInsets.all(24),
     child: SizedBox(
@@ -31,7 +32,7 @@ Widget bookItemReadingUseCase(BuildContext context) {
 )
 Widget bookItemFinishedUseCase(BuildContext context) {
   return Container(
-    color: const Color(0xFFF7F9FC),
+    color: context.appTheme.backgroundColor,
     alignment: Alignment.center,
     padding: const EdgeInsets.all(24),
     child: SizedBox(

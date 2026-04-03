@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:rsvp_flutter_app/core/theme/theme.dart';
 
 class StartStopButton extends StatelessWidget {
   const StartStopButton({
     required this.isRunning,
     this.onTap,
-    this.backgroundColor = const Color(0xFFF3F5F7),
-    this.iconColor = const Color(0xFF13191C),
+    this.backgroundColor,
+    this.iconColor,
     this.size = 120,
     this.borderRadius = 32,
     super.key,
@@ -13,13 +14,18 @@ class StartStopButton extends StatelessWidget {
 
   final bool isRunning;
   final VoidCallback? onTap;
-  final Color backgroundColor;
-  final Color iconColor;
+  final Color? backgroundColor;
+  final Color? iconColor;
   final double size;
   final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appTheme = theme.extension<AppTheme>();
+    final resolvedBackgroundColor = backgroundColor ?? appTheme?.backgroundColor2 ?? const Color(0xFFF3F5F7);
+    final resolvedIconColor = iconColor ?? appTheme?.mainTextStyle.color ?? const Color(0xFF13191C);
+
     return Semantics(
       button: true,
       label: isRunning ? 'Stop' : 'Start',
@@ -32,7 +38,7 @@ class StartStopButton extends StatelessWidget {
             width: size,
             height: size,
             decoration: BoxDecoration(
-              color: backgroundColor,
+              color: resolvedBackgroundColor,
               borderRadius: BorderRadius.circular(borderRadius),
             ),
             child: Center(
@@ -43,12 +49,12 @@ class StartStopButton extends StatelessWidget {
                 child: isRunning
                     ? _PauseIcon(
                         key: const ValueKey('start-stop-pause-icon'),
-                        color: iconColor,
+                        color: resolvedIconColor,
                         buttonSize: size,
                       )
                     : _PlayIcon(
                         key: const ValueKey('start-stop-play-icon'),
-                        color: iconColor,
+                        color: resolvedIconColor,
                         buttonSize: size,
                       ),
               ),

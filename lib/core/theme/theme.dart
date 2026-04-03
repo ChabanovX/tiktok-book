@@ -6,7 +6,6 @@ part 'theme.tailor.dart';
 @TailorMixin()
 class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   const AppTheme({
-    // fields...
     required this.backgroundColor,
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18,30 +17,9 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     required this.mainTextStyle,
     required this.subTextStyle,
     required this.buttonTextStyle,
-=======
-    required this.backgroundColor2, 
-=======
     required this.backgroundColor2,
->>>>>>> ff2880a (Add format step inside lint job (#24))
-    required this.primaryColor,
-    required this.secondaryColor,
-    required this.titleTextStyle,
-    required this.appBarTitleTextStyle,
-    required this.mainTextStyle,
-    required this.subTextStyle,
-<<<<<<< HEAD
     required this.buttonTextStyle ,
->>>>>>> 8986a3f (Add custom app theme (#23))
-=======
-    required this.buttonTextStyle,
->>>>>>> ff2880a (Add format step inside lint job (#24))
   });
-
-  // factory AppTheme.dark() {
-  //   return AppTheme(
-  //     // dark mode values
-  //   );
-  // }
 
   factory AppTheme.light() {
     return const AppTheme(
@@ -66,15 +44,7 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
         fontWeight: FontWeight.bold,
         color: Color.fromRGBO(25, 28, 29, 1),
         fontFamily: 'SpaceGrotesk',
-<<<<<<< HEAD
-<<<<<<< HEAD
       ),
-=======
-      ), 
->>>>>>> 8986a3f (Add custom app theme (#23))
-=======
-      ),
->>>>>>> ff2880a (Add format step inside lint job (#24))
       subTextStyle: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
@@ -86,20 +56,10 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
         fontWeight: FontWeight.bold,
         color: Color.fromRGBO(0, 67, 200, 1),
         fontFamily: 'Manrope',
-<<<<<<< HEAD
-<<<<<<< HEAD
       ),
-=======
-      )
->>>>>>> 8986a3f (Add custom app theme (#23))
-=======
-      ),
->>>>>>> ff2880a (Add format step inside lint job (#24))
-      // light mode values
     );
   }
 
-  // final fields here
   @override
   final Color backgroundColor;
   @override
@@ -118,4 +78,52 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   final TextStyle subTextStyle;
   @override
   final TextStyle buttonTextStyle;
+}
+
+ThemeData buildLightTheme() {
+  final appTheme = AppTheme.light();
+
+  return ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.light,
+    primaryColor: appTheme.primaryColor,
+    scaffoldBackgroundColor: appTheme.backgroundColor,
+    canvasColor: appTheme.backgroundColor,
+    cardColor: appTheme.backgroundColor2,
+    colorScheme: ColorScheme.light(
+      primary: appTheme.primaryColor,
+      secondary: appTheme.secondaryColor,
+      surface: appTheme.backgroundColor,
+      onSecondary: Colors.white,
+      onSurface: appTheme.mainTextStyle.color ?? const Color.fromRGBO(25, 28, 29, 1),
+    ),
+    textTheme: TextTheme(
+      displayLarge: appTheme.titleTextStyle,
+      displayMedium: appTheme.appBarTitleTextStyle,
+      titleLarge: appTheme.mainTextStyle,
+      bodyLarge: appTheme.mainTextStyle,
+      bodyMedium: appTheme.subTextStyle,
+      labelLarge: appTheme.buttonTextStyle,
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: appTheme.backgroundColor2,
+      titleTextStyle: appTheme.appBarTitleTextStyle,
+      foregroundColor: appTheme.primaryColor,
+      elevation: 0,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: appTheme.primaryColor,
+        foregroundColor: Colors.white,
+        textStyle: appTheme.buttonTextStyle,
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: appTheme.primaryColor,
+        textStyle: appTheme.buttonTextStyle,
+      ),
+    ),
+    extensions: [appTheme],
+  );
 }

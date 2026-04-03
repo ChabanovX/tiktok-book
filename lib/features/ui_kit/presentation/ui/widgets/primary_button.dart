@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:rsvp_flutter_app/core/theme/theme.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     required this.text,
     required this.onTap,
     this.icon = Icons.add,
-    this.backgroundColor = const Color(0xFF0057FF),
-    this.textColor = Colors.white,
-    this.iconColor = Colors.white,
+    this.backgroundColor,
+    this.textColor,
+    this.iconColor,
     this.height = 70,
     this.borderRadius = 16,
     super.key,
@@ -16,14 +17,26 @@ class PrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
   final IconData icon;
-  final Color backgroundColor;
-  final Color textColor;
-  final Color iconColor;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final Color? iconColor;
   final double height;
   final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appTheme = theme.extension<AppTheme>();
+    final resolvedBackgroundColor = backgroundColor ?? appTheme?.secondaryColor ?? const Color(0xFF0057FF);
+    final resolvedTextColor = textColor ?? theme.colorScheme.onPrimary;
+    final resolvedIconColor = iconColor ?? resolvedTextColor;
+    final resolvedTextStyle = (appTheme?.buttonTextStyle ?? theme.textTheme.labelLarge ?? const TextStyle()).copyWith(
+      color: resolvedTextColor,
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      height: 1.25,
+    );
+
     return Semantics(
       button: true,
       label: text,
@@ -41,7 +54,7 @@ class PrimaryButton extends StatelessWidget {
             focusColor: Colors.transparent,
             child: Ink(
               decoration: BoxDecoration(
-                color: backgroundColor,
+                color: resolvedBackgroundColor,
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
               child: Padding(
@@ -49,18 +62,13 @@ class PrimaryButton extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(icon, color: iconColor, size: 20),
+                    Icon(icon, color: resolvedIconColor, size: 20),
                     const SizedBox(width: 10),
                     Flexible(
                       child: Text(
                         text,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          height: 1.25,
-                        ),
+                        style: resolvedTextStyle,
                       ),
                     ),
                   ],

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 
 void main() {
   group('StartStopButton', () {
     testWidgets('shows play icon when it is stopped', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        MaterialApp(
+          theme: buildLightTheme(),
+          home: const Scaffold(
             body: Center(
               child: StartStopButton(
                 isRunning: false,
@@ -23,8 +25,9 @@ void main() {
 
     testWidgets('shows pause icon when it is running', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        MaterialApp(
+          theme: buildLightTheme(),
+          home: const Scaffold(
             body: Center(
               child: StartStopButton(
                 isRunning: true,
@@ -43,6 +46,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          theme: buildLightTheme(),
           home: Scaffold(
             body: Center(
               child: StartStopButton(

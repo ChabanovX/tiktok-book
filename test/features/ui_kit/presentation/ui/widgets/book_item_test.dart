@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 
 void main() {
   group('BookItem', () {
     testWidgets('shows progress bar and percent while reading', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        MaterialApp(
+          theme: buildLightTheme(),
+          home: const Scaffold(
             body: SizedBox(
               width: 342,
               child: BookItem(
@@ -30,8 +32,9 @@ void main() {
 
     testWidgets('shows finished state when progress is complete', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        MaterialApp(
+          theme: buildLightTheme(),
+          home: const Scaffold(
             body: SizedBox(
               width: 342,
               child: BookItem(
@@ -57,6 +60,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          theme: buildLightTheme(),
           home: Scaffold(
             body: SizedBox(
               width: 342,

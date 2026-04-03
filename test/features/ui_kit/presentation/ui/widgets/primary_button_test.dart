@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 
 void main() {
@@ -7,6 +8,7 @@ void main() {
     testWidgets('shows text and default add icon', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          theme: buildLightTheme(),
           home: Scaffold(
             body: SizedBox(
               width: 330,
@@ -28,6 +30,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          theme: buildLightTheme(),
           home: Scaffold(
             body: SizedBox(
               width: 330,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rsvp_flutter_app/core/theme/theme.dart';
 
 class BookItem extends StatelessWidget {
   const BookItem({
@@ -7,18 +8,18 @@ class BookItem extends StatelessWidget {
     required this.progress,
     this.onTap,
     this.icon = Icons.menu_book_outlined,
-    this.backgroundColor = Colors.white,
-    this.shadowColor = const Color(0x14000000),
-    this.iconBackgroundColor = const Color(0xFFF1F4F9),
-    this.iconColor = const Color(0xFF98ABC6),
-    this.titleColor = const Color(0xFF18181B),
-    this.authorColor = const Color(0xFF5E6470),
-    this.progressBarColor = const Color(0xFF1D4ED8),
-    this.progressTrackColor = const Color(0xFFE5E7EB),
-    this.progressTextColor = const Color(0xFF5E6470),
-    this.finishedTextColor = const Color(0xFFB4B9C3),
-    this.completedBadgeColor = const Color(0xFF0A53D9),
-    this.completedIconColor = Colors.white,
+    this.backgroundColor,
+    this.shadowColor,
+    this.iconBackgroundColor,
+    this.iconColor,
+    this.titleColor,
+    this.authorColor,
+    this.progressBarColor,
+    this.progressTrackColor,
+    this.progressTextColor,
+    this.finishedTextColor,
+    this.completedBadgeColor,
+    this.completedIconColor,
     this.finishedLabel = 'FINISHED',
     super.key,
   });
@@ -28,24 +29,67 @@ class BookItem extends StatelessWidget {
   final double progress;
   final VoidCallback? onTap;
   final IconData icon;
-  final Color backgroundColor;
-  final Color shadowColor;
-  final Color iconBackgroundColor;
-  final Color iconColor;
-  final Color titleColor;
-  final Color authorColor;
-  final Color progressBarColor;
-  final Color progressTrackColor;
-  final Color progressTextColor;
-  final Color finishedTextColor;
-  final Color completedBadgeColor;
-  final Color completedIconColor;
+  final Color? backgroundColor;
+  final Color? shadowColor;
+  final Color? iconBackgroundColor;
+  final Color? iconColor;
+  final Color? titleColor;
+  final Color? authorColor;
+  final Color? progressBarColor;
+  final Color? progressTrackColor;
+  final Color? progressTextColor;
+  final Color? finishedTextColor;
+  final Color? completedBadgeColor;
+  final Color? completedIconColor;
   final String finishedLabel;
 
   @override
   Widget build(BuildContext context) {
     final clampedProgress = progress.clamp(0.0, 1.0);
     final isFinished = clampedProgress >= 1;
+    final theme = Theme.of(context);
+    final appTheme = theme.extension<AppTheme>();
+
+    final resolvedBackgroundColor = backgroundColor ?? appTheme?.backgroundColor2 ?? Colors.white;
+    final resolvedShadowColor = shadowColor ?? const Color(0x14000000);
+    final resolvedIconBackgroundColor = iconBackgroundColor ?? appTheme?.backgroundColor ?? const Color(0xFFF1F4F9);
+    final resolvedIconColor = iconColor ?? appTheme?.primaryColor.withValues(alpha: 0.35) ?? const Color(0xFF98ABC6);
+    final resolvedTitleColor = titleColor ?? appTheme?.mainTextStyle.color ?? const Color(0xFF18181B);
+    final resolvedAuthorColor =
+        authorColor ?? appTheme?.subTextStyle.color?.withValues(alpha: 0.85) ?? const Color(0xFF5E6470);
+    final resolvedProgressBarColor = progressBarColor ?? appTheme?.secondaryColor ?? const Color(0xFF1D4ED8);
+    final resolvedProgressTrackColor = progressTrackColor ?? appTheme?.backgroundColor ?? const Color(0xFFE5E7EB);
+    final resolvedProgressTextColor = progressTextColor ?? appTheme?.subTextStyle.color ?? const Color(0xFF5E6470);
+    final resolvedFinishedTextColor =
+        finishedTextColor ?? appTheme?.subTextStyle.color?.withValues(alpha: 0.65) ?? const Color(0xFFB4B9C3);
+    final resolvedCompletedBadgeColor = completedBadgeColor ?? appTheme?.secondaryColor ?? const Color(0xFF0A53D9);
+    final resolvedCompletedIconColor = completedIconColor ?? theme.colorScheme.onPrimary;
+
+    final titleStyle = (appTheme?.mainTextStyle ?? theme.textTheme.titleLarge ?? const TextStyle()).copyWith(
+      color: resolvedTitleColor,
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+      height: 1.2,
+    );
+    final authorStyle = (appTheme?.subTextStyle ?? theme.textTheme.bodyMedium ?? const TextStyle()).copyWith(
+      color: resolvedAuthorColor,
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      height: 1.25,
+    );
+    final progressStyle = (appTheme?.subTextStyle ?? theme.textTheme.bodyMedium ?? const TextStyle()).copyWith(
+      color: resolvedProgressTextColor,
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      height: 1.2,
+    );
+    final finishedStyle = (appTheme?.subTextStyle ?? theme.textTheme.bodyMedium ?? const TextStyle()).copyWith(
+      color: resolvedFinishedTextColor,
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.48,
+      height: 1.2,
+    );
 
     return GestureDetector(
       onTap: onTap,
@@ -54,11 +98,11 @@ class BookItem extends StatelessWidget {
         constraints: const BoxConstraints(minHeight: 114),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: backgroundColor,
+          color: resolvedBackgroundColor,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: shadowColor,
+              color: resolvedShadowColor,
               blurRadius: 20,
               offset: const Offset(0, 6),
             ),
@@ -70,10 +114,10 @@ class BookItem extends StatelessWidget {
               height: 80,
               width: 64,
               decoration: BoxDecoration(
-                color: iconBackgroundColor,
+                color: resolvedIconBackgroundColor,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(icon, color: iconColor, size: 24),
+              child: Icon(icon, color: resolvedIconColor, size: 24),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -90,29 +134,19 @@ class BookItem extends StatelessWidget {
                           title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: titleColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            height: 1.2,
-                          ),
+                          style: titleStyle,
                         ),
                       ),
                       const SizedBox(width: 12),
                       if (isFinished)
                         _CompletedBadge(
-                          backgroundColor: completedBadgeColor,
-                          iconColor: completedIconColor,
+                          backgroundColor: resolvedCompletedBadgeColor,
+                          iconColor: resolvedCompletedIconColor,
                         )
                       else
                         Text(
                           '${(clampedProgress * 100).round()}%',
-                          style: TextStyle(
-                            color: progressTextColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            height: 1.2,
-                          ),
+                          style: progressStyle,
                         ),
                     ],
                   ),
@@ -121,24 +155,13 @@ class BookItem extends StatelessWidget {
                     author,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: authorColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      height: 1.25,
-                    ),
+                    style: authorStyle,
                   ),
                   const SizedBox(height: 14),
                   if (isFinished)
                     Text(
                       finishedLabel,
-                      style: TextStyle(
-                        color: finishedTextColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.48,
-                        height: 1.2,
-                      ),
+                      style: finishedStyle,
                     )
                   else
                     ClipRRect(
@@ -146,8 +169,8 @@ class BookItem extends StatelessWidget {
                       child: LinearProgressIndicator(
                         value: clampedProgress,
                         minHeight: 4,
-                        color: progressBarColor,
-                        backgroundColor: progressTrackColor,
+                        color: resolvedProgressBarColor,
+                        backgroundColor: resolvedProgressTrackColor,
                       ),
                     ),
                 ],
