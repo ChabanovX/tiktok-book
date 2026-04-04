@@ -61,8 +61,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
   ) {
     _engine?.start();
     
-    final currentState = state
-    ..maybeMap(
+    state.maybeMap(
       ready: (readyState) {
         emit(readyState.copyWith(isPlaying: true));
       },
@@ -116,9 +115,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
     ChangeWpmEvent event,
     Emitter<ReadingState> emit,
   ) {
-    final currentState = state
-    
-    ..maybeMap(
+    state.maybeMap(
       ready: (readyState) {
         final wasPlaying = readyState.isPlaying;
         final currentIndex = _engine?.currentIndex ?? 0;
