@@ -26,7 +26,7 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   });
 
   factory AppTheme.light() {
-    return AppTheme(
+    return const AppTheme(
       backgroundColor: Color.fromRGBO(237, 239, 252, 1),
       backgroundColor2: Color.fromRGBO(250, 250, 254, 1),
       primaryColor: Color.fromRGBO(0, 67, 200, 1),
