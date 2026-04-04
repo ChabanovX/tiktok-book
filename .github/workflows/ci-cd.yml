@@ -40,8 +40,15 @@ jobs:
 
       - name: Run formatter
         run: |
-          dart format .
-          git diff --exit-code
+          find lib test -type f -name '*.dart' \
+            ! -name '*.g.dart' \
+            ! -name '*.freezed.dart' \
+            ! -name '*.gen.dart' \
+            ! -name '*.mocks.dart' \
+            ! -name '*.pb.dart' \
+            ! -name '*.config.dart' \
+            ! -name '*.tailor.dart' \
+            -print0 | xargs -0 dart format -o none --set-exit-if-changed
 
   test:
     name: Test
