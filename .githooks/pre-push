@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo 'Skipping pre-push format check because the working tree is dirty; CI will enforce formatting.'
+  exit 0
+fi
+
+"$repo_root/tool/format_dart.sh" --check
