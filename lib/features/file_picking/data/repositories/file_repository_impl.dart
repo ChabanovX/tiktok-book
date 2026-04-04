@@ -49,7 +49,7 @@ class FileRepositoryImpl implements FileRepository {
       throw Exception('Failed to load file from local: $e');
     }
   }
-  
+
   @override
   Future<void> saveFile(BookFile bf) async {
     final file = File(bf.path);
