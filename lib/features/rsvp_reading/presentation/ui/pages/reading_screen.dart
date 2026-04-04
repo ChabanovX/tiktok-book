@@ -9,7 +9,6 @@ import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/exit_button.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/start_stop_button.dart';
 
-
 class ReadingScreenWrapper extends StatefulWidget {
   const ReadingScreenWrapper({
     required this.tokens,
@@ -31,7 +30,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
   void initState() {
     super.initState();
     _readingBloc = getIt<ReadingBloc>();
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _readingBloc.add(
@@ -76,10 +75,8 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
         builder: (context, state) {
           return state.maybeWhen(
             ready: (tokens, currentToken, wpm, totalWords, isPlaying, isCompleted, progress) {
-              final screenState = isPlaying 
-                  ? ReadingScreenState.reading 
-                  : ReadingScreenState.paused;
-              
+              final screenState = isPlaying ? ReadingScreenState.reading : ReadingScreenState.paused;
+
               return ReadingScreen(
                 state: screenState,
                 currentWord: currentToken.text,
@@ -124,49 +121,52 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
   }
 
   void _onExit(BuildContext context) {
-    unawaited(showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Выйти из чтения?'),
-        content: const Text('Вы не закончили чтение книги. Прогресс будет потерян.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Отмена'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
-            child: const Text('Выйти'),
-          ),
-        ],
+    unawaited(
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Выйти из чтения?'),
+          content: const Text('Вы не закончили чтение книги. Прогресс будет потерян.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Отмена'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: const Text('Выйти'),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   void _showCompletionDialog(BuildContext context) {
-    unawaited(showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: const Text('Поздравляем! 🎉'),
-        content: const Text('Вы успешно прочитали книгу!'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Закрыть диалог
-              Navigator.pop(context); // Вернуться на главный
-            },
-            child: const Text('Отлично!'),
-          ),
-        ],
+    unawaited(
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: const Text('Поздравляем! 🎉'),
+          content: const Text('Вы успешно прочитали книгу!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Закрыть диалог
+                Navigator.pop(context); // Вернуться на главный
+              },
+              child: const Text('Отлично!'),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
-
 
 enum ReadingScreenState {
   reading,
