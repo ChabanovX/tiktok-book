@@ -25,6 +25,12 @@ class BookConverter {
     }
 
     final words = textProcessor.process(text);
-    return words;
+    return List.generate(
+      words.length,
+      (index) => RsvpToken(
+        text: words[index],
+        index: index,
+      ),
+    );
   }
 }
