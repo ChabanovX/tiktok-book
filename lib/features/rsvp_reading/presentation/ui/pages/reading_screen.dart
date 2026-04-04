@@ -46,7 +46,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
   @override
   void dispose() {
     _readingBloc.add(const ReadingEvent.dispose());
-    _readingBloc.close();
+    unawaited(_readingBloc.close());
     super.dispose();
   }
 
