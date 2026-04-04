@@ -1,47 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:rsvp_flutter_app/core/logger/logger.dart';
-import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart';
+import 'package:rsvp_flutter_app/core/theme/theme.dart';
 
 class NewBookButton extends StatelessWidget {
   const NewBookButton({
-    required this.importBookFile,
+    this.onTap,
+    this.label = 'Add New Book',
     super.key,
   });
 
-  final ImportBookFile importBookFile;
+  final VoidCallback? onTap;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        try {
-          final loadedBook = await importBookFile();
-          logger.i('Success! Loaded ${loadedBook?.name}, size: ${loadedBook?.size}');
-        } on Exception catch (e) {
-          logger.e(e);
-        }
-      },
+    final theme = Theme.of(context);
+    final appTheme = theme.extension<AppTheme>();
+    final borderColor =
+        appTheme?.addBookCardBorderColor ??
+        (appTheme?.secondaryColor ?? theme.colorScheme.secondary).withValues(alpha: 0.28);
+    final backgroundColor =
+        appTheme?.addBookCardBackgroundColor ??
+        (appTheme?.secondaryColor ?? theme.colorScheme.secondary).withValues(alpha: 0.06);
+    final labelStyle = (appTheme?.buttonTextStyle ?? theme.textTheme.labelLarge ?? const TextStyle()).copyWith(
+      color: appTheme?.primaryColor ?? theme.colorScheme.primary,
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.4,
+    );
 
+    return GestureDetector(
+      onTap: onTap,
       child: SizedBox(
         height: 74,
         width: double.infinity,
         child: DashedBorderContainer(
-          borderColor: const Color(0x4C0043C8),
-          backgroundColor: const Color(0x0C0057FF),
+          borderColor: borderColor,
+          backgroundColor: backgroundColor,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 height: 40,
                 width: 40,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF0057FF),
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                decoration: BoxDecoration(
+                  color: appTheme?.secondaryColor ?? theme.colorScheme.secondary,
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
                 ),
                 child: const Icon(Icons.add, color: Colors.white),
               ),
               const SizedBox(width: 16),
-              const Text('Add New Book', style: TextStyle(color: Color(0xFF0043C8))),
+              Text(label, style: labelStyle),
             ],
           ),
         ),
@@ -81,9 +89,8 @@ class DashedBorderContainer extends StatelessWidget {
         dashWidth: dashWidth,
         dashSpace: dashSpace,
       ),
-      child: Container(
+      child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-        constraints: const BoxConstraints(minWidth: 200, minHeight: 100),
         child: child,
       ),
     );

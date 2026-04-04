@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
+import 'package:rsvp_flutter_app/core/logger/logger.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart';
-import 'package:rsvp_flutter_app/features/file_picking/presentation/ui/widgets/new_book_button.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/widgets/new_book_button.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -11,6 +12,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  Future<void> _handleImportBookTap(ImportBookFile importBookFile) async {
+    try {
+      final loadedBook = await importBookFile();
+      logger.i('Success! Loaded ${loadedBook?.name}, size: ${loadedBook?.size}');
+    } on Exception catch (e) {
+      logger.e(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final importBookFile = getIt<ImportBookFile>();
@@ -24,7 +34,9 @@ class _MainScreenState extends State<MainScreen> {
         child: Center(
           child: Column(
             children: [
-              NewBookButton(importBookFile: importBookFile),
+              NewBookButton(
+                onTap: () => _handleImportBookTap(importBookFile),
+              ),
             ],
           ),
         ),
