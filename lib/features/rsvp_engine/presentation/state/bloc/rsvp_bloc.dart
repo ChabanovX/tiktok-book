@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/core/logger/logger.dart';
@@ -9,9 +10,9 @@ import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_error.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 import 'package:rsvp_flutter_app/services/book_converter.dart';
 
+part 'rsvp_bloc.freezed.dart';
 part 'rsvp_event.dart';
 part 'rsvp_state.dart';
-part 'rsvp_bloc.freezed.dart';
 
 @injectable
 class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
@@ -20,18 +21,27 @@ class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
     required BookConverter bookConverter,
   }) : _fileRepository = fileRepository,
        _bookConverter = bookConverter,
-       super(const _RsvpBlocState()) {
+       super(const RsvpBlocState()) {
     on<_Started>(_onStarted);
     on<_AddBook>(_onAddBook);
-    on<_StartAnimation>(_onStartAnimation);
   }
 
   final FileRepository _fileRepository;
   final BookConverter _bookConverter;
 
-  void _onStarted(_Started event, Emitter<RsvpBlocState> emit) {}
+  void _onStarted(_Started event, Emitter<RsvpBlocState> emit) {
+    emit(const RsvpBlocState());
+  }
 
   Future<void> _onAddBook(_AddBook event, Emitter<RsvpBlocState> emit) async {
+    emit(
+      state.copyWith(
+        isParsing: true,
+        lastParsingError: null,
+        selectedBook: null,
+      ),
+    );
+
     final BookFile? bookFile;
     try {
       bookFile = await _fileRepository.pickAndLoadFile();
@@ -43,6 +53,7 @@ class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
 
     if (bookFile == null) {
       logger.d('User aborted picking the file.');
+      emit(state.copyWith(isParsing: false));
       return;
     }
 
@@ -66,9 +77,5 @@ class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
       logger.e(e);
       emit(state.copyWith(lastParsingError: RSVPError.parsingError(error: e)));
     }
-  }
-
-  void _onStartAnimation(_StartAnimation event, Emitter<RsvpBlocState> emit) {
-    // Either simply emit new state with animationShouldStartPlaying = true
   }
 }

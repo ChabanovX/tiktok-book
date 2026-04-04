@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@singleton
 class TextProcessor {
   List<String> process(String text) {
     final normalized = text

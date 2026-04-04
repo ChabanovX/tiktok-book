@@ -21,7 +21,6 @@ class FileRepositoryImpl implements FileRepository {
   @override
   Future<BookFile?> pickAndLoadFile() async {
     try {
-      // Выбор файла через системный пикер
       final result = await FilePicker.platform.pickFiles(
         allowedExtensions: ['pdf', 'txt'],
         type: FileType.custom,

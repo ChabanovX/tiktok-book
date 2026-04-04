@@ -12,6 +12,8 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:rsvp_flutter_app/core/db/app_database.dart' as _i174;
+import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart'
+    as _i431;
 import 'package:rsvp_flutter_app/features/books/data/database_service.dart'
     as _i177;
 import 'package:rsvp_flutter_app/features/file_picking/data/datasources/file_picker_datasource.dart'
@@ -24,6 +26,10 @@ import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_
     as _i69;
 import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart'
     as _i749;
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart'
+    as _i422;
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart'
+    as _i76;
 import 'package:rsvp_flutter_app/services/book_converter.dart' as _i216;
 import 'package:rsvp_flutter_app/services/cache_service.dart' as _i332;
 import 'package:rsvp_flutter_app/services/pdf_parser.dart' as _i500;
@@ -37,12 +43,14 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.factory<_i76.ReadingBloc>(() => _i76.ReadingBloc());
     gh.singleton<_i174.AppDatabase>(() => _i174.AppDatabase());
+    gh.singleton<_i431.NavigationService>(() => _i431.NavigationService());
     gh.singleton<_i51.FilePickerDataSource>(() => _i51.FilePickerDataSource());
     gh.singleton<_i303.FileLoaderService>(() => _i303.FileLoaderService());
     gh.singleton<_i332.CacheService>(() => _i332.CacheService());
+    gh.singleton<_i1019.TextProcessor>(() => _i1019.TextProcessor());
     gh.lazySingleton<_i500.PdfParser>(() => _i500.PdfParser());
-    gh.lazySingleton<_i1019.TextProcessor>(() => _i1019.TextProcessor());
     gh.lazySingleton<_i91.TxtParser>(() => _i91.TxtParser());
     gh.singleton<_i177.BookDbService>(
       () => _i177.BookDbService(gh<_i174.AppDatabase>()),
@@ -64,6 +72,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i749.ImportBookFile>(
       () => _i749.ImportBookFile(gh<_i69.FileRepository>()),
+    );
+    gh.factory<_i422.RsvpBloc>(
+      () => _i422.RsvpBloc(
+        fileRepository: gh<_i69.FileRepository>(),
+        bookConverter: gh<_i216.BookConverter>(),
+      ),
     );
     return this;
   }

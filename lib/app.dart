@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rsvp_flutter_app/core/di/di.dart';
+import 'package:rsvp_flutter_app/core/navigation/app_router.dart';
+import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
-import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/pages/main_page.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -8,8 +10,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: getIt<NavigationService>().navigatorKey,
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      initialRoute: '/',
       theme: buildLightTheme(),
-      home: const MainScreen(),
     );
   }
 }
