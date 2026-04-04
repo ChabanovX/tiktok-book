@@ -53,7 +53,6 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
       wpm: event.initialWpm,
       totalWords: event.tokens.length,
     ));
-    print("Initialized");
   }
   
   void _onStart(
