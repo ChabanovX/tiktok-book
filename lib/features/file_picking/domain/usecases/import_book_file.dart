@@ -9,6 +9,9 @@ class ImportBookFile {
   final FileRepository _fileRepository;
 
   Future<BookFile?> call() async {
-    return _fileRepository.pickAndLoadFile();
+    final bookFile = await _fileRepository.pickAndLoadFile();
+    if (bookFile == null) return null;
+    await _fileRepository.saveFile(bookFile);
+    return bookFile;
   }
 }

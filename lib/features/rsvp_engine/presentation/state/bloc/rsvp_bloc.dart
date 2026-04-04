@@ -6,6 +6,7 @@ import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file
 import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_error.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 import 'package:rsvp_flutter_app/services/book_converter.dart';
 
 part 'rsvp_event.dart';
@@ -47,7 +48,14 @@ class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
 
     logger.d('Successfully picked file. Starting the parsing...');
     try {
-      final tokens = await _bookConverter.convert(bookFile.file);
+      final words = await _bookConverter.convert(bookFile.file);
+      final tokens = List.generate(
+        words.length,
+        (index) => RsvpToken(
+          text: words[index],
+          index: index,
+        ),
+      );
       emit(
         state.copyWith(
           selectedBook: BookMetaModel(bookFile: bookFile, tokens: tokens),
