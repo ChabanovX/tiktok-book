@@ -33,11 +33,13 @@ class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
   }
 
   Future<void> _onAddBook(_AddBook event, Emitter<RsvpBlocState> emit) async {
-    emit(state.copyWith(
-      isParsing: true,
-      lastParsingError: null,
-      selectedBook: null,
-    ));
+    emit(
+      state.copyWith(
+        isParsing: true,
+        lastParsingError: null,
+        selectedBook: null,
+      ),
+    );
 
     final BookFile? bookFile;
     try {
@@ -57,7 +59,11 @@ class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
     logger.d('Successfully picked file. Starting the parsing...');
     try {
       final tokens = await _bookConverter.convert(bookFile.file);
-      emit(state.copyWith(selectedBook: BookMetaModel(bookFile: bookFile, tokens: tokens)));
+      emit(
+        state.copyWith(
+          selectedBook: BookMetaModel(bookFile: bookFile, tokens: tokens),
+        ),
+      );
       logger.d('File is successfully parsed.');
     } on Exception catch (e) {
       logger.e(e);

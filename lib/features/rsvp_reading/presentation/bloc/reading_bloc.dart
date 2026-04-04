@@ -26,7 +26,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
   }
 
   RsvpEngine? _engine;
-  
+
   Future<void> _onInitialize(
     InitializeReadingEvent event,
     Emitter<ReadingState> emit,
@@ -35,7 +35,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
       emit(const ReadingState.error(message: 'Нет текста для чтения'));
       return;
     }
-    
+
     _engine = RsvpEngine(
       tokens: event.tokens,
       wpm: event.initialWpm,
@@ -46,21 +46,23 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
         add(const ReadingCompletedEvent());
       },
     );
-    
-    emit(ReadingState.ready(
-      tokens: event.tokens,
-      currentToken: event.tokens.first,
-      wpm: event.initialWpm,
-      totalWords: event.tokens.length,
-    ));
+
+    emit(
+      ReadingState.ready(
+        tokens: event.tokens,
+        currentToken: event.tokens.first,
+        wpm: event.initialWpm,
+        totalWords: event.tokens.length,
+      ),
+    );
   }
-  
+
   void _onStart(
     StartReadingEvent event,
     Emitter<ReadingState> emit,
   ) {
     _engine?.start();
-    
+
     state.maybeMap(
       ready: (readyState) {
         emit(readyState.copyWith(isPlaying: true));
@@ -68,13 +70,13 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
       orElse: () {},
     );
   }
-  
+
   void _onPause(
     PauseReadingEvent event,
     Emitter<ReadingState> emit,
   ) {
     _engine?.pause();
-    
+
     state.maybeMap(
       ready: (readyState) {
         emit(readyState.copyWith(isPlaying: false));
@@ -82,13 +84,13 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
       orElse: () {},
     );
   }
-  
+
   void _onResume(
     ResumeReadingEvent event,
     Emitter<ReadingState> emit,
   ) {
     _engine?.resume();
-    
+
     state.maybeMap(
       ready: (readyState) {
         emit(readyState.copyWith(isPlaying: true));
@@ -96,21 +98,21 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
       orElse: () {},
     );
   }
-  
+
   void _onNext(
     NextWordEvent event,
     Emitter<ReadingState> emit,
   ) {
     _engine?.next();
   }
-  
+
   void _onPrevious(
     PreviousWordEvent event,
     Emitter<ReadingState> emit,
   ) {
     _engine?.previous();
   }
-  
+
   void _onChangeWpm(
     ChangeWpmEvent event,
     Emitter<ReadingState> emit,
@@ -119,7 +121,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
       ready: (readyState) {
         final wasPlaying = readyState.isPlaying;
         final currentIndex = _engine?.currentIndex ?? 0;
-        
+
         if (wasPlaying) {
           _engine?.pause();
         }
@@ -134,54 +136,58 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
             add(const ReadingCompletedEvent());
           },
         );
-        
+
         if (wasPlaying) {
           _engine?.start(startIndex: currentIndex);
         }
-        
-        emit(readyState.copyWith(
-          wpm: event.newWpm,
-          isPlaying: wasPlaying,
-        ));
+
+        emit(
+          readyState.copyWith(
+            wpm: event.newWpm,
+            isPlaying: wasPlaying,
+          ),
+        );
       },
       orElse: () {},
     );
   }
-  
+
   void _onUpdateCurrentToken(
     UpdateCurrentTokenEvent event,
     Emitter<ReadingState> emit,
   ) {
     state.maybeMap(
       ready: (readyState) {
-        final progress = readyState.totalWords > 0 
-            ? (event.token.index + 1) / readyState.totalWords 
-            : 0.0;
-        
-        emit(readyState.copyWith(
-          currentToken: event.token,
-          progress: progress,
-        ));
+        final progress = readyState.totalWords > 0 ? (event.token.index + 1) / readyState.totalWords : 0.0;
+
+        emit(
+          readyState.copyWith(
+            currentToken: event.token,
+            progress: progress,
+          ),
+        );
       },
       orElse: () {},
     );
   }
-  
+
   void _onReadingCompleted(
     ReadingCompletedEvent event,
     Emitter<ReadingState> emit,
   ) {
     state.maybeMap(
       ready: (readyState) {
-        emit(readyState.copyWith(
-          isCompleted: true,
-          isPlaying: false,
-        ));
+        emit(
+          readyState.copyWith(
+            isCompleted: true,
+            isPlaying: false,
+          ),
+        );
       },
       orElse: () {},
     );
   }
-  
+
   void _onDispose(
     DisposeReadingEvent event,
     Emitter<ReadingState> emit,
@@ -189,7 +195,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
     _engine?.dispose();
     _engine = null;
   }
-  
+
   @override
   Future<void> close() {
     _engine?.dispose();

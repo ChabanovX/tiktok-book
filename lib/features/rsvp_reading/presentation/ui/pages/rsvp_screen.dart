@@ -13,7 +13,7 @@ class ReadingScreen extends StatelessWidget {
     required this.bookTitle,
     super.key,
   });
-  
+
   final List<RsvpToken> tokens;
   final String bookTitle;
 
@@ -29,14 +29,13 @@ class ReadingScreen extends StatelessWidget {
   }
 }
 
-
 class ReadingScreenContent extends StatefulWidget {
   const ReadingScreenContent({
     required this.tokens,
     required this.bookTitle,
     super.key,
   });
-  
+
   final List<RsvpToken> tokens;
   final String bookTitle;
 
@@ -48,17 +47,19 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
   @override
   void initState() {
     super.initState();
-    unawaited(Future.microtask(() {
-      if (mounted) {
-        context.read<ReadingBloc>().add(
-          ReadingEvent.initialize(
-            tokens: widget.tokens,
-          ),
-        );
-      }
-    }));
+    unawaited(
+      Future.microtask(() {
+        if (mounted) {
+          context.read<ReadingBloc>().add(
+            ReadingEvent.initialize(
+              tokens: widget.tokens,
+            ),
+          );
+        }
+      }),
+    );
   }
-  
+
   @override
   void dispose() {
     context.read<ReadingBloc>().add(const ReadingEvent.dispose());
@@ -102,7 +103,7 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
               return Column(
                 children: [
                   LinearProgressIndicator(value: progress),
-                  
+
                   Expanded(
                     child: Center(
                       child: AnimatedSwitcher(
@@ -118,20 +119,20 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
                       ),
                     ),
                   ),
-                  
+
                   _buildControls(
                     context: context,
                     isPlaying: isPlaying,
                     wpm: wpm,
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   Text(
                     '${currentToken.index + 1} / $totalWords слов',
                     style: const TextStyle(fontSize: 14),
                   ),
-                  
+
                   const SizedBox(height: 32),
                 ],
               );
@@ -162,7 +163,7 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
       ),
     );
   }
-  
+
   Widget _buildControls({
     required BuildContext context,
     required bool isPlaying,
@@ -232,24 +233,26 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
       ],
     );
   }
-  
+
   void _showCompletionDialog(BuildContext context) {
-    unawaited(showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: const Text('Поздравляем!'),
-        content: const Text('Вы успешно прочитали книгу!'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
-            child: const Text('Отлично!'),
-          ),
-        ],
+    unawaited(
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: const Text('Поздравляем!'),
+          content: const Text('Вы успешно прочитали книгу!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: const Text('Отлично!'),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

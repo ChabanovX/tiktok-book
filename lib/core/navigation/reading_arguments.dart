@@ -5,7 +5,7 @@ class ReadingArguments {
     required this.tokens,
     required this.bookTitle,
   });
-  
+
   final List<RsvpToken> tokens;
   final String bookTitle;
 }

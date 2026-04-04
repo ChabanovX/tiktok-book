@@ -11,7 +11,7 @@ class AppRouter {
           builder: (_) => const MainScreen(),
           settings: settings,
         );
-        
+
       case '/reading':
         if (settings.arguments is! ReadingArguments) {
           return MaterialPageRoute(
@@ -19,7 +19,7 @@ class AppRouter {
             settings: settings,
           );
         }
-        
+
         final args = settings.arguments! as ReadingArguments;
         return MaterialPageRoute(
           builder: (_) => ReadingScreen(
@@ -28,8 +28,7 @@ class AppRouter {
           ),
           settings: settings,
         );
-        
-        
+
       default:
         return MaterialPageRoute(
           builder: (_) => const MainScreen(),

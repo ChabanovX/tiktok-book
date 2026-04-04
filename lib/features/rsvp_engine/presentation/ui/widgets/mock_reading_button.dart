@@ -5,7 +5,6 @@ import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_tokenizer.dart';
 
-
 class MockReadingButton extends StatelessWidget {
   const MockReadingButton({super.key});
 
@@ -28,7 +27,6 @@ class MockReadingButton extends StatelessWidget {
     );
   }
 
-
   void _navigateToMockReadingScreen(BuildContext context) {
     const demoText = '''
       Это демонстрационный текст для тестирования RSVP чтения.
@@ -38,14 +36,16 @@ class MockReadingButton extends StatelessWidget {
       Нажимайте паузу, если нужно отвлечься.
       И возвращайтесь к чтению в любой момент.
     ''';
-    
+
     final navigationService = getIt<NavigationService>();
     final tokenizer = RsvpTokenizer();
     final tokens = tokenizer.tokenize(demoText);
-    
-    unawaited(navigationService.goToReadingScreen(
-      tokens: tokens,
-      bookTitle: 'Демо-книга',
-    ));
+
+    unawaited(
+      navigationService.goToReadingScreen(
+        tokens: tokens,
+        bookTitle: 'Демо-книга',
+      ),
+    );
   }
 }

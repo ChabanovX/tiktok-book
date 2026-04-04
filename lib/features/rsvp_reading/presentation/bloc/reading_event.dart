@@ -6,7 +6,7 @@ class ReadingEvent with _$ReadingEvent {
     required List<RsvpToken> tokens,
     @Default(300) int initialWpm,
   }) = InitializeReadingEvent;
-  
+
   const factory ReadingEvent.start() = StartReadingEvent;
   const factory ReadingEvent.pause() = PauseReadingEvent;
   const factory ReadingEvent.resume() = ResumeReadingEvent;
