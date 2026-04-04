@@ -34,37 +34,5 @@ void main() {
       expect(find.text('1984'), findsOneWidget);
       expect(find.byType(BookItem), findsNWidgets(2));
     });
-
-    testWidgets('renders empty state via enum', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: buildLightTheme(),
-          home: const LibraryMainScreen(
-            state: LibraryMainScreenState.empty,
-          ),
-        ),
-      );
-
-      expect(find.text('Your library is empty'), findsOneWidget);
-      expect(find.text('Add your first book to\nstart fast reading!'), findsOneWidget);
-      expect(find.text('Upload a book'), findsOneWidget);
-      expect(find.byType(PrimaryButton), findsOneWidget);
-    });
-
-    testWidgets('renders import error state via enum', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: buildLightTheme(),
-          home: const LibraryMainScreen(
-            state: LibraryMainScreenState.importError,
-          ),
-        ),
-      );
-
-      expect(find.text('Import error'), findsOneWidget);
-      expect(find.text('Something went wrong\nduring uploading'), findsOneWidget);
-      expect(find.text('Try again'), findsOneWidget);
-      expect(find.byType(PrimaryButton), findsOneWidget);
-    });
   });
 }

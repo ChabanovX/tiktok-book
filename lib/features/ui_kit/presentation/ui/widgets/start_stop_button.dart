@@ -6,7 +6,6 @@ class StartStopButton extends StatelessWidget {
     required this.isRunning,
     this.onTap,
     this.backgroundColor,
-    this.iconColor,
     this.size = 120,
     this.borderRadius = 32,
     super.key,
@@ -15,16 +14,13 @@ class StartStopButton extends StatelessWidget {
   final bool isRunning;
   final VoidCallback? onTap;
   final Color? backgroundColor;
-  final Color? iconColor;
   final double size;
   final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final appTheme = theme.extension<AppTheme>();
-    final resolvedBackgroundColor = backgroundColor ?? appTheme?.backgroundColor2 ?? const Color(0xFFF3F5F7);
-    final resolvedIconColor = iconColor ?? appTheme?.mainTextStyle.color ?? const Color(0xFF13191C);
+    final appTheme = context.appTheme;
+    final resolvedBackgroundColor = backgroundColor ?? appTheme.backgroundColor2;
 
     return Semantics(
       button: true,
@@ -49,12 +45,12 @@ class StartStopButton extends StatelessWidget {
                 child: isRunning
                     ? _PauseIcon(
                         key: const ValueKey('start-stop-pause-icon'),
-                        color: resolvedIconColor,
+                        color: appTheme.mainTextStyle.color!,
                         buttonSize: size,
                       )
                     : _PlayIcon(
                         key: const ValueKey('start-stop-play-icon'),
-                        color: resolvedIconColor,
+                        color: appTheme.mainTextStyle.color!,
                         buttonSize: size,
                       ),
               ),
