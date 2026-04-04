@@ -55,7 +55,7 @@ class FileRepositoryImpl implements FileRepository {
     final file = File(bf.path);
     final List<String> words = await _converter.convert(file);
     final cached = await _cacheService.cacheBook(words);
-    await _bookDbService.insertBook(documentId: cached.$1, bookTitle: 'bookTitle', totalWords: cached.$3);
+    await _bookDbService.insertBook(documentId: cached.$1, bookTitle: bf.name, totalWords: cached.$3);
     logger.i('Saved file ${cached.$2}');
   }
 }
