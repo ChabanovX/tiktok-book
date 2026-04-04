@@ -30,7 +30,6 @@ class MockReadingButton extends StatelessWidget {
 
 
   void _navigateToMockReadingScreen(BuildContext context) {
-    // Создаём демо-текст для тестирования
     const demoText = '''
       Это демонстрационный текст для тестирования RSVP чтения.
       Вы можете проверить работу анимации, смены слов и управления скоростью.

@@ -13,8 +13,14 @@ class AppRouter {
         );
         
       case '/reading':
-        final args = settings.arguments as ReadingArguments;
-
+        if (settings.arguments is! ReadingArguments) {
+          return MaterialPageRoute(
+            builder: (_) => const MainScreen(),
+            settings: settings,
+          );
+        }
+        
+        final args = settings.arguments! as ReadingArguments;
         return MaterialPageRoute(
           builder: (_) => ReadingScreen(
             tokens: args.tokens,

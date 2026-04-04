@@ -47,7 +47,6 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
       },
     );
     
-    // Используем ready-состояние с полями
     emit(ReadingState.ready(
       tokens: event.tokens,
       currentToken: event.tokens.first,
@@ -63,7 +62,6 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
   ) {
     _engine?.start();
     
-    // Обновляем состояние через maybeMap
     final currentState = state
     ..maybeMap(
       ready: (readyState) {
@@ -119,7 +117,6 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
     ChangeWpmEvent event,
     Emitter<ReadingState> emit,
   ) {
-    // Получаем текущее состояние ready
     final currentState = state
     
     ..maybeMap(
@@ -130,8 +127,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
         if (wasPlaying) {
           _engine?.pause();
         }
-        
-        // Пересоздаём движок с новой скоростью
+
         _engine = RsvpEngine(
           tokens: readyState.tokens,
           wpm: event.newWpm,
@@ -147,7 +143,6 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
           _engine?.start(startIndex: currentIndex);
         }
         
-        // Эмитим новое состояние с обновлённой скоростью
         emit(readyState.copyWith(
           wpm: event.newWpm,
           isPlaying: wasPlaying,

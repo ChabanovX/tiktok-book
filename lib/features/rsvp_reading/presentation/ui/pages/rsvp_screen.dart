@@ -48,7 +48,6 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
   @override
   void initState() {
     super.initState();
-    // Инициализируем BLoC через событие
     unawaited(Future.microtask(() {
       if (mounted) {
         context.read<ReadingBloc>().add(
@@ -102,10 +101,8 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
             ready: (tokens, currentToken, wpm, totalWords, isPlaying, isCompleted, progress) {
               return Column(
                 children: [
-                  // Индикатор прогресса
                   LinearProgressIndicator(value: progress),
                   
-                  // Отображение текущего слова
                   Expanded(
                     child: Center(
                       child: AnimatedSwitcher(
@@ -122,7 +119,6 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
                     ),
                   ),
                   
-                  // Контролы
                   _buildControls(
                     context: context,
                     isPlaying: isPlaying,
@@ -131,7 +127,6 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
                   
                   const SizedBox(height: 16),
                   
-                  // Информация о прогрессе
                   Text(
                     '${currentToken.index + 1} / $totalWords слов',
                     style: const TextStyle(fontSize: 14),
@@ -248,8 +243,8 @@ class _ReadingScreenState extends State<ReadingScreenContent> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context); // Закрыть диалог
-              Navigator.pop(context); // Вернуться на главный экран
+              Navigator.pop(context);
+              Navigator.pop(context);
             },
             child: const Text('Отлично!'),
           ),
