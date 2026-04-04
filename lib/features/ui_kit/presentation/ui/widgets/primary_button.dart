@@ -6,9 +6,6 @@ class PrimaryButton extends StatelessWidget {
     required this.text,
     required this.onTap,
     this.icon = Icons.add,
-    this.backgroundColor,
-    this.textColor,
-    this.iconColor,
     this.height = 70,
     this.borderRadius = 16,
     super.key,
@@ -17,25 +14,13 @@ class PrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
   final IconData icon;
-  final Color? backgroundColor;
-  final Color? textColor;
-  final Color? iconColor;
   final double height;
   final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final appTheme = theme.extension<AppTheme>();
-    final resolvedBackgroundColor = backgroundColor ?? appTheme?.secondaryColor ?? const Color(0xFF0057FF);
-    final resolvedTextColor = textColor ?? theme.colorScheme.onPrimary;
-    final resolvedIconColor = iconColor ?? resolvedTextColor;
-    final resolvedTextStyle = (appTheme?.buttonTextStyle ?? theme.textTheme.labelLarge ?? const TextStyle()).copyWith(
-      color: resolvedTextColor,
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      height: 1.25,
-    );
+    final appTheme = context.appTheme;
+    final buttonTextColor = appTheme.buttonTextStyle.color;
 
     return Semantics(
       button: true,
@@ -54,7 +39,7 @@ class PrimaryButton extends StatelessWidget {
             focusColor: Colors.transparent,
             child: Ink(
               decoration: BoxDecoration(
-                color: resolvedBackgroundColor,
+                color: appTheme.secondaryColor,
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
               child: Padding(
@@ -62,13 +47,13 @@ class PrimaryButton extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(icon, color: resolvedIconColor, size: 20),
+                    Icon(icon, color: buttonTextColor, size: 20),
                     const SizedBox(width: 10),
                     Flexible(
                       child: Text(
                         text,
                         overflow: TextOverflow.ellipsis,
-                        style: resolvedTextStyle,
+                        style: appTheme.buttonTextStyle,
                       ),
                     ),
                   ],

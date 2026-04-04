@@ -43,25 +43,11 @@ class LibraryMainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final appTheme = theme.extension<AppTheme>();
-    final appBarTextStyle = (appTheme?.appBarTitleTextStyle ?? theme.textTheme.displayMedium ?? const TextStyle())
-        .copyWith(
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
-          color:
-              appTheme?.appBarTitleTextStyle.color ??
-              theme.textTheme.displayMedium?.color ??
-              theme.colorScheme.onSurface,
-        );
-    final titleStyle = (appTheme?.titleTextStyle ?? theme.textTheme.displayLarge ?? const TextStyle()).copyWith(
-      fontSize: 28,
-      fontWeight: FontWeight.w700,
-      height: 1.15,
-    );
+    final appTheme = context.appTheme;
+    final appBarTextStyle = appTheme.appBarTitleTextStyle;
 
     return Scaffold(
-      backgroundColor: appTheme?.backgroundColor2 ?? theme.scaffoldBackgroundColor,
+      backgroundColor: appTheme.backgroundColor2,
       body: SafeArea(
         child: Column(
           children: [
@@ -69,10 +55,10 @@ class LibraryMainScreen extends StatelessWidget {
               height: 68,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: appTheme?.backgroundColor2 ?? theme.cardColor,
+                color: appTheme.backgroundColor2,
                 border: Border(
                   bottom: BorderSide(
-                    color: appTheme?.dividerColorMuted ?? theme.dividerColor,
+                    color: appTheme.dividerColorMuted,
                   ),
                 ),
               ),
@@ -89,14 +75,14 @@ class LibraryMainScreen extends StatelessWidget {
                   children: [
                     Text(
                       collectionTitle,
-                      style: titleStyle,
+                      style: appTheme.titleTextStyle,
                     ),
                     const SizedBox(height: 18),
                     Container(
                       width: 44,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: appTheme?.secondaryColor ?? theme.colorScheme.secondary,
+                        color: appTheme.secondaryColor,
                         borderRadius: BorderRadius.circular(999),
                       ),
                     ),
@@ -187,21 +173,7 @@ class _StateContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final appTheme = theme.extension<AppTheme>();
-    final titleStyle = (appTheme?.titleTextStyle ?? theme.textTheme.displayLarge ?? const TextStyle()).copyWith(
-      fontSize: 28,
-      fontWeight: FontWeight.w700,
-      height: 1.15,
-    );
-    final descriptionStyle = (appTheme?.subTextStyle ?? theme.textTheme.bodyMedium ?? const TextStyle()).copyWith(
-      fontSize: 16,
-      height: 1.35,
-      color:
-          appTheme?.stateDescriptionColor ??
-          appTheme?.mainTextStyle.color?.withValues(alpha: 0.82) ??
-          theme.textTheme.bodyMedium?.color,
-    );
+    final appTheme = context.appTheme;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -211,13 +183,16 @@ class _StateContent extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: titleStyle,
+          style: appTheme.titleTextStyle,
         ),
         const SizedBox(height: 12),
-        Text(
-          description,
-          textAlign: TextAlign.center,
-          style: descriptionStyle,
+        Opacity(
+          opacity: 0.82,
+          child: Text(
+            description,
+            textAlign: TextAlign.center,
+            style: appTheme.subTextStyle,
+          ),
         ),
         const SizedBox(height: 32),
         SizedBox(
@@ -237,13 +212,12 @@ class _EmptyLibraryIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final appTheme = theme.extension<AppTheme>();
-    final cardColor = appTheme?.backgroundColor2 ?? Colors.white;
-    final iconColor = appTheme?.secondaryColor ?? theme.colorScheme.secondary;
-    final shadowColor = appTheme?.stateCardShadowColor ?? theme.shadowColor;
-    final accentBackgroundColor = appTheme?.emptyStateAccentBackgroundColor ?? theme.colorScheme.errorContainer;
-    final accentColor = appTheme?.emptyStateAccentColor ?? theme.colorScheme.error;
+    final appTheme = context.appTheme;
+    final cardColor = appTheme.backgroundColor2;
+    final iconColor = appTheme.secondaryColor;
+    final shadowColor = appTheme.stateCardShadowColor;
+    final accentBackgroundColor = appTheme.emptyStateAccentBackgroundColor;
+    final accentColor = appTheme.emptyStateAccentColor;
 
     return Stack(
       clipBehavior: Clip.none,
@@ -296,10 +270,10 @@ class _ImportErrorIllustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final appTheme = theme.extension<AppTheme>();
-    final cardColor = appTheme?.backgroundColor2 ?? Colors.white;
-    final shadowColor = appTheme?.stateCardShadowColor ?? theme.shadowColor;
-    final accentColor = appTheme?.errorStateAccentColor ?? theme.colorScheme.error;
+    final appTheme = context.appTheme;
+    final cardColor = appTheme.backgroundColor2;
+    final shadowColor = appTheme.stateCardShadowColor;
+    final accentColor = appTheme.errorStateAccentColor;
 
     return Stack(
       clipBehavior: Clip.none,
@@ -338,16 +312,16 @@ class _ImportErrorIllustration extends StatelessWidget {
             height: 32,
             width: 32,
             decoration: BoxDecoration(
-              color: appTheme?.secondaryColor ?? theme.colorScheme.secondary,
+              color: appTheme.secondaryColor,
               shape: BoxShape.circle,
               border: Border.all(
                 color: cardColor,
                 width: 4,
               ),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.info_rounded,
-              color: Colors.white,
+              color: theme.colorScheme.onSecondary,
               size: 16,
             ),
           ),

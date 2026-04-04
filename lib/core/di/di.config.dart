@@ -49,7 +49,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i500.PdfParser>(() => _i500.PdfParser());
     gh.lazySingleton<_i91.TxtParser>(() => _i91.TxtParser());
     gh.lazySingleton<_i69.FileRepository>(
-      () => _i542.FileRepositoryImpl(gh<_i303.FileLoaderService>()),
+      () => _i542.FileRepositoryImpl(
+        gh<_i303.FileLoaderService>(),
+        gh<_i332.CacheService>(),
+        gh<_i216.BookConverter>(),
+        gh<_i177.BookDbService>(),
+      ),
     );
     gh.singleton<_i749.ImportBookFile>(
       () => _i749.ImportBookFile(gh<_i69.FileRepository>()),
