@@ -7,8 +7,6 @@ part 'theme.tailor.dart';
 class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   const AppTheme({
     required this.backgroundColor,
-<<<<<<< HEAD
-<<<<<<< HEAD
     required this.backgroundColor2,
     required this.primaryColor,
     required this.secondaryColor,
@@ -25,12 +23,10 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     required this.mainTextStyle,
     required this.subTextStyle,
     required this.buttonTextStyle,
-    required this.backgroundColor2,
-    required this.buttonTextStyle ,
   });
 
   factory AppTheme.light() {
-    return const AppTheme(
+    return AppTheme(
       backgroundColor: Color.fromRGBO(237, 239, 252, 1),
       backgroundColor2: Color.fromRGBO(250, 250, 254, 1),
       primaryColor: Color.fromRGBO(0, 67, 200, 1),
