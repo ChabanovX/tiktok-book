@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rsvp_flutter_app/core/navigation/reading_arguments.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 
 @singleton
 class NavigationService {
@@ -32,11 +34,30 @@ class NavigationService {
   }
   
   void pop<T extends Object?>([T? result]) {
-    return navigatorKey.currentState?.pop(result);
+    if (_navigator?.canPop() == true) {
+      _navigator?.pop<T>(result);
+    }
   }
   
   void popUntil(String routeName) {
     navigatorKey.currentState?.popUntil(ModalRoute.withName(routeName));
+  }
+
+  Future<void> goToReadingScreen({
+    required List<RsvpToken> tokens,
+    required String bookTitle,
+  }) {
+    return pushNamed(
+      '/reading',
+      arguments: ReadingArguments(
+        tokens: tokens,
+        bookTitle: bookTitle,
+      ),
+    );
+  }
+
+  Future<void> goToMainScreen() {
+    return pushNamed('/');
   }
   
   bool canPop() {

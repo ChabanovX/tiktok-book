@@ -15,7 +15,6 @@ class MainApp extends StatelessWidget {
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: '/',
       theme: _buildLightTheme(),
-      home: const MainScreen(),
     );
   }
 

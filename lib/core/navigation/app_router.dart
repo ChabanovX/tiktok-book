@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rsvp_flutter_app/features/file_picking/presentation/ui/pages/main_page.dart';
+import 'package:rsvp_flutter_app/core/navigation/reading_arguments.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/pages/main_page.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/pages/rsvp_screen.dart';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -12,10 +14,11 @@ class AppRouter {
         
       case '/reading':
         final args = settings.arguments as ReadingArguments;
+
         return MaterialPageRoute(
           builder: (_) => ReadingScreen(
+            tokens: args.tokens,
             bookTitle: args.bookTitle,
-            bookContent: args.bookContent,
           ),
           settings: settings,
         );

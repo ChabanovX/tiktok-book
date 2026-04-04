@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_tokenizer.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/widgets/mock_reading_button.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/widgets/new_book_button.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/pages/rsvp_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -24,7 +27,11 @@ class _MainScreenState extends State<MainScreen> {
           padding: EdgeInsets.all(8.0),
           child: Center(
             child: Column(
-              children: [NewBookButton()],
+              children: [
+                NewBookButton(),
+                SizedBox(height: 16),
+                MockReadingButton(),
+              ],
             ),
           ),
         ),
