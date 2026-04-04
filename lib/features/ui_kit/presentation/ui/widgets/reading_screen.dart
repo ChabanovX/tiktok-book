@@ -34,46 +34,13 @@ class ReadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final appTheme = theme.extension<AppTheme>();
+    final appTheme = context.appTheme;
     final clampedProgress = progress.clamp(0.0, 1.0);
-    final progressTrackColor = (appTheme?.dividerColorMuted ?? theme.dividerColor).withValues(alpha: 0.24);
-    final primaryControlBackgroundColor = (appTheme?.backgroundColor2 ?? theme.cardColor).withValues(alpha: 0.72);
-    final exitControlBackgroundColor = appTheme?.backgroundColor2 ?? theme.cardColor;
-    final metaTextColor =
-        appTheme?.subTextStyle.color?.withValues(alpha: 0.72) ??
-        appTheme?.stateDescriptionColor ??
-        const Color(0xFF7A808A);
-    final actionLabelColor = appTheme?.subTextStyle.color?.withValues(alpha: 0.58) ?? const Color(0xFF8B90A0);
-
-    final currentWordStyle = (appTheme?.titleTextStyle ?? theme.textTheme.displayLarge ?? const TextStyle()).copyWith(
-      fontSize: 36,
-      fontWeight: FontWeight.w700,
-      height: 1.1,
-      color: appTheme?.mainTextStyle.color ?? theme.colorScheme.onSurface,
-    );
-    final bookTitleStyle = (appTheme?.mainTextStyle ?? theme.textTheme.titleLarge ?? const TextStyle()).copyWith(
-      fontSize: 22,
-      fontWeight: FontWeight.w700,
-      height: 1.2,
-      color: appTheme?.mainTextStyle.color ?? theme.colorScheme.onSurface,
-    );
-    final metaTextStyle = (appTheme?.subTextStyle ?? theme.textTheme.bodyMedium ?? const TextStyle()).copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      height: 1.25,
-      color: metaTextColor,
-    );
-    final actionLabelStyle = (appTheme?.buttonTextStyle ?? theme.textTheme.labelLarge ?? const TextStyle()).copyWith(
-      fontSize: 14,
-      fontWeight: FontWeight.w700,
-      letterSpacing: 2.2,
-      height: 1.2,
-      color: actionLabelColor,
-    );
+    final progressTrackColor = appTheme.dividerColorMuted.withValues(alpha: 0.24);
+    final primaryControlBackgroundColor = appTheme.backgroundColor2.withValues(alpha: 0.72);
 
     return Scaffold(
-      backgroundColor: appTheme?.backgroundColor ?? theme.scaffoldBackgroundColor,
+      backgroundColor: appTheme.backgroundColor,
       body: SafeArea(
         bottom: false,
         child: Column(
@@ -81,7 +48,7 @@ class ReadingScreen extends StatelessWidget {
             LinearProgressIndicator(
               value: clampedProgress,
               minHeight: 4,
-              color: appTheme?.secondaryColor ?? theme.colorScheme.secondary,
+              color: appTheme.secondaryColor,
               backgroundColor: progressTrackColor,
             ),
             Expanded(
@@ -100,7 +67,7 @@ class ReadingScreen extends StatelessWidget {
                           Text(
                             currentWord,
                             textAlign: TextAlign.center,
-                            style: currentWordStyle,
+                            style: appTheme.titleTextStyle,
                           ),
                           const SizedBox(height: 56),
                           Row(
@@ -109,7 +76,6 @@ class ReadingScreen extends StatelessWidget {
                             children: [
                               _ReadingControl(
                                 label: state == ReadingScreenState.reading ? 'PAUSE' : 'PLAY',
-                                labelStyle: actionLabelStyle,
                                 child: StartStopButton(
                                   isRunning: state == ReadingScreenState.reading,
                                   onTap: onStartStopTap,
@@ -121,12 +87,10 @@ class ReadingScreen extends StatelessWidget {
                               const SizedBox(width: 18),
                               _ReadingControl(
                                 label: 'EXIT',
-                                labelStyle: actionLabelStyle,
                                 child: ExitButton(
                                   onTap: onExitTap,
                                   size: 60,
                                   borderRadius: 14,
-                                  backgroundColor: exitControlBackgroundColor,
                                 ),
                               ),
                             ],
@@ -135,19 +99,25 @@ class ReadingScreen extends StatelessWidget {
                           Text(
                             bookTitle,
                             textAlign: TextAlign.center,
-                            style: bookTitleStyle,
+                            style: appTheme.mainTextStyle,
                           ),
                           const SizedBox(height: 28),
-                          Text(
-                            '$progressLabel: ${(clampedProgress * 100).round()}%',
-                            textAlign: TextAlign.center,
-                            style: metaTextStyle,
+                          Opacity(
+                            opacity: 0.72,
+                            child: Text(
+                              '$progressLabel: ${(clampedProgress * 100).round()}%',
+                              textAlign: TextAlign.center,
+                              style: appTheme.subTextStyle,
+                            ),
                           ),
                           const SizedBox(height: 24),
-                          Text(
-                            '$wordsReadLabel: $wordsRead',
-                            textAlign: TextAlign.center,
-                            style: metaTextStyle,
+                          Opacity(
+                            opacity: 0.72,
+                            child: Text(
+                              '$wordsReadLabel: $wordsRead',
+                              textAlign: TextAlign.center,
+                              style: appTheme.subTextStyle,
+                            ),
                           ),
                           SizedBox(height: bottomSpacing),
                         ],
@@ -168,23 +138,26 @@ class _ReadingControl extends StatelessWidget {
   const _ReadingControl({
     required this.child,
     required this.label,
-    required this.labelStyle,
   });
 
   final Widget child;
   final String label;
-  final TextStyle labelStyle;
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = context.appTheme;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         child,
         const SizedBox(height: 14),
-        Text(
-          label,
-          style: labelStyle,
+        Opacity(
+          opacity: 0.58,
+          child: Text(
+            label,
+            style: appTheme.buttonTextStyle,
+          ),
         ),
       ],
     );
