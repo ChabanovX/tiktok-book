@@ -23,6 +23,10 @@ import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_
     as _i69;
 import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart'
     as _i749;
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart'
+    as _i422;
+import 'package:rsvp_flutter_app/services/book_converter.dart' as _i216;
+    as _i749;
 import 'package:rsvp_flutter_app/services/book_converter.dart' as _i216;
 import 'package:rsvp_flutter_app/services/cache_service.dart' as _i332;
 import 'package:rsvp_flutter_app/services/pdf_parser.dart' as _i500;
@@ -36,6 +40,11 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.singleton<_i51.FilePickerDataSource>(() => _i51.FilePickerDataSource());
+    gh.singleton<_i303.FileLoaderService>(() => _i303.FileLoaderService());
+    gh.singleton<_i216.BookConverter>(() => _i216.BookConverter());
+    gh.lazySingleton<_i69.FileRepository>(
+      () => _i542.FileRepositoryImpl(gh<_i303.FileLoaderService>()),
     gh.singleton<_i431.NavigationService>(() => _i431.NavigationService());
     gh.singleton<_i51.FilePickerDataSource>(() => _i51.FilePickerDataSource());
     gh.singleton<_i303.FileLoaderService>(() => _i303.FileLoaderService());
@@ -49,11 +58,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i749.ImportBookFile>(
       () => _i749.ImportBookFile(gh<_i69.FileRepository>()),
     );
-    gh.singleton<_i216.BookConverter>(
-      () => _i216.BookConverter(
-        gh<_i500.PdfParser>(),
-        gh<_i91.TxtParser>(),
-        gh<_i1019.TextProcessor>(),
+    gh.factory<_i422.RsvpBloc>(
+      () => _i422.RsvpBloc(
+        fileRepository: gh<_i69.FileRepository>(),
+        bookConverter: gh<_i216.BookConverter>(),
       ),
     );
     return this;

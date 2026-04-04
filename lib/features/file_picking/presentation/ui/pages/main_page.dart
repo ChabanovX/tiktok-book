@@ -25,6 +25,17 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
             children: [
               NewBookButton(importBookFile: importBookFile),
+
+              // TODO: Rewrite hardcode
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push();
+                  },
+                  child: const Text("Hardcode book viewing")
+                ),
+              )
             ],
           ),
         ),
