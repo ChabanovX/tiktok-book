@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rsvp_flutter_app/core/constants.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 
 class BookItem extends StatelessWidget {
@@ -7,15 +8,20 @@ class BookItem extends StatelessWidget {
     required this.author,
     required this.progress,
     this.onTap,
+    this.isSelected = false,
     this.icon = Icons.menu_book_outlined,
     this.finishedLabel = 'FINISHED',
     super.key,
   });
 
+  static const Duration _selectionAnimationDuration = Constants.basicAnimationDuration;
+  static const Curve _selectionAnimationCurve = Constants.basicAnimationCurve;
+
   final String title;
   final String author;
   final double progress;
   final VoidCallback? onTap;
+  final bool isSelected;
   final IconData icon;
   final String finishedLabel;
 
@@ -25,33 +31,59 @@ class BookItem extends StatelessWidget {
     final isFinished = clampedProgress >= 1;
     final theme = Theme.of(context);
     final appTheme = context.appTheme;
+    final borderRadius = BorderRadius.circular(16);
+    final decoration = isSelected
+        ? BoxDecoration(
+            borderRadius: borderRadius,
+            border: Border.all(
+              color: appTheme.secondaryColor.withValues(alpha: 0.22),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: appTheme.primaryColor.withValues(alpha: 0.1),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+              BoxShadow(
+                color: appTheme.secondaryColor.withValues(alpha: 0.08),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          )
+        : BoxDecoration(
+            color: appTheme.backgroundColor2,
+            borderRadius: borderRadius,
+            boxShadow: [
+              BoxShadow(
+                color: appTheme.stateCardShadowColor,
+                blurRadius: 20,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          );
+    final coverDecoration = BoxDecoration(
+      color: isSelected ? appTheme.backgroundColor2.withValues(alpha: 0.72) : appTheme.backgroundColor,
+      borderRadius: BorderRadius.circular(8),
+    );
 
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: AnimatedContainer(
+        duration: _selectionAnimationDuration,
+        curve: _selectionAnimationCurve,
         constraints: const BoxConstraints(minHeight: 114),
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: appTheme.backgroundColor2,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: appTheme.stateCardShadowColor,
-              blurRadius: 20,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
+        decoration: decoration,
         child: Row(
           children: [
-            Container(
+            AnimatedContainer(
+              duration: _selectionAnimationDuration,
+              curve: _selectionAnimationCurve,
               height: 80,
               width: 64,
-              decoration: BoxDecoration(
-                color: appTheme.backgroundColor,
-                borderRadius: BorderRadius.circular(8),
-              ),
+              decoration: coverDecoration,
               child: Icon(
                 icon,
                 color: appTheme.primaryColor.withValues(alpha: 0.35),

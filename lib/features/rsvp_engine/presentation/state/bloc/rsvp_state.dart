@@ -1,11 +1,13 @@
 part of 'rsvp_bloc.dart';
 
 @freezed
-abstract class RsvpBlocState with _$RsvpBlocState {
-  const factory RsvpBlocState({
+abstract class RsvpState with _$RsvpState {
+  const factory RsvpState({
     BookMetaModel? selectedBook,
     @Default(false) bool isParsing,
 
-    RSVPError? lastParsingError,
-  }) = _RsvpBlocState;
+    RSVPError? lastError,
+
+    @Default([]) List<BookMetaModel> books,
+  }) = _RsvpState;
 }

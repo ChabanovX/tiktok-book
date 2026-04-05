@@ -15,29 +15,29 @@ part 'rsvp_event.dart';
 part 'rsvp_state.dart';
 
 @injectable
-class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
+class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   RsvpBloc({
     required FileRepository fileRepository,
     required BookConverter bookConverter,
   }) : _fileRepository = fileRepository,
        _bookConverter = bookConverter,
-       super(const RsvpBlocState()) {
+       super(const _RsvpState()) {
     on<_Started>(_onStarted);
     on<_AddBook>(_onAddBook);
+    on<_ToggleSelectBook>(_onToggleSelectBook);
+    on<_StartAnimation>(_onStartAnimation);
   }
 
   final FileRepository _fileRepository;
   final BookConverter _bookConverter;
 
-  void _onStarted(_Started event, Emitter<RsvpBlocState> emit) {
-    emit(const RsvpBlocState());
-  }
+  void _onStarted(_Started event, Emitter<RsvpState> emit) {}
 
-  Future<void> _onAddBook(_AddBook event, Emitter<RsvpBlocState> emit) async {
+  Future<void> _onAddBook(_AddBook event, Emitter<RsvpState> emit) async {
     emit(
       state.copyWith(
         isParsing: true,
-        lastParsingError: null,
+        lastError: null,
         selectedBook: null,
       ),
     );
@@ -47,7 +47,7 @@ class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
       bookFile = await _fileRepository.pickAndLoadFile();
     } on Exception catch (e) {
       logger.e(e);
-      emit(state.copyWith(lastParsingError: RSVPError.parsingError(error: e)));
+      emit(state.copyWith(lastError: RSVPError.parsingError(error: e)));
       return;
     }
 
@@ -67,15 +67,21 @@ class RsvpBloc extends Bloc<RsvpBlocEvent, RsvpBlocState> {
           index: index,
         ),
       );
-      emit(
-        state.copyWith(
-          selectedBook: BookMetaModel(bookFile: bookFile, tokens: tokens),
-        ),
-      );
+      final books = List<BookMetaModel>.from(state.books)..add(BookMetaModel(bookFile: bookFile, tokens: tokens));
+      emit(state.copyWith(books: books));
       logger.d('File is successfully parsed.');
     } on Exception catch (e) {
       logger.e(e);
-      emit(state.copyWith(lastParsingError: RSVPError.parsingError(error: e)));
+      emit(state.copyWith(lastError: RSVPError.parsingError(error: e)));
     }
+  }
+
+  void _onToggleSelectBook(_ToggleSelectBook event, Emitter<RsvpState> emit) {
+    final selectedBook = state.selectedBook == event.book ? null : event.book;
+    emit(state.copyWith(selectedBook: selectedBook));
+  }
+
+  void _onStartAnimation(_StartAnimation event, Emitter<RsvpState> emit) {
+    // Either simply emit new state with animationShouldStartPlaying = true
   }
 }
