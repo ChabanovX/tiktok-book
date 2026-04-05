@@ -23,6 +23,7 @@ class MainScreen extends StatelessWidget {
           final bookWidgets = state.books
               .map(
                 (b) => BookItem(
+                  onTap: () => context.read<RsvpBloc>().add(RsvpEvent.toggleSelectBook(book: b)),
                   title: b.name ?? 'Unknown',
                   author: 'Unknown',
                   progress: 0.0,
