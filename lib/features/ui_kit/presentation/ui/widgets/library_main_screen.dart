@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/widgets/new_book_button.dart';
+import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/bottom_selectedbook_window.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/primary_button.dart';
 
 enum LibraryMainScreenState {
@@ -49,41 +52,59 @@ class LibraryMainScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: appTheme.backgroundColor2,
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            Container(
-              height: 68,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: appTheme.backgroundColor2,
-                border: Border(
-                  bottom: BorderSide(
-                    color: appTheme.dividerColorMuted,
+            Column(
+              children: [
+                Container(
+                  height: 68,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: appTheme.backgroundColor2,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: appTheme.dividerColorMuted,
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    appBarTitle,
+                    style: appBarTextStyle,
                   ),
                 ),
-              ),
-              child: Text(
-                appBarTitle,
-                style: appBarTextStyle,
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 22, 16, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      collectionTitle,
-                      style: appTheme.titleTextStyle,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 22, 16, 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          collectionTitle,
+                          style: appTheme.titleTextStyle,
+                        ),
+                        const SizedBox(height: 18),
+                        Expanded(
+                          child: _buildBody(context),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 18),
-                    Expanded(
-                      child: _buildBody(context),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
+            ),
+            BlocBuilder<RsvpBloc, RsvpState>(
+              buildWhen: (previous, current) => previous.selectedBook != current.selectedBook,
+              builder: (context, state) {
+                final selectedBook = state.selectedBook;
+                if (selectedBook == null) return const SizedBox.shrink();
+
+                return Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 32,
+                  child: BottomSelectedbookWindow(selectedBook: selectedBook),
+                );
+              },
             ),
           ],
         ),
