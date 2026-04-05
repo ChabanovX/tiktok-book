@@ -55,12 +55,13 @@ extension RsvpEventPatterns on RsvpEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _AddBook value)?  addBook,TResult Function( _StartAnimation value)?  startAnimation,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _AddBook value)?  addBook,TResult Function( _ToggleSelectBook value)?  toggleSelectBook,TResult Function( _StartAnimation value)?  startAnimation,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _AddBook() when addBook != null:
-return addBook(_that);case _StartAnimation() when startAnimation != null:
+return addBook(_that);case _ToggleSelectBook() when toggleSelectBook != null:
+return toggleSelectBook(_that);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that);case _:
   return orElse();
 
@@ -79,12 +80,13 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _AddBook value)  addBook,required TResult Function( _StartAnimation value)  startAnimation,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _AddBook value)  addBook,required TResult Function( _ToggleSelectBook value)  toggleSelectBook,required TResult Function( _StartAnimation value)  startAnimation,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _AddBook():
-return addBook(_that);case _StartAnimation():
+return addBook(_that);case _ToggleSelectBook():
+return toggleSelectBook(_that);case _StartAnimation():
 return startAnimation(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -102,12 +104,13 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _AddBook value)?  addBook,TResult? Function( _StartAnimation value)?  startAnimation,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _AddBook value)?  addBook,TResult? Function( _ToggleSelectBook value)?  toggleSelectBook,TResult? Function( _StartAnimation value)?  startAnimation,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _AddBook() when addBook != null:
-return addBook(_that);case _StartAnimation() when startAnimation != null:
+return addBook(_that);case _ToggleSelectBook() when toggleSelectBook != null:
+return toggleSelectBook(_that);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that);case _:
   return null;
 
@@ -125,11 +128,12 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  addBook,TResult Function( int bookID)?  startAnimation,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  addBook,TResult Function( BookMetaModel book)?  toggleSelectBook,TResult Function( int bookID)?  startAnimation,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddBook() when addBook != null:
-return addBook();case _StartAnimation() when startAnimation != null:
+return addBook();case _ToggleSelectBook() when toggleSelectBook != null:
+return toggleSelectBook(_that.book);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that.bookID);case _:
   return orElse();
 
@@ -148,11 +152,12 @@ return startAnimation(_that.bookID);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  addBook,required TResult Function( int bookID)  startAnimation,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  addBook,required TResult Function( BookMetaModel book)  toggleSelectBook,required TResult Function( int bookID)  startAnimation,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _AddBook():
-return addBook();case _StartAnimation():
+return addBook();case _ToggleSelectBook():
+return toggleSelectBook(_that.book);case _StartAnimation():
 return startAnimation(_that.bookID);case _:
   throw StateError('Unexpected subclass');
 
@@ -170,11 +175,12 @@ return startAnimation(_that.bookID);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  addBook,TResult? Function( int bookID)?  startAnimation,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  addBook,TResult? Function( BookMetaModel book)?  toggleSelectBook,TResult? Function( int bookID)?  startAnimation,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddBook() when addBook != null:
-return addBook();case _StartAnimation() when startAnimation != null:
+return addBook();case _ToggleSelectBook() when toggleSelectBook != null:
+return toggleSelectBook(_that.book);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that.bookID);case _:
   return null;
 
@@ -246,6 +252,81 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _ToggleSelectBook implements RsvpEvent {
+  const _ToggleSelectBook({required this.book});
+  
+
+ final  BookMetaModel book;
+
+/// Create a copy of RsvpEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ToggleSelectBookCopyWith<_ToggleSelectBook> get copyWith => __$ToggleSelectBookCopyWithImpl<_ToggleSelectBook>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ToggleSelectBook&&(identical(other.book, book) || other.book == book));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,book);
+
+@override
+String toString() {
+  return 'RsvpEvent.toggleSelectBook(book: $book)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ToggleSelectBookCopyWith<$Res> implements $RsvpEventCopyWith<$Res> {
+  factory _$ToggleSelectBookCopyWith(_ToggleSelectBook value, $Res Function(_ToggleSelectBook) _then) = __$ToggleSelectBookCopyWithImpl;
+@useResult
+$Res call({
+ BookMetaModel book
+});
+
+
+$BookMetaModelCopyWith<$Res> get book;
+
+}
+/// @nodoc
+class __$ToggleSelectBookCopyWithImpl<$Res>
+    implements _$ToggleSelectBookCopyWith<$Res> {
+  __$ToggleSelectBookCopyWithImpl(this._self, this._then);
+
+  final _ToggleSelectBook _self;
+  final $Res Function(_ToggleSelectBook) _then;
+
+/// Create a copy of RsvpEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? book = null,}) {
+  return _then(_ToggleSelectBook(
+book: null == book ? _self.book : book // ignore: cast_nullable_to_non_nullable
+as BookMetaModel,
+  ));
+}
+
+/// Create a copy of RsvpEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BookMetaModelCopyWith<$Res> get book {
+  
+  return $BookMetaModelCopyWith<$Res>(_self.book, (value) {
+    return _then(_self.copyWith(book: value));
+  });
+}
+}
 
 /// @nodoc
 

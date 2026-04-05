@@ -24,6 +24,8 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
        super(const _RsvpState()) {
     on<_Started>(_onStarted);
     on<_AddBook>(_onAddBook);
+    on<_ToggleSelectBook>(_onToggleSelectBook);
+    on<_StartAnimation>(_onStartAnimation);
   }
 
   final FileRepository _fileRepository;
@@ -72,6 +74,11 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
       logger.e(e);
       emit(state.copyWith(lastError: RSVPError.parsingError(error: e)));
     }
+  }
+
+  void _onToggleSelectBook(_ToggleSelectBook event, Emitter<RsvpState> emit) {
+    final selectedBook = state.selectedBook == event.book ? null : event.book;
+    emit(state.copyWith(selectedBook: selectedBook));
   }
 
   void _onStartAnimation(_StartAnimation event, Emitter<RsvpState> emit) {
