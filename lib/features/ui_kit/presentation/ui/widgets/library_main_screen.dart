@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rsvp_flutter_app/core/constants.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/widgets/new_book_button.dart';
@@ -12,8 +13,8 @@ enum LibraryMainScreenState {
   importError,
 }
 
-const _bookSelectionAnimationDuration = Duration(milliseconds: 400);
-const Curve _bookSelectionAnimationCurve = Curves.easeInOutCubic;
+const Duration _bookSelectionAnimationDuration = Constants.basicAnimationDuration;
+const Curve _bookSelectionAnimationCurve = Constants.basicAnimationCurve;
 
 class LibraryMainScreen extends StatelessWidget {
   const LibraryMainScreen({

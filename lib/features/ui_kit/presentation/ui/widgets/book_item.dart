@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rsvp_flutter_app/core/constants.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 
 class BookItem extends StatelessWidget {
@@ -13,8 +14,8 @@ class BookItem extends StatelessWidget {
     super.key,
   });
 
-  static const Duration _selectionAnimationDuration = Duration(milliseconds: 400);
-  static const Curve _selectionAnimationCurve = Curves.easeInOutCubic;
+  static const Duration _selectionAnimationDuration = Constants.basicAnimationDuration;
+  static const Curve _selectionAnimationCurve = Constants.basicAnimationCurve;
 
   final String title;
   final String author;
