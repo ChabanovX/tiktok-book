@@ -146,14 +146,22 @@ class LibraryMainScreen extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     switch (state) {
       case LibraryMainScreenState.nonEmpty:
-        return ListView(
+        return Column(
           children: [
             NewBookButton(
               label: addBookLabel,
               onTap: onAddBookTap,
             ),
             const SizedBox(height: 18),
-            ..._buildSeparatedItems(bookItems),
+            Expanded(
+              child: ListView(
+                children: [
+                  ..._buildSeparatedItems(bookItems),
+                  // Also add sizedBox for valid intersection with bottom_selectedbook_window.
+                  const SizedBox(height: 200),
+                ],
+              ),
+            ),
           ],
         );
       case LibraryMainScreenState.empty:
