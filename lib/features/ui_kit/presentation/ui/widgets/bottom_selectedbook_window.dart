@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
+import 'package:rsvp_flutter_app/core/di/di.dart';
+import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 
@@ -101,7 +105,15 @@ class BottomSelectedbookWindow extends StatelessWidget {
                           letterSpacing: 0.2,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        final navigationService = getIt<NavigationService>();
+                        unawaited(
+                          navigationService.goToReadingScreen(
+                            tokens: selectedBook.tokens,
+                            bookTitle: 'Демо-книга',
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
