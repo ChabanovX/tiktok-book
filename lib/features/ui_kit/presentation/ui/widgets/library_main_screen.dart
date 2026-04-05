@@ -12,6 +12,9 @@ enum LibraryMainScreenState {
   importError,
 }
 
+const _bookSelectionAnimationDuration = Duration(milliseconds: 400);
+const Curve _bookSelectionAnimationCurve = Curves.easeInOutCubic;
+
 class LibraryMainScreen extends StatelessWidget {
   const LibraryMainScreen({
     required this.state,
@@ -96,13 +99,40 @@ class LibraryMainScreen extends StatelessWidget {
               buildWhen: (previous, current) => previous.selectedBook != current.selectedBook,
               builder: (context, state) {
                 final selectedBook = state.selectedBook;
-                if (selectedBook == null) return const SizedBox.shrink();
-
                 return Positioned(
                   left: 0,
                   right: 0,
                   bottom: 32,
-                  child: BottomSelectedbookWindow(selectedBook: selectedBook),
+                  child: AnimatedSwitcher(
+                    duration: _bookSelectionAnimationDuration,
+                    switchInCurve: _bookSelectionAnimationCurve,
+                    switchOutCurve: _bookSelectionAnimationCurve,
+                    transitionBuilder: (child, animation) {
+                      final curvedAnimation = CurvedAnimation(
+                        parent: animation,
+                        curve: _bookSelectionAnimationCurve,
+                      );
+
+                      return FadeTransition(
+                        opacity: curvedAnimation,
+                        child: SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(0, 0.08),
+                            end: Offset.zero,
+                          ).animate(curvedAnimation),
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: selectedBook == null
+                        ? const SizedBox(
+                            key: ValueKey('bottom-selected-book-empty'),
+                          )
+                        : BottomSelectedbookWindow(
+                            key: ValueKey(selectedBook.bookFile.name),
+                            selectedBook: selectedBook,
+                          ),
+                  ),
                 );
               },
             ),
