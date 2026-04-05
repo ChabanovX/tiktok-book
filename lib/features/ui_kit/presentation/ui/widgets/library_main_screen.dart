@@ -78,15 +78,6 @@ class LibraryMainScreen extends StatelessWidget {
                       style: appTheme.titleTextStyle,
                     ),
                     const SizedBox(height: 18),
-                    Container(
-                      width: 44,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: appTheme.secondaryColor,
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                    ),
-                    const SizedBox(height: 18),
                     Expanded(
                       child: _buildBody(context),
                     ),
