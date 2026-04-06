@@ -16,7 +16,8 @@ class NewBookButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final appTheme = theme.extension<AppTheme>();
-    final resolvedLabel = label ?? context.l10n.newBookButtonLabel;
+    final l10n = context.l10n;
+    final resolvedLabel = label ?? l10n.newBookButtonLabel;
     final borderColor =
         appTheme?.addBookCardBorderColor ??
         (appTheme?.secondaryColor ?? theme.colorScheme.secondary).withValues(alpha: 0.28);

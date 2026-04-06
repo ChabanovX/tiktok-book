@@ -100,18 +100,24 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
               child: CircularProgressIndicator(),
             ),
             error: (message) => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error, size: 64, color: Colors.red),
-                  const SizedBox(height: 16),
-                  Text(context.l10n.readingErrorMessage(_localizeErrorMessage(context, message))),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(context.l10n.commonBack),
-                  ),
-                ],
+              child: Builder(
+                builder: (context) {
+                  final l10n = context.l10n;
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error, size: 64, color: Colors.red),
+                      const SizedBox(height: 16),
+                      Text(l10n.readingErrorMessage(_localizeErrorMessage(context, message))),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(l10n.commonBack),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             orElse: () => const Center(
@@ -151,9 +157,11 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
   }
 
   String _localizeErrorMessage(BuildContext context, String message) {
+    final l10n = context.l10n;
+
     switch (message) {
       case readingEmptyTextErrorKey:
-        return context.l10n.readingErrorEmptyText;
+        return l10n.readingErrorEmptyText;
       default:
         return message;
     }

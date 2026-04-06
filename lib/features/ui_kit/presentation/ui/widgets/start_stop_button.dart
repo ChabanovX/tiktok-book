@@ -21,11 +21,12 @@ class StartStopButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+    final l10n = context.l10n;
     final resolvedBackgroundColor = backgroundColor ?? appTheme.backgroundColor2;
 
     return Semantics(
       button: true,
-      label: isRunning ? context.l10n.startStopPauseSemantic : context.l10n.startStopPlaySemantic,
+      label: isRunning ? l10n.startStopPauseSemantic : l10n.startStopPlaySemantic,
       child: Material(
         color: Colors.transparent,
         child: InkWell(

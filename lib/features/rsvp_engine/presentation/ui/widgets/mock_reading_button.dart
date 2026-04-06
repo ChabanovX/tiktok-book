@@ -11,6 +11,8 @@ class MockReadingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
@@ -18,7 +20,7 @@ class MockReadingButton extends StatelessWidget {
           _navigateToMockReadingScreen(context);
         },
         icon: const Icon(Icons.auto_awesome),
-        label: Text(context.l10n.mockReadingButtonLabel),
+        label: Text(l10n.mockReadingButtonLabel),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 12),
           backgroundColor: Colors.purple,
@@ -29,14 +31,15 @@ class MockReadingButton extends StatelessWidget {
   }
 
   void _navigateToMockReadingScreen(BuildContext context) {
+    final l10n = context.l10n;
     final navigationService = getIt<NavigationService>();
     final tokenizer = RsvpTokenizer();
-    final tokens = tokenizer.tokenize(context.l10n.mockReadingDemoText);
+    final tokens = tokenizer.tokenize(l10n.mockReadingDemoText);
 
     unawaited(
       navigationService.goToReadingScreen(
         tokens: tokens,
-        bookTitle: context.l10n.mockReadingBookTitle,
+        bookTitle: l10n.mockReadingBookTitle,
       ),
     );
   }

@@ -11,6 +11,8 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return BlocProvider(
       create: (context) => getIt<RsvpBloc>(),
       child: BlocBuilder<RsvpBloc, RsvpState>(
@@ -29,7 +31,7 @@ class MainScreen extends StatelessWidget {
                   onDelete: () => context.read<RsvpBloc>().add(RsvpEvent.removeBook(book: b)),
                   isSelected: state.selectedBook == b,
                   title: b.resolveTitle(),
-                  author: context.l10n.bookUnknownAuthor,
+                  author: l10n.bookUnknownAuthor,
                   progress: 0.0,
                 ),
               )

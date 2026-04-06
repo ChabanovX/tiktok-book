@@ -35,7 +35,8 @@ class BookItem extends StatelessWidget {
     final isFinished = clampedProgress >= 1;
     final theme = Theme.of(context);
     final appTheme = context.appTheme;
-    final resolvedFinishedLabel = finishedLabel ?? context.l10n.bookItemFinished;
+    final l10n = context.l10n;
+    final resolvedFinishedLabel = finishedLabel ?? l10n.bookItemFinished;
     final borderRadius = BorderRadius.circular(16);
     final decoration = isSelected
         ? BoxDecoration(
@@ -177,7 +178,7 @@ class BookItem extends StatelessWidget {
             backgroundColor: appTheme.desctructionColor,
             foregroundColor: theme.colorScheme.onSecondary,
             icon: Icons.delete_outline_rounded,
-            label: context.l10n.bookItemDelete,
+            label: l10n.bookItemDelete,
             borderRadius: borderRadius,
           ),
         ],

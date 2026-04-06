@@ -17,10 +17,11 @@ class ExitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+    final l10n = context.l10n;
 
     return Semantics(
       button: true,
-      label: context.l10n.exitButtonSemantic,
+      label: l10n.exitButtonSemantic,
       child: SizedBox(
         width: size,
         height: size,

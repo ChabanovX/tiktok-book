@@ -15,8 +15,9 @@ class BottomSelectedbookWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+    final l10n = context.l10n;
     final resolvedTitle = selectedBook.resolveTitle().trim();
-    final title = resolvedTitle.isEmpty ? context.l10n.bookUnknownTitle : resolvedTitle;
+    final title = resolvedTitle.isEmpty ? l10n.bookUnknownTitle : resolvedTitle;
     final wordCount = selectedBook.tokens.length;
     final fileExtension = selectedBook.bookFile.fileExtension.toUpperCase();
 
@@ -56,7 +57,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.l10n.selectedBookTitle,
+                          l10n.selectedBookTitle,
                           style: appTheme.subTextStyle.copyWith(
                             color: appTheme.primaryColor,
                             fontWeight: FontWeight.w700,
@@ -100,7 +101,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                     child: CupertinoButton(
                       padding: .zero,
                       child: Text(
-                        context.l10n.selectedBookRead,
+                        l10n.selectedBookRead,
                         style: appTheme.mainTextStyle.copyWith(
                           color: appTheme.primaryColor,
                           fontWeight: FontWeight.w700,
@@ -128,7 +129,8 @@ class BottomSelectedbookWindow extends StatelessWidget {
   }
 
   String _wordCountLabel(BuildContext context, int count) {
-    return context.l10n.bookWordCount(count);
+    final l10n = context.l10n;
+    return l10n.bookWordCount(count);
   }
 }
 

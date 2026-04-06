@@ -52,10 +52,11 @@ class LibraryMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+    final l10n = context.l10n;
     final appBarTextStyle = appTheme.appBarTitleTextStyle;
     final hasRsvpBloc = _hasRsvpBloc(context);
-    final resolvedAppBarTitle = appBarTitle ?? context.l10n.appTitle;
-    final resolvedCollectionTitle = collectionTitle ?? context.l10n.libraryCollectionTitle;
+    final resolvedAppBarTitle = appBarTitle ?? l10n.appTitle;
+    final resolvedCollectionTitle = collectionTitle ?? l10n.libraryCollectionTitle;
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor2,
