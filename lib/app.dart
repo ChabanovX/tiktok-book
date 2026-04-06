@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/app_router.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
+import 'package:rsvp_flutter_app/core/theme/app_theme_controller.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/l10n/app_locale_controller.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
@@ -12,7 +13,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: appLocaleController,
+      animation: Listenable.merge([
+        appLocaleController,
+        appThemeController,
+      ]),
       builder: (context, child) {
         return MaterialApp(
           locale: appLocaleController.locale,
@@ -20,7 +24,9 @@ class MainApp extends StatelessWidget {
           navigatorKey: getIt<NavigationService>().navigatorKey,
           onGenerateRoute: AppRouter.onGenerateRoute,
           initialRoute: '/',
-          theme: buildDarkTheme(),
+          theme: buildLightTheme(),
+          darkTheme: buildDarkTheme(),
+          themeMode: appThemeController.themeMode,
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
         );

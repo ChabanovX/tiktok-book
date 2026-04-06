@@ -183,5 +183,25 @@
   "settingsLanguageRussianTitle": "Русский",
   "@settingsLanguageRussianTitle": {
     "description": "Заголовок варианта русской локали."
+  },
+  "settingsThemeSectionTitle": "Оформление",
+  "@settingsThemeSectionTitle": {
+    "description": "Заголовок секции выбора темы."
+  },
+  "settingsThemeSectionDescription": "Выберите, как должно выглядеть приложение.",
+  "@settingsThemeSectionDescription": {
+    "description": "Описание секции выбора темы."
+  },
+  "settingsThemeSystemTitle": "Как в системе",
+  "@settingsThemeSystemTitle": {
+    "description": "Заголовок варианта системной темы."
+  },
+  "settingsThemeLightTitle": "Светлая",
+  "@settingsThemeLightTitle": {
+    "description": "Заголовок варианта светлой темы."
+  },
+  "settingsThemeDarkTitle": "Тёмная",
+  "@settingsThemeDarkTitle": {
+    "description": "Заголовок варианта тёмной темы."
   }
 }

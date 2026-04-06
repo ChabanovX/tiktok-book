@@ -337,6 +337,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Russian'**
   String get settingsLanguageRussianTitle;
+
+  /// Title of the theme settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get settingsThemeSectionTitle;
+
+  /// Description text on the theme settings screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how the app theme should look.'**
+  String get settingsThemeSectionDescription;
+
+  /// Title for the system theme option.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get settingsThemeSystemTitle;
+
+  /// Title for the light theme option.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingsThemeLightTitle;
+
+  /// Title for the dark theme option.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingsThemeDarkTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

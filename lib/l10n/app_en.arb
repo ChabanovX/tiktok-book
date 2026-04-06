@@ -183,5 +183,25 @@
   "settingsLanguageRussianTitle": "Russian",
   "@settingsLanguageRussianTitle": {
     "description": "Title for the Russian locale option."
+  },
+  "settingsThemeSectionTitle": "Appearance",
+  "@settingsThemeSectionTitle": {
+    "description": "Title of the theme settings section."
+  },
+  "settingsThemeSectionDescription": "Choose how the app theme should look.",
+  "@settingsThemeSectionDescription": {
+    "description": "Description text on the theme settings screen."
+  },
+  "settingsThemeSystemTitle": "System default",
+  "@settingsThemeSystemTitle": {
+    "description": "Title for the system theme option."
+  },
+  "settingsThemeLightTitle": "Light",
+  "@settingsThemeLightTitle": {
+    "description": "Title for the light theme option."
+  },
+  "settingsThemeDarkTitle": "Dark",
+  "@settingsThemeDarkTitle": {
+    "description": "Title for the dark theme option."
   }
 }

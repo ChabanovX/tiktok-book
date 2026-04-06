@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/constants.dart';
+import 'package:rsvp_flutter_app/core/theme/app_theme_controller.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/l10n/app_locale_controller.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
@@ -13,11 +14,15 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: appLocaleController,
+      animation: Listenable.merge([
+        appLocaleController,
+        appThemeController,
+      ]),
       builder: (context, child) {
         final appTheme = context.appTheme;
         final l10n = context.l10n;
         final selectedLocale = appLocaleController.locale;
+        final selectedThemeMode = appThemeController.themeMode;
 
         return Scaffold(
           backgroundColor: appTheme.backgroundColor2,
@@ -95,6 +100,43 @@ class SettingsPage extends StatelessWidget {
                         title: l10n.settingsLanguageRussianTitle,
                         isSelected: selectedLocale == _russianLocale,
                         onTap: () => appLocaleController.setLocale(_russianLocale),
+                      ),
+                      const SizedBox(height: 36),
+                      Text(
+                        l10n.settingsThemeSectionTitle,
+                        style: appTheme.titleTextStyle.copyWith(
+                          fontSize: 30,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        l10n.settingsThemeSectionDescription,
+                        style: appTheme.subTextStyle.copyWith(
+                          color: appTheme.stateDescriptionColor,
+                          fontSize: 14,
+                          height: 1.45,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      _LocaleOptionCard(
+                        icon: Icons.brightness_auto_rounded,
+                        title: l10n.settingsThemeSystemTitle,
+                        isSelected: selectedThemeMode == ThemeMode.system,
+                        onTap: () => appThemeController.setThemeMode(ThemeMode.system),
+                      ),
+                      const SizedBox(height: 14),
+                      _LocaleOptionCard(
+                        icon: Icons.light_mode_rounded,
+                        title: l10n.settingsThemeLightTitle,
+                        isSelected: selectedThemeMode == ThemeMode.light,
+                        onTap: () => appThemeController.setThemeMode(ThemeMode.light),
+                      ),
+                      const SizedBox(height: 14),
+                      _LocaleOptionCard(
+                        icon: Icons.dark_mode_rounded,
+                        title: l10n.settingsThemeDarkTitle,
+                        isSelected: selectedThemeMode == ThemeMode.dark,
+                        onTap: () => appThemeController.setThemeMode(ThemeMode.dark),
                       ),
                     ],
                   ),
