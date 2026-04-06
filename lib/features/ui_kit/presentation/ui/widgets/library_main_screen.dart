@@ -56,6 +56,7 @@ class LibraryMainScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: appTheme.backgroundColor2,
       body: SafeArea(
+        bottom: false,
         child: Stack(
           children: [
             Column(
