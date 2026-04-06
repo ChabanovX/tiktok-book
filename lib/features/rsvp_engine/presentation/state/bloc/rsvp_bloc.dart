@@ -2,12 +2,14 @@ import 'package:bloc/bloc.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/logger/logger.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_error.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_tokenizer.dart';
 import 'package:rsvp_flutter_app/services/book_converter.dart';
 
 part 'rsvp_bloc.freezed.dart';
@@ -61,13 +63,8 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     logger.d('Successfully picked file. Starting the parsing...');
     try {
       final words = await _bookConverter.convert(bookFile.file);
-      final tokens = List.generate(
-        words.length,
-        (index) => RsvpToken(
-          text: words[index],
-          index: index,
-        ),
-      );
+      final tokenizer = getIt<RsvpTokenizer>();
+      final tokens = tokenizer.tokenizeFromWords(words);
       final books = List<BookMetaModel>.from(state.books)..add(BookMetaModel(bookFile: bookFile, tokens: tokens));
       emit(state.copyWith(books: books));
       logger.d('File is successfully parsed.');
