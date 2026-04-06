@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
           navigatorKey: getIt<NavigationService>().navigatorKey,
           onGenerateRoute: AppRouter.onGenerateRoute,
           initialRoute: '/',
-          theme: buildLightTheme(),
+          theme: buildDarkTheme(),
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
         );
