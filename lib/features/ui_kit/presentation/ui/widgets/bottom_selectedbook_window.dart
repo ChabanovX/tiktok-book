@@ -5,6 +5,7 @@ import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class BottomSelectedbookWindow extends StatelessWidget {
   const BottomSelectedbookWindow({required this.selectedBook, super.key});
@@ -14,7 +15,8 @@ class BottomSelectedbookWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
-    final title = selectedBook.resolveTitle();
+    final resolvedTitle = selectedBook.resolveTitle().trim();
+    final title = resolvedTitle.isEmpty ? context.l10n.bookUnknownTitle : resolvedTitle;
     final wordCount = selectedBook.tokens.length;
     final fileExtension = selectedBook.bookFile.fileExtension.toUpperCase();
 
@@ -54,7 +56,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Selected book',
+                          context.l10n.selectedBookTitle,
                           style: appTheme.subTextStyle.copyWith(
                             color: appTheme.primaryColor,
                             fontWeight: FontWeight.w700,
@@ -76,7 +78,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                           runSpacing: 8,
                           children: [
                             _InfoChip(
-                              label: _wordCountLabel(wordCount),
+                              label: _wordCountLabel(context, wordCount),
                               color: appTheme.primaryColor,
                             ),
                             _InfoChip(
@@ -98,7 +100,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                     child: CupertinoButton(
                       padding: .zero,
                       child: Text(
-                        'Read',
+                        context.l10n.selectedBookRead,
                         style: appTheme.mainTextStyle.copyWith(
                           color: appTheme.primaryColor,
                           fontWeight: FontWeight.w700,
@@ -110,7 +112,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                         unawaited(
                           navigationService.goToReadingScreen(
                             tokens: selectedBook.tokens,
-                            bookTitle: selectedBook.name ?? 'Unknown',
+                            bookTitle: title,
                           ),
                         );
                       },
@@ -125,12 +127,8 @@ class BottomSelectedbookWindow extends StatelessWidget {
     );
   }
 
-  String _wordCountLabel(int count) {
-    if (count == 1) {
-      return '1 word';
-    }
-
-    return '$count words';
+  String _wordCountLabel(BuildContext context, int count) {
+    return context.l10n.bookWordCount(count);
   }
 }
 

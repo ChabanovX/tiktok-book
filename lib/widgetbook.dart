@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 import 'package:rsvp_flutter_app/widgetbook.directories.g.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -27,6 +28,11 @@ class WidgetbookApp extends StatelessWidget {
         MaterialThemeAddon(
           themes: [widgetbookLightTheme],
           initialTheme: widgetbookLightTheme,
+        ),
+        LocalizationAddon(
+          locales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          initialLocale: const Locale('ru'),
         ),
       ],
       directories: directories,

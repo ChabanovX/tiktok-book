@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rsvp_flutter_app/core/constants.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class BookItem extends StatelessWidget {
   const BookItem({
@@ -12,7 +13,7 @@ class BookItem extends StatelessWidget {
     this.onDelete,
     this.isSelected = false,
     this.icon = Icons.menu_book_outlined,
-    this.finishedLabel = 'FINISHED',
+    this.finishedLabel,
     super.key,
   });
 
@@ -26,7 +27,7 @@ class BookItem extends StatelessWidget {
   final VoidCallback? onDelete;
   final bool isSelected;
   final IconData icon;
-  final String finishedLabel;
+  final String? finishedLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class BookItem extends StatelessWidget {
     final isFinished = clampedProgress >= 1;
     final theme = Theme.of(context);
     final appTheme = context.appTheme;
+    final resolvedFinishedLabel = finishedLabel ?? context.l10n.bookItemFinished;
     final borderRadius = BorderRadius.circular(16);
     final decoration = isSelected
         ? BoxDecoration(
@@ -139,7 +141,7 @@ class BookItem extends StatelessWidget {
                     Opacity(
                       opacity: 0.65,
                       child: Text(
-                        finishedLabel,
+                        resolvedFinishedLabel,
                         style: appTheme.subTextStyle,
                       ),
                     )
@@ -175,7 +177,7 @@ class BookItem extends StatelessWidget {
             backgroundColor: appTheme.desctructionColor,
             foregroundColor: theme.colorScheme.onSecondary,
             icon: Icons.delete_outline_rounded,
-            label: 'Delete',
+            label: context.l10n.bookItemDelete,
             borderRadius: borderRadius,
           ),
         ],

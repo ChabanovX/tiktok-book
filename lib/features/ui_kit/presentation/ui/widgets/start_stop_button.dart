@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class StartStopButton extends StatelessWidget {
   const StartStopButton({
@@ -24,7 +25,7 @@ class StartStopButton extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: isRunning ? 'Stop' : 'Start',
+      label: isRunning ? context.l10n.startStopPauseSemantic : context.l10n.startStopPlaySemantic,
       child: Material(
         color: Colors.transparent,
         child: InkWell(

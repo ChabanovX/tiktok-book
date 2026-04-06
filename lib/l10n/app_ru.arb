@@ -1,0 +1,159 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Book Fast Track TT",
+  "@appTitle": {
+    "description": "Название приложения."
+  },
+  "libraryCollectionTitle": "Личная библиотека",
+  "@libraryCollectionTitle": {
+    "description": "Заголовок секции библиотеки."
+  },
+  "libraryAddBookCta": "ДОБАВИТЬ КНИГУ",
+  "@libraryAddBookCta": {
+    "description": "Основная кнопка добавления книги."
+  },
+  "libraryEmptyTitle": "В библиотеке пока пусто",
+  "@libraryEmptyTitle": {
+    "description": "Заголовок пустого состояния библиотеки."
+  },
+  "libraryEmptyDescription": "Добавьте первую книгу,\nчтобы начать быстрое чтение!",
+  "@libraryEmptyDescription": {
+    "description": "Описание пустого состояния библиотеки."
+  },
+  "libraryEmptyButton": "Загрузить книгу",
+  "@libraryEmptyButton": {
+    "description": "Кнопка в пустом состоянии библиотеки."
+  },
+  "libraryImportErrorTitle": "Ошибка импорта",
+  "@libraryImportErrorTitle": {
+    "description": "Заголовок состояния ошибки импорта."
+  },
+  "libraryImportErrorDescription": "Что-то пошло не так\nпри загрузке книги",
+  "@libraryImportErrorDescription": {
+    "description": "Описание состояния ошибки импорта."
+  },
+  "libraryImportErrorButton": "Попробовать снова",
+  "@libraryImportErrorButton": {
+    "description": "Кнопка повтора после ошибки импорта."
+  },
+  "newBookButtonLabel": "Добавить книгу",
+  "@newBookButtonLabel": {
+    "description": "Резервная подпись кнопки добавления книги."
+  },
+  "bookItemFinished": "ПРОЧИТАНО",
+  "@bookItemFinished": {
+    "description": "Метка завершённой книги."
+  },
+  "bookItemDelete": "Удалить",
+  "@bookItemDelete": {
+    "description": "Подпись действия удаления книги."
+  },
+  "bookUnknownTitle": "Неизвестная книга",
+  "@bookUnknownTitle": {
+    "description": "Резервное название книги."
+  },
+  "bookUnknownAuthor": "Неизвестный автор",
+  "@bookUnknownAuthor": {
+    "description": "Резервное имя автора."
+  },
+  "selectedBookTitle": "Выбрана книга",
+  "@selectedBookTitle": {
+    "description": "Заголовок карточки выбранной книги."
+  },
+  "selectedBookRead": "Читать",
+  "@selectedBookRead": {
+    "description": "Кнопка запуска чтения выбранной книги."
+  },
+  "bookWordCount": "{count, plural, =0{0 слов} one{{count} слово} few{{count} слова} many{{count} слов} other{{count} слова}}",
+  "@bookWordCount": {
+    "description": "Количество слов в выбранной книге.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingErrorMessage": "Ошибка: {message}",
+  "@readingErrorMessage": {
+    "description": "Сообщение об ошибке чтения с деталями.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "commonBack": "Назад",
+  "@commonBack": {
+    "description": "Универсальная подпись кнопки назад."
+  },
+  "readingCompletedTitle": "Поздравляем!",
+  "@readingCompletedTitle": {
+    "description": "Заголовок диалога об окончании чтения."
+  },
+  "readingCompletedMessage": "Вы успешно дочитали книгу!",
+  "@readingCompletedMessage": {
+    "description": "Текст диалога об окончании чтения."
+  },
+  "readingCompletedAction": "Отлично!",
+  "@readingCompletedAction": {
+    "description": "Кнопка подтверждения в диалоге об окончании чтения."
+  },
+  "readingProgress": "Текущий прогресс: {percent}%",
+  "@readingProgress": {
+    "description": "Подпись прогресса на экране чтения.",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "readingWordsRead": "Слов прочитано: {count}",
+  "@readingWordsRead": {
+    "description": "Подпись количества прочитанных слов.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingControlPause": "ПАУЗА",
+  "@readingControlPause": {
+    "description": "Подпись под кнопкой паузы."
+  },
+  "readingControlPlay": "СТАРТ",
+  "@readingControlPlay": {
+    "description": "Подпись под кнопкой продолжения чтения."
+  },
+  "readingControlExit": "ВЫХОД",
+  "@readingControlExit": {
+    "description": "Подпись под кнопкой выхода."
+  },
+  "startStopPauseSemantic": "Пауза",
+  "@startStopPauseSemantic": {
+    "description": "Семантическая подпись кнопки паузы."
+  },
+  "startStopPlaySemantic": "Продолжить",
+  "@startStopPlaySemantic": {
+    "description": "Семантическая подпись кнопки продолжения чтения."
+  },
+  "exitButtonSemantic": "Выйти из чтения",
+  "@exitButtonSemantic": {
+    "description": "Семантическая подпись кнопки выхода из чтения."
+  },
+  "readingErrorEmptyText": "Нет текста для чтения",
+  "@readingErrorEmptyText": {
+    "description": "Ошибка, если для чтения не передан текст."
+  },
+  "mockReadingButtonLabel": "Мок: Открыть чтение (демо)",
+  "@mockReadingButtonLabel": {
+    "description": "Подпись кнопки демо-режима чтения."
+  },
+  "mockReadingDemoText": "Это демонстрационный текст для тестирования RSVP-чтения.\nВы можете проверить анимацию, смену слов и элементы управления.\nНаслаждайтесь быстрым чтением без движения глаз.\nПопробуйте менять скорость через выпадающий список.\nНажмите паузу, если нужно отвлечься.\nИ возвращайтесь к чтению в любой момент.\nБОЛЬШОЕСЛОВОДЛЯПРОВЕРКИБОЛЬШОЕСЛОВОДЛЯПРОВЕРКИБОЛЬШОЕСЛОВОДЛЯПРОВЕРКИ",
+  "@mockReadingDemoText": {
+    "description": "Демонстрационный текст для мок-режима чтения."
+  },
+  "mockReadingBookTitle": "Демо-книга",
+  "@mockReadingBookTitle": {
+    "description": "Название книги в мок-режиме чтения."
+  }
+}
