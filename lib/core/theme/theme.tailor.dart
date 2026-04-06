@@ -26,6 +26,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
   TextStyle get titleTextStyle;
   TextStyle get appBarTitleTextStyle;
   TextStyle get mainTextStyle;
+  TextStyle get bookTitleText;
   TextStyle get subTextStyle;
   TextStyle get buttonTextStyle;
 
@@ -47,6 +48,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
     TextStyle? titleTextStyle,
     TextStyle? appBarTitleTextStyle,
     TextStyle? mainTextStyle,
+    TextStyle? bookTitleText,
     TextStyle? subTextStyle,
     TextStyle? buttonTextStyle,
   }) {
@@ -74,6 +76,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       appBarTitleTextStyle: appBarTitleTextStyle ?? this.appBarTitleTextStyle,
       mainTextStyle: mainTextStyle ?? this.mainTextStyle,
+      bookTitleText: bookTitleText ?? this.bookTitleText,
       subTextStyle: subTextStyle ?? this.subTextStyle,
       buttonTextStyle: buttonTextStyle ?? this.buttonTextStyle,
     );
@@ -143,6 +146,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
         t,
       )!,
       mainTextStyle: TextStyle.lerp(mainTextStyle, other.mainTextStyle, t)!,
+      bookTitleText: TextStyle.lerp(bookTitleText, other.bookTitleText, t)!,
       subTextStyle: TextStyle.lerp(subTextStyle, other.subTextStyle, t)!,
       buttonTextStyle: TextStyle.lerp(
         buttonTextStyle,
@@ -222,6 +226,10 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
               other.mainTextStyle,
             ) &&
             const DeepCollectionEquality().equals(
+              bookTitleText,
+              other.bookTitleText,
+            ) &&
+            const DeepCollectionEquality().equals(
               subTextStyle,
               other.subTextStyle,
             ) &&
@@ -251,6 +259,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       const DeepCollectionEquality().hash(titleTextStyle),
       const DeepCollectionEquality().hash(appBarTitleTextStyle),
       const DeepCollectionEquality().hash(mainTextStyle),
+      const DeepCollectionEquality().hash(bookTitleText),
       const DeepCollectionEquality().hash(subTextStyle),
       const DeepCollectionEquality().hash(buttonTextStyle),
     );
@@ -276,6 +285,7 @@ extension AppThemeBuildContextProps on BuildContext {
   TextStyle get titleTextStyle => appTheme.titleTextStyle;
   TextStyle get appBarTitleTextStyle => appTheme.appBarTitleTextStyle;
   TextStyle get mainTextStyle => appTheme.mainTextStyle;
+  TextStyle get bookTitleText => appTheme.bookTitleText;
   TextStyle get subTextStyle => appTheme.subTextStyle;
   TextStyle get buttonTextStyle => appTheme.buttonTextStyle;
 }

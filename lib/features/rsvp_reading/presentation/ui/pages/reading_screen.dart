@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
+import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
@@ -102,11 +103,11 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                 children: [
                   const Icon(Icons.error, size: 64, color: Colors.red),
                   const SizedBox(height: 16),
-                  Text('Ошибка: $message'),
+                  Text('Error: $message'),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Назад'),
+                    child: const Text('Back'),
                   ),
                 ],
               ),
@@ -121,28 +122,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
   }
 
   void _onExit(BuildContext context) {
-    unawaited(
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Выйти из чтения?'),
-          content: const Text('Вы не закончили чтение книги. Прогресс будет потерян.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Отмена'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-              child: const Text('Выйти'),
-            ),
-          ],
-        ),
-      ),
-    );
+    getIt<NavigationService>().pop();
   }
 
   void _showCompletionDialog(BuildContext context) {
@@ -151,15 +131,14 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-          title: const Text('Поздравляем! 🎉'),
-          content: const Text('Вы успешно прочитали книгу!'),
+          title: const Text('Congratulations!'),
+          content: const Text('You have successfully read the book!'),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Закрыть диалог
-                Navigator.pop(context); // Вернуться на главный
+                getIt<NavigationService>().pop();
               },
-              child: const Text('Отлично!'),
+              child: const Text('Great!'),
             ),
           ],
         ),
@@ -219,72 +198,94 @@ class ReadingScreen extends StatelessWidget {
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final topSpacing = (constraints.maxHeight * 0.22).clamp(72.0, 168.0);
+                  final totalHeight = constraints.maxHeight;
+
+                  final halfHeight = (totalHeight - 56) / 2;
+
+                  final topSpacing = (constraints.maxHeight * 0.10).clamp(72.0, 168.0);
                   final bottomSpacing = (constraints.maxHeight * 0.18).clamp(56.0, 144.0);
 
-                  return SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(minHeight: constraints.maxHeight),
                       child: Column(
                         children: [
-                          SizedBox(height: topSpacing),
-                          Text(
-                            currentWord,
-                            textAlign: TextAlign.center,
-                            style: appTheme.titleTextStyle,
-                          ),
-                          const SizedBox(height: 56),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _ReadingControl(
-                                label: state == ReadingScreenState.reading ? 'PAUSE' : 'PLAY',
-                                child: StartStopButton(
-                                  isRunning: state == ReadingScreenState.reading,
-                                  onTap: onStartStopTap,
-                                  size: 60,
-                                  borderRadius: 14,
-                                  backgroundColor: primaryControlBackgroundColor,
+                          SizedBox(
+                            height: halfHeight - 14,
+                            child: Column(
+                              children: [
+                                SizedBox(height: topSpacing),
+                                Text(
+                                  bookTitle,
+                                  textAlign: TextAlign.center,
+                                  style: appTheme.bookTitleText,
                                 ),
-                              ),
-                              const SizedBox(width: 18),
-                              _ReadingControl(
-                                label: 'EXIT',
-                                child: ExitButton(
-                                  onTap: onExitTap,
-                                  size: 60,
-                                  borderRadius: 14,
+                                const SizedBox(height: 21),
+                                Opacity(
+                                  opacity: 0.72,
+                                  child: Text(
+                                    '$progressLabel: ${(clampedProgress * 100).round()}%',
+                                    textAlign: TextAlign.center,
+                                    style: appTheme.subTextStyle,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: bottomSpacing),
-                          Text(
-                            bookTitle,
-                            textAlign: TextAlign.center,
-                            style: appTheme.mainTextStyle,
-                          ),
-                          const SizedBox(height: 28),
-                          Opacity(
-                            opacity: 0.72,
-                            child: Text(
-                              '$progressLabel: ${(clampedProgress * 100).round()}%',
-                              textAlign: TextAlign.center,
-                              style: appTheme.subTextStyle,
+                                const SizedBox(height: 21),
+                                Opacity(
+                                  opacity: 0.72,
+                                  child: Text(
+                                    '$wordsReadLabel: $wordsRead',
+                                    textAlign: TextAlign.center,
+                                    style: appTheme.subTextStyle,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 24),
-                          Opacity(
-                            opacity: 0.72,
-                            child: Text(
-                              '$wordsReadLabel: $wordsRead',
-                              textAlign: TextAlign.center,
-                              style: appTheme.subTextStyle,
+                          SizedBox(
+                            height: 56,
+                            child: Center(
+                              child: Text(
+                                currentWord,
+                                textAlign: TextAlign.center,
+                                style: appTheme.titleTextStyle,
+                              ),
                             ),
                           ),
-                          SizedBox(height: bottomSpacing),
+                          SizedBox(
+                            height: halfHeight + 14,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    _ReadingControl(
+                                      label: state == ReadingScreenState.reading ? 'PAUSE' : 'PLAY',
+                                      child: StartStopButton(
+                                        isRunning: state == ReadingScreenState.reading,
+                                        onTap: onStartStopTap,
+                                        size: 60,
+                                        borderRadius: 14,
+                                        backgroundColor: primaryControlBackgroundColor,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 48),
+                                    _ReadingControl(
+                                      label: 'EXIT',
+                                      child: ExitButton(
+                                        onTap: onExitTap,
+                                        size: 60,
+                                        borderRadius: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: bottomSpacing),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
