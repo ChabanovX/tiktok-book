@@ -14,7 +14,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
-    final title = _resolveTitle(selectedBook);
+    final title = selectedBook.resolveTitle();
     final wordCount = selectedBook.tokens.length;
     final fileExtension = selectedBook.bookFile.fileExtension.toUpperCase();
 
@@ -123,15 +123,6 @@ class BottomSelectedbookWindow extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _resolveTitle(BookMetaModel book) {
-    final name = book.name?.trim();
-    if (name != null && name.isNotEmpty) {
-      return name;
-    }
-
-    return book.bookFile.name;
   }
 
   String _wordCountLabel(int count) {
