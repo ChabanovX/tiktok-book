@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rsvp_flutter_app/core/constants.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 
@@ -8,6 +9,7 @@ class BookItem extends StatelessWidget {
     required this.author,
     required this.progress,
     this.onTap,
+    this.onDelete,
     this.isSelected = false,
     this.icon = Icons.menu_book_outlined,
     this.finishedLabel = 'FINISHED',
@@ -21,6 +23,7 @@ class BookItem extends StatelessWidget {
   final String author;
   final double progress;
   final VoidCallback? onTap;
+  final VoidCallback? onDelete;
   final bool isSelected;
   final IconData icon;
   final String finishedLabel;
@@ -67,7 +70,7 @@ class BookItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
     );
 
-    return GestureDetector(
+    final card = GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: AnimatedContainer(
@@ -156,6 +159,28 @@ class BookItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+
+    if (onDelete == null) {
+      return card;
+    }
+
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        extentRatio: 0.28,
+        children: [
+          SlidableAction(
+            onPressed: (_) => onDelete?.call(),
+            backgroundColor: appTheme.errorStateAccentColor,
+            foregroundColor: theme.colorScheme.onSecondary,
+            icon: Icons.delete_outline_rounded,
+            label: 'Delete',
+            borderRadius: borderRadius,
+          ),
+        ],
+      ),
+      child: card,
     );
   }
 }
