@@ -21,6 +21,7 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     required this.titleTextStyle,
     required this.appBarTitleTextStyle,
     required this.mainTextStyle,
+    required this.bookTitleText,
     required this.subTextStyle,
     required this.buttonTextStyle,
   });
@@ -54,6 +55,12 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
       mainTextStyle: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
+        color: Color.fromRGBO(25, 28, 29, 1),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      bookTitleText: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w400,
         color: Color.fromRGBO(25, 28, 29, 1),
         fontFamily: 'SpaceGrotesk',
       ),
@@ -102,6 +109,8 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   final TextStyle appBarTitleTextStyle;
   @override
   final TextStyle mainTextStyle;
+  @override
+  final TextStyle bookTitleText;
   @override
   final TextStyle subTextStyle;
   @override
