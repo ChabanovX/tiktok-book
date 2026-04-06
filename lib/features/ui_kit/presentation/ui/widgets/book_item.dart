@@ -172,7 +172,7 @@ class BookItem extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (_) => onDelete?.call(),
-            backgroundColor: appTheme.errorStateAccentColor,
+            backgroundColor: appTheme.desctructionColor,
             foregroundColor: theme.colorScheme.onSecondary,
             icon: Icons.delete_outline_rounded,
             label: 'Delete',

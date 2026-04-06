@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 
@@ -18,6 +19,7 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     required this.emptyStateAccentBackgroundColor,
     required this.emptyStateAccentColor,
     required this.errorStateAccentColor,
+    required this.desctructionColor,
     required this.titleTextStyle,
     required this.appBarTitleTextStyle,
     required this.mainTextStyle,
@@ -39,6 +41,7 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
       emptyStateAccentBackgroundColor: Color(0xFFFFDED4),
       emptyStateAccentColor: Color(0xFFD66C42),
       errorStateAccentColor: Color(0xFFB44716),
+      desctructionColor: CupertinoColors.destructiveRed,
       titleTextStyle: TextStyle(
         fontSize: 36,
         fontWeight: FontWeight.bold,
@@ -96,6 +99,8 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   final Color emptyStateAccentColor;
   @override
   final Color errorStateAccentColor;
+  @override
+  final Color desctructionColor;
   @override
   final TextStyle titleTextStyle;
   @override
