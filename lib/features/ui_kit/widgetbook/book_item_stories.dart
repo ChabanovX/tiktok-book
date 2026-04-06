@@ -20,6 +20,7 @@ Widget bookItemReadingUseCase(BuildContext context) {
         author: 'Ray Bradbury',
         progress: 0.82,
         onTap: () {},
+        onDelete: () {},
       ),
     ),
   );
@@ -42,6 +43,7 @@ Widget bookItemFinishedUseCase(BuildContext context) {
         author: 'F. Scott Fitzgerald',
         progress: 1,
         onTap: () {},
+        onDelete: () {},
       ),
     ),
   );

@@ -1,8 +1,10 @@
 part of 'rsvp_bloc.dart';
 
 @freezed
-class RsvpBlocEvent with _$RsvpBlocEvent {
-  const factory RsvpBlocEvent.started() = _Started;
-  const factory RsvpBlocEvent.addBook() = _AddBook;
-  const factory RsvpBlocEvent.startAnimation({required int bookID}) = _StartAnimation;
+class RsvpEvent with _$RsvpEvent {
+  const factory RsvpEvent.started() = _Started;
+  const factory RsvpEvent.addBook() = _AddBook;
+  const factory RsvpEvent.removeBook({required BookMetaModel book}) = _RemoveBook;
+  const factory RsvpEvent.toggleSelectBook({required BookMetaModel book}) = _ToggleSelectBook;
+  const factory RsvpEvent.startAnimation({required int bookID}) = _StartAnimation;
 }

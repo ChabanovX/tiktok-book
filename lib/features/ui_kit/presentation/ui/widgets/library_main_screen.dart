@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rsvp_flutter_app/core/constants.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/widgets/new_book_button.dart';
+import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/bottom_selectedbook_window.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/primary_button.dart';
 
 enum LibraryMainScreenState {
@@ -8,6 +12,9 @@ enum LibraryMainScreenState {
   empty,
   importError,
 }
+
+const Duration _bookSelectionAnimationDuration = Constants.basicAnimationDuration;
+const Curve _bookSelectionAnimationCurve = Constants.basicAnimationCurve;
 
 class LibraryMainScreen extends StatelessWidget {
   const LibraryMainScreen({
@@ -45,55 +52,94 @@ class LibraryMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
     final appBarTextStyle = appTheme.appBarTitleTextStyle;
+    final hasRsvpBloc = _hasRsvpBloc(context);
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor2,
       body: SafeArea(
-        child: Column(
+        bottom: false,
+        child: Stack(
           children: [
-            Container(
-              height: 68,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: appTheme.backgroundColor2,
-                border: Border(
-                  bottom: BorderSide(
-                    color: appTheme.dividerColorMuted,
-                  ),
-                ),
-              ),
-              child: Text(
-                appBarTitle,
-                style: appBarTextStyle,
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 22, 16, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      collectionTitle,
-                      style: appTheme.titleTextStyle,
-                    ),
-                    const SizedBox(height: 18),
-                    Container(
-                      width: 44,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: appTheme.secondaryColor,
-                        borderRadius: BorderRadius.circular(999),
+            Column(
+              children: [
+                Container(
+                  height: 68,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: appTheme.backgroundColor2,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: appTheme.dividerColorMuted,
                       ),
                     ),
-                    const SizedBox(height: 18),
-                    Expanded(
-                      child: _buildBody(context),
-                    ),
-                  ],
+                  ),
+                  child: Text(
+                    appBarTitle,
+                    style: appBarTextStyle,
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 22, 16, 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          collectionTitle,
+                          style: appTheme.titleTextStyle,
+                        ),
+                        const SizedBox(height: 18),
+                        Expanded(
+                          child: _buildBody(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
+            if (hasRsvpBloc)
+              BlocBuilder<RsvpBloc, RsvpState>(
+                buildWhen: (previous, current) => previous.selectedBook != current.selectedBook,
+                builder: (context, state) {
+                  final selectedBook = state.selectedBook;
+                  return Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 32,
+                    child: AnimatedSwitcher(
+                      duration: _bookSelectionAnimationDuration,
+                      switchInCurve: _bookSelectionAnimationCurve,
+                      switchOutCurve: _bookSelectionAnimationCurve,
+                      transitionBuilder: (child, animation) {
+                        final curvedAnimation = CurvedAnimation(
+                          parent: animation,
+                          curve: _bookSelectionAnimationCurve,
+                        );
+
+                        return FadeTransition(
+                          opacity: curvedAnimation,
+                          child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0, 0.08),
+                              end: Offset.zero,
+                            ).animate(curvedAnimation),
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: selectedBook == null
+                          ? const SizedBox(
+                              key: ValueKey('bottom-selected-book-empty'),
+                            )
+                          : BottomSelectedbookWindow(
+                              key: ValueKey(selectedBook.bookFile.name),
+                              selectedBook: selectedBook,
+                            ),
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),
@@ -101,16 +147,66 @@ class LibraryMainScreen extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: _bookSelectionAnimationDuration,
+      switchInCurve: _bookSelectionAnimationCurve,
+      switchOutCurve: _bookSelectionAnimationCurve,
+      layoutBuilder: (currentChild, previousChildren) {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            ...previousChildren,
+            ?currentChild,
+          ],
+        );
+      },
+      transitionBuilder: (child, animation) {
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: _bookSelectionAnimationCurve,
+        );
+
+        return FadeTransition(
+          opacity: curvedAnimation,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 0.04),
+              end: Offset.zero,
+            ).animate(curvedAnimation),
+            child: child,
+          ),
+        );
+      },
+      child: KeyedSubtree(
+        key: ValueKey(state),
+        child: _buildBodyContent(context),
+      ),
+    );
+  }
+
+  bool _hasRsvpBloc(BuildContext context) {
+    return context.findAncestorWidgetOfExactType<BlocProvider<RsvpBloc>>() != null;
+  }
+
+  Widget _buildBodyContent(BuildContext context) {
     switch (state) {
       case LibraryMainScreenState.nonEmpty:
-        return ListView(
+        return Column(
           children: [
             NewBookButton(
               label: addBookLabel,
               onTap: onAddBookTap,
             ),
             const SizedBox(height: 18),
-            ..._buildSeparatedItems(bookItems),
+            Expanded(
+              child: ListView(
+                children: [
+                  ..._buildSeparatedItems(bookItems),
+                  // Also add sizedBox for valid intersection with bottom_selectedbook_window.
+                  const SizedBox(height: 200),
+                ],
+              ),
+            ),
           ],
         );
       case LibraryMainScreenState.empty:

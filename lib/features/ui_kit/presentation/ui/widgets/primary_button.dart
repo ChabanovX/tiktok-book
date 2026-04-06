@@ -20,7 +20,8 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
-    final buttonTextColor = appTheme.buttonTextStyle.color;
+    // final buttonTextColor = appTheme.buttonTextStyle.color;
+    const buttonTextColor = Colors.white;
 
     return Semantics(
       button: true,
@@ -51,9 +52,10 @@ class PrimaryButton extends StatelessWidget {
                     const SizedBox(width: 10),
                     Flexible(
                       child: Text(
+                        // TODO: add theme for this text.
                         text,
                         overflow: TextOverflow.ellipsis,
-                        style: appTheme.buttonTextStyle,
+                        style: appTheme.buttonTextStyle.copyWith(color: buttonTextColor),
                       ),
                     ),
                   ],
