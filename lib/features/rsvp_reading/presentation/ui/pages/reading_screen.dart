@@ -200,7 +200,7 @@ class ReadingScreen extends StatelessWidget {
                 builder: (context, constraints) {
                   final totalHeight = constraints.maxHeight;
 
-                  final halfHeight = (totalHeight - 56)/2;
+                  final halfHeight = (totalHeight - 56) / 2;
 
                   final topSpacing = (constraints.maxHeight * 0.10).clamp(72.0, 168.0);
                   final bottomSpacing = (constraints.maxHeight * 0.18).clamp(56.0, 144.0);
@@ -211,8 +211,6 @@ class ReadingScreen extends StatelessWidget {
                       constraints: BoxConstraints(minHeight: constraints.maxHeight),
                       child: Column(
                         children: [
-                          
-                          
                           SizedBox(
                             height: halfHeight - 14,
                             child: Column(
