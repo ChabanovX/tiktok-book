@@ -52,10 +52,12 @@ class LibraryMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
     final appBarTextStyle = appTheme.appBarTitleTextStyle;
+    final hasRsvpBloc = _hasRsvpBloc(context);
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor2,
       body: SafeArea(
+        bottom: false,
         child: Stack(
           children: [
             Column(
@@ -96,47 +98,48 @@ class LibraryMainScreen extends StatelessWidget {
                 ),
               ],
             ),
-            BlocBuilder<RsvpBloc, RsvpState>(
-              buildWhen: (previous, current) => previous.selectedBook != current.selectedBook,
-              builder: (context, state) {
-                final selectedBook = state.selectedBook;
-                return Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 32,
-                  child: AnimatedSwitcher(
-                    duration: _bookSelectionAnimationDuration,
-                    switchInCurve: _bookSelectionAnimationCurve,
-                    switchOutCurve: _bookSelectionAnimationCurve,
-                    transitionBuilder: (child, animation) {
-                      final curvedAnimation = CurvedAnimation(
-                        parent: animation,
-                        curve: _bookSelectionAnimationCurve,
-                      );
+            if (hasRsvpBloc)
+              BlocBuilder<RsvpBloc, RsvpState>(
+                buildWhen: (previous, current) => previous.selectedBook != current.selectedBook,
+                builder: (context, state) {
+                  final selectedBook = state.selectedBook;
+                  return Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 32,
+                    child: AnimatedSwitcher(
+                      duration: _bookSelectionAnimationDuration,
+                      switchInCurve: _bookSelectionAnimationCurve,
+                      switchOutCurve: _bookSelectionAnimationCurve,
+                      transitionBuilder: (child, animation) {
+                        final curvedAnimation = CurvedAnimation(
+                          parent: animation,
+                          curve: _bookSelectionAnimationCurve,
+                        );
 
-                      return FadeTransition(
-                        opacity: curvedAnimation,
-                        child: SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(0, 0.08),
-                            end: Offset.zero,
-                          ).animate(curvedAnimation),
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: selectedBook == null
-                        ? const SizedBox(
-                            key: ValueKey('bottom-selected-book-empty'),
-                          )
-                        : BottomSelectedbookWindow(
-                            key: ValueKey(selectedBook.bookFile.name),
-                            selectedBook: selectedBook,
+                        return FadeTransition(
+                          opacity: curvedAnimation,
+                          child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0, 0.08),
+                              end: Offset.zero,
+                            ).animate(curvedAnimation),
+                            child: child,
                           ),
-                  ),
-                );
-              },
-            ),
+                        );
+                      },
+                      child: selectedBook == null
+                          ? const SizedBox(
+                              key: ValueKey('bottom-selected-book-empty'),
+                            )
+                          : BottomSelectedbookWindow(
+                              key: ValueKey(selectedBook.bookFile.name),
+                              selectedBook: selectedBook,
+                            ),
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),
@@ -144,6 +147,48 @@ class LibraryMainScreen extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: _bookSelectionAnimationDuration,
+      switchInCurve: _bookSelectionAnimationCurve,
+      switchOutCurve: _bookSelectionAnimationCurve,
+      layoutBuilder: (currentChild, previousChildren) {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            ...previousChildren,
+            ?currentChild,
+          ],
+        );
+      },
+      transitionBuilder: (child, animation) {
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: _bookSelectionAnimationCurve,
+        );
+
+        return FadeTransition(
+          opacity: curvedAnimation,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 0.04),
+              end: Offset.zero,
+            ).animate(curvedAnimation),
+            child: child,
+          ),
+        );
+      },
+      child: KeyedSubtree(
+        key: ValueKey(state),
+        child: _buildBodyContent(context),
+      ),
+    );
+  }
+
+  bool _hasRsvpBloc(BuildContext context) {
+    return context.findAncestorWidgetOfExactType<BlocProvider<RsvpBloc>>() != null;
+  }
+
+  Widget _buildBodyContent(BuildContext context) {
     switch (state) {
       case LibraryMainScreenState.nonEmpty:
         return Column(

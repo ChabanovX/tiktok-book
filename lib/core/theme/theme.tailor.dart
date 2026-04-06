@@ -22,6 +22,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
   Color get emptyStateAccentBackgroundColor;
   Color get emptyStateAccentColor;
   Color get errorStateAccentColor;
+  Color get desctructionColor;
   TextStyle get titleTextStyle;
   TextStyle get appBarTitleTextStyle;
   TextStyle get mainTextStyle;
@@ -42,6 +43,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
     Color? emptyStateAccentBackgroundColor,
     Color? emptyStateAccentColor,
     Color? errorStateAccentColor,
+    Color? desctructionColor,
     TextStyle? titleTextStyle,
     TextStyle? appBarTitleTextStyle,
     TextStyle? mainTextStyle,
@@ -68,6 +70,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
           emptyStateAccentColor ?? this.emptyStateAccentColor,
       errorStateAccentColor:
           errorStateAccentColor ?? this.errorStateAccentColor,
+      desctructionColor: desctructionColor ?? this.desctructionColor,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       appBarTitleTextStyle: appBarTitleTextStyle ?? this.appBarTitleTextStyle,
       mainTextStyle: mainTextStyle ?? this.mainTextStyle,
@@ -126,6 +129,11 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       errorStateAccentColor: Color.lerp(
         errorStateAccentColor,
         other.errorStateAccentColor,
+        t,
+      )!,
+      desctructionColor: Color.lerp(
+        desctructionColor,
+        other.desctructionColor,
         t,
       )!,
       titleTextStyle: TextStyle.lerp(titleTextStyle, other.titleTextStyle, t)!,
@@ -198,6 +206,10 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
               other.errorStateAccentColor,
             ) &&
             const DeepCollectionEquality().equals(
+              desctructionColor,
+              other.desctructionColor,
+            ) &&
+            const DeepCollectionEquality().equals(
               titleTextStyle,
               other.titleTextStyle,
             ) &&
@@ -235,6 +247,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       const DeepCollectionEquality().hash(emptyStateAccentBackgroundColor),
       const DeepCollectionEquality().hash(emptyStateAccentColor),
       const DeepCollectionEquality().hash(errorStateAccentColor),
+      const DeepCollectionEquality().hash(desctructionColor),
       const DeepCollectionEquality().hash(titleTextStyle),
       const DeepCollectionEquality().hash(appBarTitleTextStyle),
       const DeepCollectionEquality().hash(mainTextStyle),
@@ -259,6 +272,7 @@ extension AppThemeBuildContextProps on BuildContext {
       appTheme.emptyStateAccentBackgroundColor;
   Color get emptyStateAccentColor => appTheme.emptyStateAccentColor;
   Color get errorStateAccentColor => appTheme.errorStateAccentColor;
+  Color get desctructionColor => appTheme.desctructionColor;
   TextStyle get titleTextStyle => appTheme.titleTextStyle;
   TextStyle get appBarTitleTextStyle => appTheme.appBarTitleTextStyle;
   TextStyle get mainTextStyle => appTheme.mainTextStyle;

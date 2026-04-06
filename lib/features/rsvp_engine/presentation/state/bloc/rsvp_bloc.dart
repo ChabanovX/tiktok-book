@@ -24,6 +24,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
        super(const _RsvpState()) {
     on<_Started>(_onStarted);
     on<_AddBook>(_onAddBook);
+    on<_RemoveBook>(_onRemoveBook);
     on<_ToggleSelectBook>(_onToggleSelectBook);
     on<_StartAnimation>(_onStartAnimation);
   }
@@ -79,6 +80,18 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   void _onToggleSelectBook(_ToggleSelectBook event, Emitter<RsvpState> emit) {
     final selectedBook = state.selectedBook == event.book ? null : event.book;
     emit(state.copyWith(selectedBook: selectedBook));
+  }
+
+  void _onRemoveBook(_RemoveBook event, Emitter<RsvpState> emit) {
+    final books = List<BookMetaModel>.from(state.books)..remove(event.book);
+    final selectedBook = state.selectedBook == event.book ? null : state.selectedBook;
+
+    emit(
+      state.copyWith(
+        books: books,
+        selectedBook: selectedBook,
+      ),
+    );
   }
 
   void _onStartAnimation(_StartAnimation event, Emitter<RsvpState> emit) {
