@@ -295,6 +295,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Demo book'**
   String get mockReadingBookTitle;
+
+  /// Tooltip and accessibility label for opening the settings screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get settingsOpenButtonLabel;
+
+  /// Title of the settings page.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsPageTitle;
+
+  /// Title of the language settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'App language'**
+  String get settingsLanguageSectionTitle;
+
+  /// Description text on the language settings screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the language used in the interface.'**
+  String get settingsLanguageSectionDescription;
+
+  /// Title for the system locale option.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get settingsLanguageSystemTitle;
+
+  /// Title for the English locale option.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get settingsLanguageEnglishTitle;
+
+  /// Title for the Russian locale option.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get settingsLanguageRussianTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

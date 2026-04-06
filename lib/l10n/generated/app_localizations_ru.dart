@@ -127,4 +127,25 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mockReadingBookTitle => 'Демо-книга';
+
+  @override
+  String get settingsOpenButtonLabel => 'Открыть настройки';
+
+  @override
+  String get settingsPageTitle => 'Настройки';
+
+  @override
+  String get settingsLanguageSectionTitle => 'Язык приложения';
+
+  @override
+  String get settingsLanguageSectionDescription => 'Выберите язык интерфейса';
+
+  @override
+  String get settingsLanguageSystemTitle => 'Как в системе';
+
+  @override
+  String get settingsLanguageEnglishTitle => 'English';
+
+  @override
+  String get settingsLanguageRussianTitle => 'Русский';
 }

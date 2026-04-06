@@ -155,5 +155,33 @@
   "mockReadingBookTitle": "Демо-книга",
   "@mockReadingBookTitle": {
     "description": "Название книги в мок-режиме чтения."
+  },
+  "settingsOpenButtonLabel": "Открыть настройки",
+  "@settingsOpenButtonLabel": {
+    "description": "Подсказка и подпись для открытия экрана настроек."
+  },
+  "settingsPageTitle": "Настройки",
+  "@settingsPageTitle": {
+    "description": "Заголовок экрана настроек."
+  },
+  "settingsLanguageSectionTitle": "Язык приложения",
+  "@settingsLanguageSectionTitle": {
+    "description": "Заголовок секции выбора языка."
+  },
+  "settingsLanguageSectionDescription": "Выберите язык интерфейса",
+  "@settingsLanguageSectionDescription": {
+    "description": "Описание на экране выбора языка."
+  },
+  "settingsLanguageSystemTitle": "Как в системе",
+  "@settingsLanguageSystemTitle": {
+    "description": "Заголовок варианта системной локали."
+  },
+  "settingsLanguageEnglishTitle": "English",
+  "@settingsLanguageEnglishTitle": {
+    "description": "Заголовок варианта английской локали."
+  },
+  "settingsLanguageRussianTitle": "Русский",
+  "@settingsLanguageRussianTitle": {
+    "description": "Заголовок варианта русской локали."
   }
 }

@@ -125,4 +125,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mockReadingBookTitle => 'Demo book';
+
+  @override
+  String get settingsOpenButtonLabel => 'Open settings';
+
+  @override
+  String get settingsPageTitle => 'Settings';
+
+  @override
+  String get settingsLanguageSectionTitle => 'App language';
+
+  @override
+  String get settingsLanguageSectionDescription => 'Choose the language used in the interface.';
+
+  @override
+  String get settingsLanguageSystemTitle => 'System default';
+
+  @override
+  String get settingsLanguageEnglishTitle => 'English';
+
+  @override
+  String get settingsLanguageRussianTitle => 'Russian';
 }

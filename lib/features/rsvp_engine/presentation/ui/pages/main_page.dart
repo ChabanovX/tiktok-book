@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
+import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
@@ -42,6 +43,7 @@ class MainScreen extends StatelessWidget {
             bookItems: bookWidgets,
             onStateActionTap: () => context.read<RsvpBloc>().add(const RsvpEvent.addBook()),
             onAddBookTap: () => context.read<RsvpBloc>().add(const RsvpEvent.addBook()),
+            onSettingsTap: () => getIt<NavigationService>().goToSettingsScreen(),
           );
         },
       ),

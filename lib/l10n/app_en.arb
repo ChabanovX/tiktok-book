@@ -155,5 +155,33 @@
   "mockReadingBookTitle": "Demo book",
   "@mockReadingBookTitle": {
     "description": "Book title used in the mock reading flow."
+  },
+  "settingsOpenButtonLabel": "Open settings",
+  "@settingsOpenButtonLabel": {
+    "description": "Tooltip and accessibility label for opening the settings screen."
+  },
+  "settingsPageTitle": "Settings",
+  "@settingsPageTitle": {
+    "description": "Title of the settings page."
+  },
+  "settingsLanguageSectionTitle": "App language",
+  "@settingsLanguageSectionTitle": {
+    "description": "Title of the language settings section."
+  },
+  "settingsLanguageSectionDescription": "Choose the language used in the interface.",
+  "@settingsLanguageSectionDescription": {
+    "description": "Description text on the language settings screen."
+  },
+  "settingsLanguageSystemTitle": "System default",
+  "@settingsLanguageSystemTitle": {
+    "description": "Title for the system locale option."
+  },
+  "settingsLanguageEnglishTitle": "English",
+  "@settingsLanguageEnglishTitle": {
+    "description": "Title for the English locale option."
+  },
+  "settingsLanguageRussianTitle": "Russian",
+  "@settingsLanguageRussianTitle": {
+    "description": "Title for the Russian locale option."
   }
 }

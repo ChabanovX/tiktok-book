@@ -23,6 +23,7 @@ class LibraryMainScreen extends StatelessWidget {
     this.bookItems = const [],
     this.onAddBookTap,
     this.onStateActionTap,
+    this.onSettingsTap,
     this.appBarTitle,
     this.collectionTitle,
     this.addBookLabel,
@@ -39,6 +40,7 @@ class LibraryMainScreen extends StatelessWidget {
   final List<Widget> bookItems;
   final VoidCallback? onAddBookTap;
   final VoidCallback? onStateActionTap;
+  final VoidCallback? onSettingsTap;
   final String? appBarTitle;
   final String? collectionTitle;
   final String? addBookLabel;
@@ -68,6 +70,7 @@ class LibraryMainScreen extends StatelessWidget {
               children: [
                 Container(
                   height: 68,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: appTheme.backgroundColor2,
@@ -77,9 +80,30 @@ class LibraryMainScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: Text(
-                    resolvedAppBarTitle,
-                    style: appBarTextStyle,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 48),
+                      Expanded(
+                        child: Text(
+                          resolvedAppBarTitle,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: appBarTextStyle,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 48,
+                        child: IconButton(
+                          onPressed: onSettingsTap,
+                          tooltip: l10n.settingsOpenButtonLabel,
+                          icon: Icon(
+                            Icons.settings_rounded,
+                            color: appTheme.primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
