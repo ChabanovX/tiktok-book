@@ -13,4 +13,4 @@ abstract class RsvpState with _$RsvpState {
   }) = _RsvpState;
 }
 
-enum LibraryMainScreenState { nonEmpty, empty, importError, isInitializing }
+enum LibraryMainScreenState { initial, nonEmpty, empty, importError, initializing }
