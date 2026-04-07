@@ -35,6 +35,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
 
   Future<void> _onStarted(_Started event, Emitter<RsvpState> emit) async {
     emit(state.copyWith(currentPageState: .initializing, lastError: null));
+    // await Future.delayed(Duration(seconds: 2));
     try {
       final cachedBooks = await _fileRepository.getAllBooks();
       logger.d('Retrieved ${cachedBooks.length} cachedBooks.');
@@ -45,7 +46,13 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
         ),
       );
     } on Exception catch (e) {
-      emit(state.copyWith(lastError: RSVPError.initError(error: e)));
+      final error = RSVPError.initError(error: e);
+      emit(
+        state.copyWith(
+          currentPageState: _getCurrentPageState(newError: error),
+          lastError: error,
+        ),
+      );
       logger.e(e);
     } finally {}
   }
