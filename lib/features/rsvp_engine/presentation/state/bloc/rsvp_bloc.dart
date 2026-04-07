@@ -38,13 +38,16 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     try {
       final cachedBooks = await _fileRepository.getAllBooks();
       logger.d('Retrieved ${cachedBooks.length} cachedBooks.');
-      emit(state.copyWith(books: cachedBooks));
+      emit(
+        state.copyWith(
+          books: cachedBooks,
+          currentPageState: _getCurrentPageState(newBooks: cachedBooks),
+        ),
+      );
     } on Exception catch (e) {
       emit(state.copyWith(lastError: RSVPError.initError(error: e)));
       logger.e(e);
-    } finally {
-      emit(state.copyWith(currentPageState: _getCurrentPageState()));
-    }
+    } finally {}
   }
 
   Future<void> _onAddBook(_AddBook event, Emitter<RsvpState> emit) async {
@@ -133,13 +136,15 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     // Either simply emit new state with animationShouldStartPlaying = true
   }
 
-  LibraryMainScreenState _getCurrentPageState() {
-    final LibraryMainScreenState currentState = switch (state) {
-      _ when state.lastError != null => .importError,
-      _ when state.books.isNotEmpty => .nonEmpty,
-      _ => .empty,
-    };
+  LibraryMainScreenState _getCurrentPageState({
+    List<BookMetaModel>? newBooks,
+    RSVPError? newError,
+  }) {
+    final booksFinal = newBooks ?? state.books;
+    final errorFinal = newError ?? state.lastError;
 
-    return currentState;
+    if (errorFinal != null) return .importError;
+    if (booksFinal.isNotEmpty) return .nonEmpty;
+    return .empty;
   }
 }
