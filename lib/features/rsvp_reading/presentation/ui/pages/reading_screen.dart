@@ -36,7 +36,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
 
   late final ReadingBloc _readingBloc;
   Timer? _progressDebounceTimer;
-  late final int _lastPersistedIndex = widget.book.currentIndex;
+  late int _lastPersistedIndex = widget.book.currentIndex;
   int? _pendingProgressIndex;
 
   @override
