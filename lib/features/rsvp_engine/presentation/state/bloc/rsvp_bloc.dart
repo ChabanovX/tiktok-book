@@ -75,7 +75,14 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
       bookFile = await _fileRepository.pickAndLoadFile();
     } on Exception catch (e) {
       logger.e(e);
-      emit(state.copyWith(lastError: RSVPError.parsingError(error: e)));
+      final error = RSVPError.parsingError(error: e);
+      emit(
+        state.copyWith(
+          isAddingBook: false,
+          lastError: error,
+          currentPageState: _getCurrentPageState(newError: error),
+        ),
+      );
       return;
     }
 
@@ -85,38 +92,54 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
       return;
     }
 
-    logger.d('Successfully picked file. Starting the parsing and syncing...');
-    // Here we have additional parsing, which happens 2 times:
-    //    - in _fileRepository service
-    //    - here.
-    //
-    // This a little bad, better to parse everything in this method and pass to database
-    // ready parsed object, might refactor later.
-
-    // First, we update UI.
+    logger.d('Successfully picked file. Starting the parsing...');
+    final List<RsvpToken> tokens;
     try {
       final words = await _bookConverter.convert(bookFile.file);
-      final List<RsvpToken> tokens = [];
-      for (int i = 0; i < words.length; i++) {
-        tokens.add(RsvpToken(text: words[i], index: i));
-      }
-      final books = List<BookMetaModel>.from(state.books)..add(BookMetaModel(bookFile: bookFile, tokens: tokens));
-      emit(state.copyWith(books: books));
-      logger.d('File is successfully parsed.');
+      tokens = List.generate(
+        words.length,
+        (index) => RsvpToken(
+          text: words[index],
+          index: index,
+        ),
+      );
     } on Exception catch (e) {
       logger.e(e);
-      emit(state.copyWith(lastError: RSVPError.parsingError(error: e)));
+      final error = RSVPError.parsingError(error: e);
+      emit(
+        state.copyWith(
+          isAddingBook: false,
+          lastError: error,
+          currentPageState: _getCurrentPageState(newError: error),
+        ),
+      );
+      return;
     }
 
-    // Second, we sync with local database.
+    logger.d('Successfully parsed file. Starting the syncing...');
     try {
-      await _fileRepository.saveFile(bookFile);
+      final savedBook = await _fileRepository.saveFile(bookFile, tokens: tokens);
+      final books = List<BookMetaModel>.from(state.books)..add(savedBook);
+      emit(
+        state.copyWith(
+          books: books,
+          isAddingBook: false,
+          lastError: null,
+          currentPageState: _getCurrentPageState(newBooks: books),
+        ),
+      );
+      logger.d('File is successfully parsed and synced.');
     } on Exception catch (e) {
       logger.e(e);
-      emit(state.copyWith(lastError: const RSVPError.syncingError(type: SyncingErrorType.addingBookError)));
+      final error = RSVPError.syncingError(type: SyncingErrorType.addingBookError, error: e);
+      emit(
+        state.copyWith(
+          isAddingBook: false,
+          lastError: error,
+          currentPageState: _getCurrentPageState(newError: error),
+        ),
+      );
     }
-
-    emit(state.copyWith(currentPageState: _getCurrentPageState()));
   }
 
   void _onToggleSelectBook(_ToggleSelectBook event, Emitter<RsvpState> emit) {

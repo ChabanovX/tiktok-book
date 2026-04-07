@@ -54,24 +54,29 @@ class FileRepositoryImpl implements FileRepository {
   }
 
   @override
-  Future<void> saveFile(BookFile bf) async {
-    final file = File(bf.path);
-    final List<String> words = await _converter.convert(file);
+  Future<BookMetaModel> saveFile(
+    BookFile bf, {
+    List<RsvpToken>? tokens,
+  }) async {
+    final resolvedTokens = tokens ?? await _buildTokensFromFile(bf);
+    final words = resolvedTokens.map((token) => token.text).toList(growable: false);
     final cached = await _cacheService.cacheBook(words);
     await _bookDbService.insertBook(documentId: cached.$1, bookTitle: bf.name, totalWords: cached.$3);
     logger.i('Saved file ${cached.$2}');
+
+    return BookMetaModel(
+      bookFile: bf,
+      documentId: cached.$1,
+      name: bf.name,
+      tokens: resolvedTokens,
+    );
   }
 
   @override
   Future<void> deleteBook(BookMetaModel book) async {
-    final documentId = await _resolveDocumentId(book);
-    if (documentId == null) {
-      throw Exception('Failed to resolve cached book id for "${book.resolveTitle()}"');
-    }
-
-    await _bookDbService.deleteBook(documentId);
-    await _cacheService.deleteBook(documentId);
-    logger.i('Deleted book $documentId');
+    await _bookDbService.deleteBook(book.documentId);
+    await _cacheService.deleteBook(book.documentId);
+    logger.i('Deleted book ${book.documentId}');
   }
 
   @override
@@ -92,7 +97,9 @@ class FileRepositoryImpl implements FileRepository {
         size: await cacheFile.length(),
         file: cacheFile,
       ),
+      documentId: book.documentId,
       name: book.bookTitle,
+      currentIndex: book.currentIndex,
       tokens: List.generate(
         words.length,
         (index) => RsvpToken(
@@ -108,28 +115,15 @@ class FileRepositoryImpl implements FileRepository {
     return File('${dir.path}/cache/$documentId.json');
   }
 
-  Future<String?> _resolveDocumentId(BookMetaModel book) async {
-    final pathSegments = book.bookFile.path.split('/');
-    final fileName = pathSegments.isEmpty ? '' : pathSegments.last;
-
-    if (fileName.endsWith('.json')) {
-      return fileName.substring(0, fileName.length - '.json'.length);
-    }
-
-    final persistedBooks = await _bookDbService.getAllBooks();
-    final resolvedTitle = book.resolveTitle();
-    final totalWords = book.tokens.length;
-
-    for (final persistedBook in persistedBooks) {
-      final isMatchingTitle = persistedBook.bookTitle == resolvedTitle;
-      final isMatchingWordCount = persistedBook.totalWords == totalWords;
-
-      if (isMatchingTitle && isMatchingWordCount) {
-        return persistedBook.documentId;
-      }
-    }
-
-    return null;
+  Future<List<RsvpToken>> _buildTokensFromFile(BookFile bookFile) async {
+    final words = await _converter.convert(bookFile.file);
+    return List.generate(
+      words.length,
+      (index) => RsvpToken(
+        text: words[index],
+        index: index,
+      ),
+    );
   }
 
   String _resolveFileExtension(String fileName) {
