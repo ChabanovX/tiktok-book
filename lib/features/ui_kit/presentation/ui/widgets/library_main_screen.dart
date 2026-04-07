@@ -8,12 +8,6 @@ import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/bottom_
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/primary_button.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
-enum LibraryMainScreenState {
-  nonEmpty,
-  empty,
-  importError,
-}
-
 const Duration _bookSelectionAnimationDuration = Constants.basicAnimationDuration;
 const Curve _bookSelectionAnimationCurve = Constants.basicAnimationCurve;
 
