@@ -7,4 +7,12 @@ sealed class RSVPError with _$RSVPError {
   const factory RSVPError.pickingError({Object? error, StackTrace? st}) = _PickingError;
   const factory RSVPError.parsingError({Object? error, StackTrace? st}) = _ParsingError;
   const factory RSVPError.initError({Object? error, StackTrace? st}) = _InitError;
+  const factory RSVPError.syncingError({required SyncingErrorType type, Object? error, StackTrace? st}) = _SyncingError;
+}
+
+enum SyncingErrorType {
+  addingBookError,
+  retrievingBooksError,
+  updatingBookError,
+  deletingBookError,
 }
