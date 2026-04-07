@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-// import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/core/logger/logger.dart';
+import 'package:rsvp_flutter_app/features/books/data/database_service.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
@@ -17,9 +17,11 @@ part 'rsvp_state.dart';
 @injectable
 class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   RsvpBloc({
+    required BookDbService bookDbService,
     required FileRepository fileRepository,
     required BookConverter bookConverter,
-  }) : _fileRepository = fileRepository,
+  }) : _bookDbService = bookDbService,
+       _fileRepository = fileRepository,
        _bookConverter = bookConverter,
        super(const _RsvpState()) {
     on<_Started>(_onStarted);
@@ -31,6 +33,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
 
   final FileRepository _fileRepository;
   final BookConverter _bookConverter;
+  final BookDbService _bookDbService;
 
   void _onStarted(_Started event, Emitter<RsvpState> emit) {}
 
