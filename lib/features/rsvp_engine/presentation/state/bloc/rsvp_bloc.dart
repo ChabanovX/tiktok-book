@@ -54,7 +54,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
         ),
       );
       logger.e(e);
-    } finally {}
+    }
   }
 
   Future<void> _onAddBook(_AddBook event, Emitter<RsvpState> emit) async {
