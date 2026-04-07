@@ -86,12 +86,13 @@ extension RSVPErrorPatterns on RSVPError {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _PickingError value)?  pickingError,TResult Function( _ParsingError value)?  parsingError,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _PickingError value)?  pickingError,TResult Function( _ParsingError value)?  parsingError,TResult Function( _InitError value)?  initError,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _PickingError() when pickingError != null:
 return pickingError(_that);case _ParsingError() when parsingError != null:
-return parsingError(_that);case _:
+return parsingError(_that);case _InitError() when initError != null:
+return initError(_that);case _:
   return orElse();
 
 }
@@ -109,12 +110,13 @@ return parsingError(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _PickingError value)  pickingError,required TResult Function( _ParsingError value)  parsingError,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _PickingError value)  pickingError,required TResult Function( _ParsingError value)  parsingError,required TResult Function( _InitError value)  initError,}){
 final _that = this;
 switch (_that) {
 case _PickingError():
 return pickingError(_that);case _ParsingError():
-return parsingError(_that);}
+return parsingError(_that);case _InitError():
+return initError(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -128,12 +130,13 @@ return parsingError(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _PickingError value)?  pickingError,TResult? Function( _ParsingError value)?  parsingError,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _PickingError value)?  pickingError,TResult? Function( _ParsingError value)?  parsingError,TResult? Function( _InitError value)?  initError,}){
 final _that = this;
 switch (_that) {
 case _PickingError() when pickingError != null:
 return pickingError(_that);case _ParsingError() when parsingError != null:
-return parsingError(_that);case _:
+return parsingError(_that);case _InitError() when initError != null:
+return initError(_that);case _:
   return null;
 
 }
@@ -150,11 +153,12 @@ return parsingError(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Object? error,  StackTrace? st)?  pickingError,TResult Function( Object? error,  StackTrace? st)?  parsingError,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Object? error,  StackTrace? st)?  pickingError,TResult Function( Object? error,  StackTrace? st)?  parsingError,TResult Function( Object? error,  StackTrace? st)?  initError,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PickingError() when pickingError != null:
 return pickingError(_that.error,_that.st);case _ParsingError() when parsingError != null:
-return parsingError(_that.error,_that.st);case _:
+return parsingError(_that.error,_that.st);case _InitError() when initError != null:
+return initError(_that.error,_that.st);case _:
   return orElse();
 
 }
@@ -172,11 +176,12 @@ return parsingError(_that.error,_that.st);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Object? error,  StackTrace? st)  pickingError,required TResult Function( Object? error,  StackTrace? st)  parsingError,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Object? error,  StackTrace? st)  pickingError,required TResult Function( Object? error,  StackTrace? st)  parsingError,required TResult Function( Object? error,  StackTrace? st)  initError,}) {final _that = this;
 switch (_that) {
 case _PickingError():
 return pickingError(_that.error,_that.st);case _ParsingError():
-return parsingError(_that.error,_that.st);}
+return parsingError(_that.error,_that.st);case _InitError():
+return initError(_that.error,_that.st);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -190,11 +195,12 @@ return parsingError(_that.error,_that.st);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Object? error,  StackTrace? st)?  pickingError,TResult? Function( Object? error,  StackTrace? st)?  parsingError,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Object? error,  StackTrace? st)?  pickingError,TResult? Function( Object? error,  StackTrace? st)?  parsingError,TResult? Function( Object? error,  StackTrace? st)?  initError,}) {final _that = this;
 switch (_that) {
 case _PickingError() when pickingError != null:
 return pickingError(_that.error,_that.st);case _ParsingError() when parsingError != null:
-return parsingError(_that.error,_that.st);case _:
+return parsingError(_that.error,_that.st);case _InitError() when initError != null:
+return initError(_that.error,_that.st);case _:
   return null;
 
 }
@@ -328,6 +334,73 @@ class __$ParsingErrorCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? error = freezed,Object? st = freezed,}) {
   return _then(_ParsingError(
+error: freezed == error ? _self.error : error ,st: freezed == st ? _self.st : st // ignore: cast_nullable_to_non_nullable
+as StackTrace?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _InitError implements RSVPError {
+  const _InitError({this.error, this.st});
+  
+
+@override final  Object? error;
+@override final  StackTrace? st;
+
+/// Create a copy of RSVPError
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InitErrorCopyWith<_InitError> get copyWith => __$InitErrorCopyWithImpl<_InitError>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitError&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.st, st) || other.st == st));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(error),st);
+
+@override
+String toString() {
+  return 'RSVPError.initError(error: $error, st: $st)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$InitErrorCopyWith<$Res> implements $RSVPErrorCopyWith<$Res> {
+  factory _$InitErrorCopyWith(_InitError value, $Res Function(_InitError) _then) = __$InitErrorCopyWithImpl;
+@override @useResult
+$Res call({
+ Object? error, StackTrace? st
+});
+
+
+
+
+}
+/// @nodoc
+class __$InitErrorCopyWithImpl<$Res>
+    implements _$InitErrorCopyWith<$Res> {
+  __$InitErrorCopyWithImpl(this._self, this._then);
+
+  final _InitError _self;
+  final $Res Function(_InitError) _then;
+
+/// Create a copy of RSVPError
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? error = freezed,Object? st = freezed,}) {
+  return _then(_InitError(
 error: freezed == error ? _self.error : error ,st: freezed == st ? _self.st : st // ignore: cast_nullable_to_non_nullable
 as StackTrace?,
   ));
