@@ -106,12 +106,27 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     emit(state.copyWith(selectedBook: selectedBook));
   }
 
-  void _onRemoveBook(_RemoveBook event, Emitter<RsvpState> emit) {
-    final books = List<BookMetaModel>.from(state.books)..remove(event.book);
-    final selectedBook = state.selectedBook == event.book ? null : state.selectedBook;
+  Future<void> _onRemoveBook(_RemoveBook event, Emitter<RsvpState> emit) async {
+    try {
+      await _fileRepository.deleteBook(event.book);
 
-    emit(state.copyWith(books: books, selectedBook: selectedBook));
-    emit(state.copyWith(currentPageState: _getCurrentPageState()));
+      final books = List<BookMetaModel>.from(state.books)..remove(event.book);
+      final selectedBook = state.selectedBook == event.book ? null : state.selectedBook;
+
+      emit(state.copyWith(books: books, selectedBook: selectedBook, lastError: null));
+      emit(state.copyWith(currentPageState: _getCurrentPageState()));
+    } on Exception catch (e) {
+      logger.e(e);
+      emit(
+        state.copyWith(
+          lastError: RSVPError.syncingError(
+            type: SyncingErrorType.deletingBookError,
+            error: e,
+          ),
+        ),
+      );
+      emit(state.copyWith(currentPageState: _getCurrentPageState()));
+    }
   }
 
   void _onStartAnimation(_StartAnimation event, Emitter<RsvpState> emit) {

@@ -115,6 +115,9 @@ BookMetaModel _buildBook({required String name}) {
 
 class _FakeFileRepository implements FileRepository {
   @override
+  Future<void> deleteBook(BookMetaModel book) async {}
+
+  @override
   Future<List<BookMetaModel>> getAllBooks() async => const [];
 
   @override

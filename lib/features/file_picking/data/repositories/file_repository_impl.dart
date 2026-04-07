@@ -63,6 +63,18 @@ class FileRepositoryImpl implements FileRepository {
   }
 
   @override
+  Future<void> deleteBook(BookMetaModel book) async {
+    final documentId = await _resolveDocumentId(book);
+    if (documentId == null) {
+      throw Exception('Failed to resolve cached book id for "${book.resolveTitle()}"');
+    }
+
+    await _bookDbService.deleteBook(documentId);
+    await _cacheService.deleteBook(documentId);
+    logger.i('Deleted book $documentId');
+  }
+
+  @override
   Future<List<BookMetaModel>> getAllBooks() async {
     final books = await _bookDbService.getAllBooks();
     return Future.wait(books.map(_buildBookMetaModel));
@@ -94,6 +106,30 @@ class FileRepositoryImpl implements FileRepository {
   Future<File> _resolveCacheFile(String documentId) async {
     final dir = await getApplicationDocumentsDirectory();
     return File('${dir.path}/cache/$documentId.json');
+  }
+
+  Future<String?> _resolveDocumentId(BookMetaModel book) async {
+    final pathSegments = book.bookFile.path.split('/');
+    final fileName = pathSegments.isEmpty ? '' : pathSegments.last;
+
+    if (fileName.endsWith('.json')) {
+      return fileName.substring(0, fileName.length - '.json'.length);
+    }
+
+    final persistedBooks = await _bookDbService.getAllBooks();
+    final resolvedTitle = book.resolveTitle();
+    final totalWords = book.tokens.length;
+
+    for (final persistedBook in persistedBooks) {
+      final isMatchingTitle = persistedBook.bookTitle == resolvedTitle;
+      final isMatchingWordCount = persistedBook.totalWords == totalWords;
+
+      if (isMatchingTitle && isMatchingWordCount) {
+        return persistedBook.documentId;
+      }
+    }
+
+    return null;
   }
 
   String _resolveFileExtension(String fileName) {
