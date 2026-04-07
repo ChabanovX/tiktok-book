@@ -114,7 +114,6 @@ class BottomSelectedbookWindow extends StatelessWidget {
                         final bionicTokens = getIt<RsvpTokenizer>().tokenizeBionicFromDomain(selectedBook.tokens);
                         unawaited(
                           navigationService.goToReadingScreen(
-                            tokens: selectedBook.tokens,
                             tokens: bionicTokens,
                             bookTitle: title,
                           ),
