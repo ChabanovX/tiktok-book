@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -35,7 +37,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     emit(state.copyWith(isInitializing: true, lastError: null));
     try {
       final cachedBooks = await _fileRepository.getAllBooks();
-      print(cachedBooks);
+      logger.d('Retrieved ${cachedBooks.length} cachedBooks.');
       emit(state.copyWith(books: cachedBooks));
     } on Exception catch (e) {
       emit(state.copyWith(lastError: RSVPError.initError(error: e)));
@@ -46,14 +48,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   }
 
   Future<void> _onAddBook(_AddBook event, Emitter<RsvpState> emit) async {
-    emit(
-      state.copyWith(
-        isAddingBook: true,
-        lastError: null,
-        selectedBook: null,
-      ),
-    );
-
+    emit(state.copyWith(isAddingBook: true, lastError: null, selectedBook: null));
     final BookFile? bookFile;
     try {
       bookFile = await _fileRepository.pickAndLoadFile();
@@ -69,7 +64,16 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
       return;
     }
 
-    logger.d('Successfully picked file. Starting the parsing...');
+    logger.d('Successfully picked file. Starting the parsing and syncing...');
+
+    // Here we have additional parsing, which happens 2 times:
+    //    - in _fileRepository service
+    //    - here.
+    //
+    // This a little bad, better to parse everything in this method and pass to database
+    // ready parsed object, might refactor later.
+
+    // First, we update UI.
     try {
       final words = await _bookConverter.convert(bookFile.file);
       final tokens = List.generate(
@@ -85,6 +89,14 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     } on Exception catch (e) {
       logger.e(e);
       emit(state.copyWith(lastError: RSVPError.parsingError(error: e)));
+    }
+
+    // Second, we sync with local database.
+    try {
+      await _fileRepository.saveFile(bookFile);
+    } on Exception catch (e) {
+      logger.e(e);
+      emit(state.copyWith(lastError: const RSVPError.syncingError(type: SyncingErrorType.addingBookError)));
     }
   }
 
