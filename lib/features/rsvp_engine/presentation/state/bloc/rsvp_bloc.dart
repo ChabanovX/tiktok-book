@@ -17,11 +17,9 @@ part 'rsvp_state.dart';
 @injectable
 class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   RsvpBloc({
-    required BookDbService bookDbService,
     required FileRepository fileRepository,
     required BookConverter bookConverter,
-  }) : _bookDbService = bookDbService,
-       _fileRepository = fileRepository,
+  }) : _fileRepository = fileRepository,
        _bookConverter = bookConverter,
        super(const _RsvpState()) {
     on<_Started>(_onStarted);
@@ -33,12 +31,12 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
 
   final FileRepository _fileRepository;
   final BookConverter _bookConverter;
-  final BookDbService _bookDbService;
 
   Future<void> _onStarted(_Started event, Emitter<RsvpState> emit) async {
     emit(state.copyWith(isInitializing: true, lastError: null));
     try {
-      final cachedBooks = await _bookDbService.getAllBooks();
+      final cachedBooks = await _fileRepository.getAllBooks();
+      print(cachedBooks);
       emit(state.copyWith(books: cachedBooks));
     } on Exception catch (e) {
       emit(state.copyWith(lastError: RSVPError.initError(error: e)));

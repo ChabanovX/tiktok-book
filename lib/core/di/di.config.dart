@@ -75,7 +75,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i422.RsvpBloc>(
       () => _i422.RsvpBloc(
-        bookDbService: gh<_i177.BookDbService>(),
         fileRepository: gh<_i69.FileRepository>(),
         bookConverter: gh<_i216.BookConverter>(),
       ),
