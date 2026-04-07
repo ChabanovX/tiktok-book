@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/core/navigation/reading_arguments.dart';
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 
 @singleton
 class NavigationService {
@@ -44,7 +44,7 @@ class NavigationService {
   }
 
   Future<void> goToReadingScreen({
-    required List<RsvpToken> tokens,
+    required List<RsvpBionicToken> tokens,
     required String bookTitle,
   }) {
     return pushNamed(

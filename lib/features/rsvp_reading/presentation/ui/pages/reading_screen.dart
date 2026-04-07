@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/exit_button.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/start_stop_button.dart';
@@ -18,7 +18,7 @@ class ReadingScreenWrapper extends StatefulWidget {
     super.key,
   });
 
-  final List<RsvpToken> tokens;
+  final List<RsvpBionicToken> tokens;
   final String bookTitle;
 
   @override
@@ -186,7 +186,7 @@ class ReadingScreen extends StatelessWidget {
   });
 
   final ReadingScreenState state;
-  final RsvpToken currentWord;
+  final RsvpBionicToken currentWord;
   final String bookTitle;
   final double progress;
   final int wordsRead;
@@ -366,7 +366,7 @@ class BionicWordWidget extends StatelessWidget {
     super.key,
   });
 
-  final RsvpToken token;
+  final RsvpBionicToken token;
   final TextStyle baseStyle;
   final TextStyle? boldStyle;
   final TextStyle? semiboldStyle;
@@ -391,7 +391,7 @@ class BionicWordWidget extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: token.regularRext,
+            text: token.regularText,
             style: baseStyle.copyWith(
               fontWeight: FontWeight.normal,
             ),

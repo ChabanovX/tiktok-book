@@ -14,3 +14,6 @@ Use `flutter_test` for widget and unit coverage. Place tests in the matching fea
 
 ## Generated Code, Commits, and Pull Requests
 Run `dart run build_runner build --delete-conflicting-outputs` after changing Freezed, Injectable, Drift, Theme Tailor, or Widgetbook-annotated code. Recent history favors short, imperative commit subjects; merged commits often append the PR number, for example `Fix generated files formatting (#25)`. Keep commits focused. PRs should summarize user impact, list verification steps (`flutter analyze`, `flutter test`), link the related issue or task, and include screenshots for visible UI changes.
+
+## Response Conventions
+When referencing files in assistant responses, use relative repository paths in both the visible markdown link label and the target, for example `[lib/features/example/example.dart](lib/features/example/example.dart)` or with an anchor such as `[lib/features/example/example.dart](lib/features/example/example.dart#L12)`. Do not use absolute filesystem paths in markdown links.

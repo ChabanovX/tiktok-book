@@ -1,38 +1,53 @@
 import 'package:injectable/injectable.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 
 @singleton
 class RsvpTokenizer {
   const RsvpTokenizer();
 
-  List<RsvpToken> tokenize(String text, {double boldPercentage = 0.25, double semiboldPercentage = 0.15}) {
+  List<RsvpToken> tokenize(String text) {
     final words = text.split(RegExp(r'\s+')).where((word) => word.trim().isNotEmpty).toList();
 
     return List.generate(
       words.length,
       (index) => RsvpToken(
-        boldText: _getBoldPart(words[index], boldPercentage),
-        semiboldText: _getSemiboldPart(words[index], boldPercentage, semiboldPercentage),
-        regularRext: _getRegularPart(words[index], boldPercentage, semiboldPercentage),
+        text: words[index],
         index: index,
       ),
     );
   }
 
-  List<RsvpToken> tokenizeFromWords(
+  List<RsvpBionicToken> tokenizeBionicFromWords(
     List<String> words, {
     double boldPercentage = 0.20,
     double semiboldPercentage = 0.15,
   }) {
     return List.generate(
       words.length,
-      (index) => RsvpToken(
+      (index) => RsvpBionicToken(
         boldText: _getBoldPart(words[index], boldPercentage),
         semiboldText: _getSemiboldPart(words[index], boldPercentage, semiboldPercentage),
-        regularRext: _getRegularPart(words[index], boldPercentage, semiboldPercentage),
+        regularText: _getRegularPart(words[index], boldPercentage, semiboldPercentage),
         index: index,
       ),
     );
+  }
+
+  List<RsvpBionicToken> tokenizeBionicFromDomain(
+    List<RsvpToken> words, {
+    double boldPercentage = 0.20,
+    double semiboldPercentage = 0.15,
+  }) {
+    return List.generate(words.length, (index) {
+      final simpleWordToken = words[index].text;
+      return RsvpBionicToken(
+        boldText: _getBoldPart(simpleWordToken, boldPercentage),
+        semiboldText: _getSemiboldPart(simpleWordToken, boldPercentage, semiboldPercentage),
+        regularText: _getRegularPart(simpleWordToken, boldPercentage, semiboldPercentage),
+        index: index,
+      );
+    });
   }
 
   String _getBoldPart(String word, double boldPercentage) {
