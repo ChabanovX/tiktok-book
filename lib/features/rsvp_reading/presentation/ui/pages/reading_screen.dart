@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
@@ -7,8 +8,7 @@ import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
-import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/exit_button.dart';
-import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/start_stop_button.dart';
+import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 
 class ReadingScreenWrapper extends StatefulWidget {
   const ReadingScreenWrapper({
@@ -82,6 +82,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                 state: screenState,
                 currentWord: currentToken.text,
                 bookTitle: widget.bookTitle,
+                wpm: wpm,
                 progress: progress,
                 wordsRead: currentToken.index + 1,
                 onStartStopTap: () {
@@ -90,6 +91,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                   } else {
                     _readingBloc.add(const ReadingEvent.resume());
                   }
+                },
+                onChangeWpm: (newWpm) {
+                  _readingBloc.add(ReadingEvent.changeWpm(newWpm));
                 },
                 onExitTap: () => _onExit(context),
               );
@@ -159,7 +163,9 @@ class ReadingScreen extends StatelessWidget {
     required this.bookTitle,
     required this.progress,
     required this.wordsRead,
+    required this.wpm,
     this.onStartStopTap,
+    this.onChangeWpm,
     this.onExitTap,
     this.progressLabel = 'Current progress',
     this.wordsReadLabel = 'Words read',
@@ -172,9 +178,13 @@ class ReadingScreen extends StatelessWidget {
   final double progress;
   final int wordsRead;
   final VoidCallback? onStartStopTap;
+  final ValueChanged<int>? onChangeWpm;
   final VoidCallback? onExitTap;
   final String progressLabel;
   final String wordsReadLabel;
+  final int wpm;
+
+  static const List<int> _speedOptions = [200, 250, 300, 350, 400, 450, 500, 550, 600];
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +225,12 @@ class ReadingScreen extends StatelessWidget {
                             height: halfHeight - 14,
                             child: Column(
                               children: [
-                                SizedBox(height: topSpacing),
+                                SizedBox(height: topSpacing / 2),
+                                SpeedButton(
+                                  wpm: wpm,
+                                  onTap: onChangeWpm == null ? null : () => _showSpeedPicker(context),
+                                ),
+                                SizedBox(height: topSpacing / 2),
                                 Text(
                                   bookTitle,
                                   textAlign: TextAlign.center,
@@ -296,6 +311,94 @@ class ReadingScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _showSpeedPicker(BuildContext context) async {
+    final onChangeWpm = this.onChangeWpm;
+    if (onChangeWpm == null) {
+      return;
+    }
+
+    var selectedWpm = wpm;
+    final initialIndex = _speedOptions.indexOf(wpm);
+    final pickerController = FixedExtentScrollController(
+      initialItem: initialIndex >= 0 ? initialIndex : 0,
+    );
+
+    await showCupertinoModalPopup<void>(
+      context: context,
+      builder: (context) {
+        final backgroundColor = CupertinoColors.systemBackground.resolveFrom(context);
+        final separatorColor = CupertinoColors.separator.resolveFrom(context);
+
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Container(
+              height: 300,
+              color: backgroundColor,
+              child: Column(
+                children: [
+                  Container(
+                    height: 52,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: separatorColor),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text('Cancel'),
+                        ),
+                        Text(
+                          'Reading speed',
+                          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            onChangeWpm(selectedWpm);
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Done'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: CupertinoPicker(
+                      scrollController: pickerController,
+                      itemExtent: 44,
+                      useMagnifier: true,
+                      magnification: 1.06,
+                      onSelectedItemChanged: (index) {
+                        setModalState(() {
+                          selectedWpm = _speedOptions[index];
+                        });
+                      },
+                      children: _speedOptions
+                          .map(
+                            (value) => Center(
+                              child: Text('$value WPM'),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

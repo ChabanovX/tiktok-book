@@ -110,7 +110,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                         unawaited(
                           navigationService.goToReadingScreen(
                             tokens: selectedBook.tokens,
-                            bookTitle: selectedBook.name ?? 'Unknown',
+                            bookTitle: title,
                           ),
                         );
                       },

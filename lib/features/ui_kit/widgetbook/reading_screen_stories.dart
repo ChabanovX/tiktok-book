@@ -16,6 +16,7 @@ Widget readingScreenReadingUseCase(BuildContext context) {
     wordsRead: 6969,
     onStartStopTap: () {},
     onExitTap: () {},
+    wpm: 400,
   );
 }
 
@@ -33,5 +34,6 @@ Widget readingScreenPausedUseCase(BuildContext context) {
     wordsRead: 6969,
     onStartStopTap: () {},
     onExitTap: () {},
+    wpm: 400,
   );
 }

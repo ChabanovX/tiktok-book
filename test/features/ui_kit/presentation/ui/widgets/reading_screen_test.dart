@@ -15,6 +15,7 @@ void main() {
             bookTitle: 'Brave New World',
             progress: 0.67,
             wordsRead: 6969,
+            wpm: 300,
           ),
         ),
       );
@@ -40,6 +41,7 @@ void main() {
             bookTitle: 'Brave New World',
             progress: 0.67,
             wordsRead: 6969,
+            wpm: 300,
           ),
         ),
       );
@@ -63,6 +65,7 @@ void main() {
             wordsRead: 6969,
             onStartStopTap: () => startStopTapCount++,
             onExitTap: () => exitTapCount++,
+            wpm: 300,
           ),
         ),
       );
