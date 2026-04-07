@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/navigation/reading_arguments.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/pages/main_page.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/pages/reading_screen.dart';
+import 'package:rsvp_flutter_app/features/settings/presentation/ui/pages/settings_page.dart';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -26,6 +27,12 @@ class AppRouter {
             tokens: args.tokens,
             bookTitle: args.bookTitle,
           ),
+          settings: settings,
+        );
+
+      case '/settings':
+        return MaterialPageRoute(
+          builder: (_) => const SettingsPage(),
           settings: settings,
         );
 

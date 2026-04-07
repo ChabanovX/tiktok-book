@@ -14,3 +14,14 @@ abstract class BookMetaModel with _$BookMetaModel {
     @Default([]) List<RsvpToken> tokens,
   }) = _BookMetaModel;
 }
+
+extension BookMetaModelX on BookMetaModel {
+  String resolveTitle() {
+    final name = this.name?.trim();
+    if (name != null && name.isNotEmpty) {
+      return name;
+    }
+
+    return bookFile.name;
+  }
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class ExitButton extends StatelessWidget {
   const ExitButton({
@@ -16,10 +17,11 @@ class ExitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+    final l10n = context.l10n;
 
     return Semantics(
       button: true,
-      label: 'Exit',
+      label: l10n.exitButtonSemantic,
       child: SizedBox(
         width: size,
         height: size,

@@ -6,6 +6,7 @@ import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rs
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/widgets/new_book_button.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/bottom_selectedbook_window.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/primary_button.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 enum LibraryMainScreenState {
   nonEmpty,
@@ -22,15 +23,16 @@ class LibraryMainScreen extends StatelessWidget {
     this.bookItems = const [],
     this.onAddBookTap,
     this.onStateActionTap,
-    this.appBarTitle = 'Book Fast Track TT HZ',
-    this.collectionTitle = 'Personal Collection',
-    this.addBookLabel = 'ADD NEW BOOK',
-    this.emptyTitle = 'Your library is empty',
-    this.emptyDescription = 'Add your first book to\nstart fast reading!',
-    this.emptyButtonLabel = 'Upload a book',
-    this.importErrorTitle = 'Import error',
-    this.importErrorDescription = 'Something went wrong\nduring uploading',
-    this.importErrorButtonLabel = 'Try again',
+    this.onSettingsTap,
+    this.appBarTitle,
+    this.collectionTitle,
+    this.addBookLabel,
+    this.emptyTitle,
+    this.emptyDescription,
+    this.emptyButtonLabel,
+    this.importErrorTitle,
+    this.importErrorDescription,
+    this.importErrorButtonLabel,
     super.key,
   });
 
@@ -38,21 +40,25 @@ class LibraryMainScreen extends StatelessWidget {
   final List<Widget> bookItems;
   final VoidCallback? onAddBookTap;
   final VoidCallback? onStateActionTap;
-  final String appBarTitle;
-  final String collectionTitle;
-  final String addBookLabel;
-  final String emptyTitle;
-  final String emptyDescription;
-  final String emptyButtonLabel;
-  final String importErrorTitle;
-  final String importErrorDescription;
-  final String importErrorButtonLabel;
+  final VoidCallback? onSettingsTap;
+  final String? appBarTitle;
+  final String? collectionTitle;
+  final String? addBookLabel;
+  final String? emptyTitle;
+  final String? emptyDescription;
+  final String? emptyButtonLabel;
+  final String? importErrorTitle;
+  final String? importErrorDescription;
+  final String? importErrorButtonLabel;
 
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+    final l10n = context.l10n;
     final appBarTextStyle = appTheme.appBarTitleTextStyle;
     final hasRsvpBloc = _hasRsvpBloc(context);
+    final resolvedAppBarTitle = appBarTitle ?? l10n.appTitle;
+    final resolvedCollectionTitle = collectionTitle ?? l10n.libraryCollectionTitle;
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor2,
@@ -64,6 +70,7 @@ class LibraryMainScreen extends StatelessWidget {
               children: [
                 Container(
                   height: 68,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: appTheme.backgroundColor2,
@@ -73,9 +80,30 @@ class LibraryMainScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: Text(
-                    appBarTitle,
-                    style: appBarTextStyle,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 48),
+                      Expanded(
+                        child: Text(
+                          resolvedAppBarTitle,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: appBarTextStyle,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 48,
+                        child: IconButton(
+                          onPressed: onSettingsTap,
+                          tooltip: l10n.settingsOpenButtonLabel,
+                          icon: Icon(
+                            Icons.settings_rounded,
+                            color: appTheme.primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
@@ -85,7 +113,7 @@ class LibraryMainScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          collectionTitle,
+                          resolvedCollectionTitle,
                           style: appTheme.titleTextStyle,
                         ),
                         const SizedBox(height: 18),
@@ -189,12 +217,21 @@ class LibraryMainScreen extends StatelessWidget {
   }
 
   Widget _buildBodyContent(BuildContext context) {
+    final l10n = context.l10n;
+    final resolvedAddBookLabel = addBookLabel ?? l10n.libraryAddBookCta;
+    final resolvedEmptyTitle = emptyTitle ?? l10n.libraryEmptyTitle;
+    final resolvedEmptyDescription = emptyDescription ?? l10n.libraryEmptyDescription;
+    final resolvedEmptyButtonLabel = emptyButtonLabel ?? l10n.libraryEmptyButton;
+    final resolvedImportErrorTitle = importErrorTitle ?? l10n.libraryImportErrorTitle;
+    final resolvedImportErrorDescription = importErrorDescription ?? l10n.libraryImportErrorDescription;
+    final resolvedImportErrorButtonLabel = importErrorButtonLabel ?? l10n.libraryImportErrorButton;
+
     switch (state) {
       case LibraryMainScreenState.nonEmpty:
         return Column(
           children: [
             NewBookButton(
-              label: addBookLabel,
+              label: resolvedAddBookLabel,
               onTap: onAddBookTap,
             ),
             const SizedBox(height: 18),
@@ -215,9 +252,9 @@ class LibraryMainScreen extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 336),
             child: _StateContent(
               illustration: const _EmptyLibraryIllustration(),
-              title: emptyTitle,
-              description: emptyDescription,
-              buttonLabel: emptyButtonLabel,
+              title: resolvedEmptyTitle,
+              description: resolvedEmptyDescription,
+              buttonLabel: resolvedEmptyButtonLabel,
               onButtonTap: onStateActionTap,
             ),
           ),
@@ -228,9 +265,9 @@ class LibraryMainScreen extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 336),
             child: _StateContent(
               illustration: const _ImportErrorIllustration(),
-              title: importErrorTitle,
-              description: importErrorDescription,
-              buttonLabel: importErrorButtonLabel,
+              title: resolvedImportErrorTitle,
+              description: resolvedImportErrorDescription,
+              buttonLabel: resolvedImportErrorButtonLabel,
               onButtonTap: onStateActionTap,
             ),
           ),

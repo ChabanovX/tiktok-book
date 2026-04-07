@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class NewBookButton extends StatelessWidget {
   const NewBookButton({
     this.onTap,
-    this.label = 'Add New Book',
+    this.label,
     super.key,
   });
 
   final VoidCallback? onTap;
-  final String label;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final appTheme = theme.extension<AppTheme>();
+    final l10n = context.l10n;
+    final resolvedLabel = label ?? l10n.newBookButtonLabel;
     final borderColor =
         appTheme?.addBookCardBorderColor ??
         (appTheme?.secondaryColor ?? theme.colorScheme.secondary).withValues(alpha: 0.28);
@@ -49,7 +52,7 @@ class NewBookButton extends StatelessWidget {
                 child: const Icon(Icons.add, color: Colors.white),
               ),
               const SizedBox(width: 16),
-              Text(label, style: labelStyle),
+              Text(resolvedLabel, style: labelStyle),
             ],
           ),
         ),
