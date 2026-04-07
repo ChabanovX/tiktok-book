@@ -8,8 +8,11 @@ part 'book_model.freezed.dart';
 abstract class BookMetaModel with _$BookMetaModel {
   const factory BookMetaModel({
     required BookFile bookFile,
+    required String documentId,
 
     String? name,
+
+    @Default(0) int currentIndex,
 
     @Default([]) List<RsvpToken> tokens,
   }) = _BookMetaModel;
