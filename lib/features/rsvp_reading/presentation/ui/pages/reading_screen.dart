@@ -9,8 +9,9 @@ import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
-import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/exit_button.dart';
-import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/start_stop_button.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/cupertino_picker.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/material_picker.dart';
+import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class ReadingScreenWrapper extends StatefulWidget {
@@ -99,6 +100,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                 state: screenState,
                 currentWord: currentToken,
                 bookTitle: widget.bookTitle,
+                wpm: wpm,
                 progress: progress,
                 wordsRead: currentToken.index + 1,
                 onStartStopTap: () {
@@ -108,6 +110,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                   } else {
                     _readingBloc.add(const ReadingEvent.resume());
                   }
+                },
+                onChangeWpm: (newWpm) {
+                  _readingBloc.add(ReadingEvent.changeWpm(newWpm));
                 },
                 onExitTap: () => _onExit(context),
               );
@@ -223,7 +228,9 @@ class ReadingScreen extends StatelessWidget {
     required this.bookTitle,
     required this.progress,
     required this.wordsRead,
+    required this.wpm,
     this.onStartStopTap,
+    this.onChangeWpm,
     this.onExitTap,
     super.key,
   });
@@ -234,7 +241,9 @@ class ReadingScreen extends StatelessWidget {
   final double progress;
   final int wordsRead;
   final VoidCallback? onStartStopTap;
+  final ValueChanged<int>? onChangeWpm;
   final VoidCallback? onExitTap;
+  final int wpm;
 
   @override
   Widget build(BuildContext context) {
@@ -260,7 +269,6 @@ class ReadingScreen extends StatelessWidget {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final totalHeight = constraints.maxHeight;
-
                   final halfHeight = (totalHeight - 56) / 2;
 
                   final topSpacing = (constraints.maxHeight * 0.10).clamp(72.0, 168.0);
@@ -276,7 +284,12 @@ class ReadingScreen extends StatelessWidget {
                             height: halfHeight - 14,
                             child: Column(
                               children: [
-                                SizedBox(height: topSpacing),
+                                SizedBox(height: topSpacing / 2),
+                                SpeedButton(
+                                  wpm: wpm,
+                                  onTap: onChangeWpm == null ? null : () => _showSpeedPicker(context),
+                                ),
+                                SizedBox(height: topSpacing / 2),
                                 Text(
                                   bookTitle,
                                   textAlign: TextAlign.center,
@@ -366,6 +379,21 @@ class ReadingScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _showSpeedPicker(BuildContext context) async {
+    final onChangeWpm = this.onChangeWpm;
+    if (onChangeWpm == null) {
+      return;
+    }
+
+    final platform = Theme.of(context).platform;
+    if (platform == TargetPlatform.iOS || platform == TargetPlatform.macOS) {
+      await showCupertinoSpeedPicker(context, wpm, onChangeWpm);
+      return;
+    }
+
+    await showMaterialSpeedPicker(context, wpm, onChangeWpm);
   }
 }
 

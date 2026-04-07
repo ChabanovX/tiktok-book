@@ -20,6 +20,8 @@ import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/primary_button_stori
     as _rsvp_flutter_app_features_ui_kit_widgetbook_primary_button_stories;
 import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/reading_screen_stories.dart'
     as _rsvp_flutter_app_features_ui_kit_widgetbook_reading_screen_stories;
+import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/speed_button_stories.dart'
+    as _rsvp_flutter_app_features_ui_kit_widgetbook_speed_button_stories;
 import 'package:rsvp_flutter_app/features/ui_kit/widgetbook/start_stop_button_stories.dart'
     as _rsvp_flutter_app_features_ui_kit_widgetbook_start_stop_button_stories;
 import 'package:widgetbook/widgetbook.dart' as _widgetbook;
@@ -104,6 +106,17 @@ final directories = <_widgetbook.WidgetbookNode>[
             builder:
                 _rsvp_flutter_app_features_ui_kit_widgetbook_reading_screen_stories
                     .readingScreenReadingUseCase,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'SpeedButton',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder:
+                _rsvp_flutter_app_features_ui_kit_widgetbook_speed_button_stories
+                    .speedButtonDefaultUseCase,
           ),
         ],
       ),
