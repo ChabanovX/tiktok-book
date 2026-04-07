@@ -129,6 +129,18 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
         color: Color(0xFFF8FAFC),
         fontFamily: 'SpaceGrotesk',
       ),
+      rsvpTextStyleSemiBold: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w600,
+        color: Color(0xFFF8FAFC),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      rsvpTextStyleRegular: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFFF8FAFC),
+        fontFamily: 'SpaceGrotesk',
+      ),
       bookTitleText: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w400,
