@@ -22,7 +22,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     required BookConverter bookConverter,
   }) : _fileRepository = fileRepository,
        _bookConverter = bookConverter,
-       super(const _RsvpState()) {
+       super(const _RsvpState(currentPageState: .initial)) {
     on<_Started>(_onStarted);
     on<_AddBook>(_onAddBook);
     on<_RemoveBook>(_onRemoveBook);
@@ -34,7 +34,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   final BookConverter _bookConverter;
 
   Future<void> _onStarted(_Started event, Emitter<RsvpState> emit) async {
-    emit(state.copyWith(isInitializing: true, lastError: null));
+    emit(state.copyWith(currentPageState: .initializing, lastError: null));
     try {
       final cachedBooks = await _fileRepository.getAllBooks();
       logger.d('Retrieved ${cachedBooks.length} cachedBooks.');
@@ -43,7 +43,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
       emit(state.copyWith(lastError: RSVPError.initError(error: e)));
       logger.e(e);
     } finally {
-      emit(state.copyWith(isInitializing: false));
+      emit(state.copyWith(currentPageState: _getCurrentPageState()));
     }
   }
 
@@ -65,7 +65,6 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     }
 
     logger.d('Successfully picked file. Starting the parsing and syncing...');
-
     // Here we have additional parsing, which happens 2 times:
     //    - in _fileRepository service
     //    - here.
@@ -98,6 +97,8 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
       logger.e(e);
       emit(state.copyWith(lastError: const RSVPError.syncingError(type: SyncingErrorType.addingBookError)));
     }
+
+    emit(state.copyWith(currentPageState: _getCurrentPageState()));
   }
 
   void _onToggleSelectBook(_ToggleSelectBook event, Emitter<RsvpState> emit) {
@@ -109,15 +110,21 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     final books = List<BookMetaModel>.from(state.books)..remove(event.book);
     final selectedBook = state.selectedBook == event.book ? null : state.selectedBook;
 
-    emit(
-      state.copyWith(
-        books: books,
-        selectedBook: selectedBook,
-      ),
-    );
+    emit(state.copyWith(books: books, selectedBook: selectedBook));
+    emit(state.copyWith(currentPageState: _getCurrentPageState()));
   }
 
   void _onStartAnimation(_StartAnimation event, Emitter<RsvpState> emit) {
     // Either simply emit new state with animationShouldStartPlaying = true
+  }
+
+  LibraryMainScreenState _getCurrentPageState() {
+    final LibraryMainScreenState currentState = switch (state) {
+      _ when state.lastError != null => .importError,
+      _ when state.books.isNotEmpty => .nonEmpty,
+      _ => .empty,
+    };
+
+    return currentState;
   }
 }
