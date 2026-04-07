@@ -35,7 +35,18 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   final BookConverter _bookConverter;
   final BookDbService _bookDbService;
 
-  void _onStarted(_Started event, Emitter<RsvpState> emit) {}
+  Future<void> _onStarted(_Started event, Emitter<RsvpState> emit) async {
+    emit(state.copyWith(isInitializing: true, lastError: null));
+    try {
+      final cachedBooks = await _bookDbService.getAllBooks();
+      emit(state.copyWith(books: cachedBooks));
+    } on Exception catch (e) {
+      emit(state.copyWith(lastError: RSVPError.initError(error: e)));
+      logger.e(e);
+    } finally {
+      emit(state.copyWith(isInitializing: false));
+    }
+  }
 
   Future<void> _onAddBook(_AddBook event, Emitter<RsvpState> emit) async {
     emit(
