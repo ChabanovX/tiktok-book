@@ -34,6 +34,22 @@ class RsvpTokenizer {
     );
   }
 
+  List<RsvpBionicToken> tokenizeBionicFromDomain(
+    List<RsvpToken> words, {
+    double boldPercentage = 0.20,
+    double semiboldPercentage = 0.15,
+  }) {
+    return List.generate(words.length, (index) {
+      final simpleWordToken = words[index].text;
+      return RsvpBionicToken(
+        boldText: _getBoldPart(simpleWordToken, boldPercentage),
+        semiboldText: _getSemiboldPart(simpleWordToken, boldPercentage, semiboldPercentage),
+        regularText: _getRegularPart(simpleWordToken, boldPercentage, semiboldPercentage),
+        index: index,
+      );
+    });
+  }
+
   String _getBoldPart(String word, double boldPercentage) {
     if (word.isEmpty) return '';
 
