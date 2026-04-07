@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/constants.dart';
+import 'package:rsvp_flutter_app/core/logger/logger.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/ui/widgets/new_book_button.dart';
@@ -169,11 +170,21 @@ class LibraryMainScreen extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
+    // For identifying the same widget for unnecessary transition removal.
+    final switcherKey = switch (state) {
+      LibraryMainScreenState.initial => 'loading',
+      LibraryMainScreenState.initializing => 'loading',
+      LibraryMainScreenState.empty => 'empty',
+      LibraryMainScreenState.importError => 'error',
+      LibraryMainScreenState.nonEmpty => 'non_empty',
+    };
+
     return AnimatedSwitcher(
       duration: _bookSelectionAnimationDuration,
       switchInCurve: _bookSelectionAnimationCurve,
       switchOutCurve: _bookSelectionAnimationCurve,
       layoutBuilder: (currentChild, previousChildren) {
+        if (previousChildren.isNotEmpty && currentChild == previousChildren.last) return previousChildren.first;
         return Stack(
           fit: StackFit.expand,
           children: [
@@ -200,7 +211,7 @@ class LibraryMainScreen extends StatelessWidget {
         );
       },
       child: KeyedSubtree(
-        key: ValueKey(state),
+        key: ValueKey(switcherKey),
         child: _buildBodyContent(context),
       ),
     );
@@ -222,6 +233,7 @@ class LibraryMainScreen extends StatelessWidget {
     final resolvedImportErrorDescription = importErrorDescription ?? l10n.libraryImportErrorDescription;
     final resolvedImportErrorButtonLabel = importErrorButtonLabel ?? l10n.libraryImportErrorButton;
 
+    logger.d('Current state: $state');
     switch (state) {
       case LibraryMainScreenState.nonEmpty:
         return Column(
