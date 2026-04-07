@@ -36,15 +36,13 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
 
   late final ReadingBloc _readingBloc;
   Timer? _progressDebounceTimer;
-  late int _lastPersistedIndex;
+  late final int _lastPersistedIndex = widget.book.currentIndex;
   int? _pendingProgressIndex;
 
   @override
   void initState() {
     super.initState();
     _readingBloc = getIt<ReadingBloc>();
-    _lastPersistedIndex = widget.book.currentIndex;
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _readingBloc.add(
