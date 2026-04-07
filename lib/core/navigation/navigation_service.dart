@@ -60,6 +60,10 @@ class NavigationService {
     return pushNamed('/');
   }
 
+  Future<void> goToSettingsScreen() {
+    return pushNamed('/settings');
+  }
+
   bool canPop() {
     return navigatorKey.currentState?.canPop() ?? false;
   }

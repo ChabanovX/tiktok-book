@@ -9,6 +9,7 @@ import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.da
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/exit_button.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/start_stop_button.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class ReadingScreenWrapper extends StatefulWidget {
   const ReadingScreenWrapper({
@@ -63,9 +64,10 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
               }
             },
             error: (message) {
+              final localizedMessage = _localizeErrorMessage(context, message);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(message),
+                  content: Text(localizedMessage),
                   backgroundColor: Colors.red,
                 ),
               );
@@ -98,18 +100,24 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
               child: CircularProgressIndicator(),
             ),
             error: (message) => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error, size: 64, color: Colors.red),
-                  const SizedBox(height: 16),
-                  Text('Error: $message'),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Back'),
-                  ),
-                ],
+              child: Builder(
+                builder: (context) {
+                  final l10n = context.l10n;
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error, size: 64, color: Colors.red),
+                      const SizedBox(height: 16),
+                      Text(l10n.readingErrorMessage(_localizeErrorMessage(context, message))),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(l10n.commonBack),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             orElse: () => const Center(
@@ -126,24 +134,37 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
   }
 
   void _showCompletionDialog(BuildContext context) {
+    final l10n = context.l10n;
+
     unawaited(
       showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-          title: const Text('Congratulations!'),
-          content: const Text('You have successfully read the book!'),
+          title: Text(l10n.readingCompletedTitle),
+          content: Text(l10n.readingCompletedMessage),
           actions: [
             TextButton(
               onPressed: () {
                 getIt<NavigationService>().pop();
               },
-              child: const Text('Great!'),
+              child: Text(l10n.readingCompletedAction),
             ),
           ],
         ),
       ),
     );
+  }
+
+  String _localizeErrorMessage(BuildContext context, String message) {
+    final l10n = context.l10n;
+
+    switch (message) {
+      case readingEmptyTextErrorKey:
+        return l10n.readingErrorEmptyText;
+      default:
+        return message;
+    }
   }
 }
 
@@ -161,8 +182,6 @@ class ReadingScreen extends StatelessWidget {
     required this.wordsRead,
     this.onStartStopTap,
     this.onExitTap,
-    this.progressLabel = 'Current progress',
-    this.wordsReadLabel = 'Words read',
     super.key,
   });
 
@@ -173,12 +192,11 @@ class ReadingScreen extends StatelessWidget {
   final int wordsRead;
   final VoidCallback? onStartStopTap;
   final VoidCallback? onExitTap;
-  final String progressLabel;
-  final String wordsReadLabel;
 
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+    final l10n = context.l10n;
     final clampedProgress = progress.clamp(0.0, 1.0);
     final progressTrackColor = appTheme.dividerColorMuted.withValues(alpha: 0.24);
     final primaryControlBackgroundColor = appTheme.backgroundColor2.withValues(alpha: 0.72);
@@ -225,7 +243,7 @@ class ReadingScreen extends StatelessWidget {
                                 Opacity(
                                   opacity: 0.72,
                                   child: Text(
-                                    '$progressLabel: ${(clampedProgress * 100).round()}%',
+                                    l10n.readingProgress((clampedProgress * 100).round()),
                                     textAlign: TextAlign.center,
                                     style: appTheme.subTextStyle,
                                   ),
@@ -234,7 +252,7 @@ class ReadingScreen extends StatelessWidget {
                                 Opacity(
                                   opacity: 0.72,
                                   child: Text(
-                                    '$wordsReadLabel: $wordsRead',
+                                    l10n.readingWordsRead(wordsRead),
                                     textAlign: TextAlign.center,
                                     style: appTheme.subTextStyle,
                                   ),
@@ -262,7 +280,9 @@ class ReadingScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     _ReadingControl(
-                                      label: state == ReadingScreenState.reading ? 'PAUSE' : 'PLAY',
+                                      label: state == ReadingScreenState.reading
+                                          ? l10n.readingControlPause
+                                          : l10n.readingControlPlay,
                                       child: StartStopButton(
                                         isRunning: state == ReadingScreenState.reading,
                                         onTap: onStartStopTap,
@@ -273,7 +293,7 @@ class ReadingScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 48),
                                     _ReadingControl(
-                                      label: 'EXIT',
+                                      label: l10n.readingControlExit,
                                       child: ExitButton(
                                         onTap: onExitTap,
                                         size: 60,

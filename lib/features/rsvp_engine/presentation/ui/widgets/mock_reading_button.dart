@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_tokenizer.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class MockReadingButton extends StatelessWidget {
   const MockReadingButton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
@@ -17,7 +20,7 @@ class MockReadingButton extends StatelessWidget {
           _navigateToMockReadingScreen(context);
         },
         icon: const Icon(Icons.auto_awesome),
-        label: const Text('Мок: Открыть чтение (демо)'),
+        label: Text(l10n.mockReadingButtonLabel),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 12),
           backgroundColor: Colors.purple,
@@ -28,24 +31,15 @@ class MockReadingButton extends StatelessWidget {
   }
 
   void _navigateToMockReadingScreen(BuildContext context) {
-    const demoText = '''
-      Это демонстрационный текст для тестирования RSVP чтения.
-      Вы можете проверить работу анимации, смены слов и управления скоростью.
-      Наслаждайтесь быстрым чтением без движения глаз!
-      Попробуйте менять скорость через выпадающий список.
-      Нажимайте паузу, если нужно отвлечься.
-      И возвращайтесь к чтению в любой момент.
-      БОЛЬШОЕСЛОВОДЛЯПРОВЕРКИБОЛЬШОЕСЛОВОДЛЯПРОВЕРКИБОЛЬШОЕСЛОВОДЛЯПРОВЕРКИ
-    ''';
-
+    final l10n = context.l10n;
     final navigationService = getIt<NavigationService>();
     final tokenizer = RsvpTokenizer();
-    final tokens = tokenizer.tokenize(demoText);
+    final tokens = tokenizer.tokenize(l10n.mockReadingDemoText);
 
     unawaited(
       navigationService.goToReadingScreen(
         tokens: tokens,
-        bookTitle: 'Демо-книга',
+        bookTitle: l10n.mockReadingBookTitle,
       ),
     );
   }
