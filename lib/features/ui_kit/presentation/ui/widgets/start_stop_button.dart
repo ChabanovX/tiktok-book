@@ -99,10 +99,10 @@ class _PauseIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final barHeight = buttonSize * 0.44;
+    final barHeight = buttonSize * 0.35;
     final barWidth = buttonSize * 0.15;
     final borderWidth = buttonSize * 0.04;
-    final spacing = buttonSize * 0.10;
+    final spacing = buttonSize * 0.07;
 
     return Row(
       mainAxisSize: MainAxisSize.min,
