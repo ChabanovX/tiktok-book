@@ -233,7 +233,6 @@ class LibraryMainScreen extends StatelessWidget {
     final resolvedImportErrorDescription = importErrorDescription ?? l10n.libraryImportErrorDescription;
     final resolvedImportErrorButtonLabel = importErrorButtonLabel ?? l10n.libraryImportErrorButton;
 
-    logger.d('Current state: $state');
     switch (state) {
       case LibraryMainScreenState.nonEmpty:
         return Column(

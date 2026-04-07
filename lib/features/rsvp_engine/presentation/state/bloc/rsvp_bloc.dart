@@ -33,17 +33,17 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   final FileRepository _fileRepository;
   final BookConverter _bookConverter;
 
-  @override
-  void onEvent(RsvpEvent event) {
-    super.onEvent(event);
-    logger.d('event.hashCode');
-  }
+  // @override
+  // void onEvent(RsvpEvent event) {
+  //   super.onEvent(event);
+  //   logger.d('event.hashCode');
+  // }
 
-  @override
-  void onChange(Change<RsvpState> change) {
-    super.onChange(change);
-    logger.d('change.currentState');
-  }
+  // @override
+  // void onChange(Change<RsvpState> change) {
+  //   super.onChange(change);
+  //   logger.d('change.currentState');
+  // }
 
   Future<void> _onStarted(_Started event, Emitter<RsvpState> emit) async {
     emit(state.copyWith(currentPageState: .initializing, lastError: null));
