@@ -1,0 +1,207 @@
+{
+  "@@locale": "en",
+  "appTitle": "Book Fast Track TT",
+  "@appTitle": {
+    "description": "Application title."
+  },
+  "libraryCollectionTitle": "Personal Collection",
+  "@libraryCollectionTitle": {
+    "description": "Library screen collection title."
+  },
+  "libraryAddBookCta": "ADD NEW BOOK",
+  "@libraryAddBookCta": {
+    "description": "Primary add-book call to action on the library screen."
+  },
+  "libraryEmptyTitle": "Your library is empty",
+  "@libraryEmptyTitle": {
+    "description": "Empty state title when there are no books."
+  },
+  "libraryEmptyDescription": "Add your first book to\nstart fast reading!",
+  "@libraryEmptyDescription": {
+    "description": "Empty state description on the library screen."
+  },
+  "libraryEmptyButton": "Upload a book",
+  "@libraryEmptyButton": {
+    "description": "Button label in the empty library state."
+  },
+  "libraryImportErrorTitle": "Import error",
+  "@libraryImportErrorTitle": {
+    "description": "Import error state title."
+  },
+  "libraryImportErrorDescription": "Something went wrong\nwhile uploading the book",
+  "@libraryImportErrorDescription": {
+    "description": "Import error state description."
+  },
+  "libraryImportErrorButton": "Try again",
+  "@libraryImportErrorButton": {
+    "description": "Retry button label for the import error state."
+  },
+  "newBookButtonLabel": "Add New Book",
+  "@newBookButtonLabel": {
+    "description": "Fallback label for the add new book button."
+  },
+  "bookItemFinished": "FINISHED",
+  "@bookItemFinished": {
+    "description": "Badge label for a finished book."
+  },
+  "bookItemDelete": "Delete",
+  "@bookItemDelete": {
+    "description": "Delete action label for a book item."
+  },
+  "bookUnknownTitle": "Unknown book",
+  "@bookUnknownTitle": {
+    "description": "Fallback book title when none is available."
+  },
+  "bookUnknownAuthor": "Unknown author",
+  "@bookUnknownAuthor": {
+    "description": "Fallback author when none is available."
+  },
+  "selectedBookTitle": "Selected book",
+  "@selectedBookTitle": {
+    "description": "Section title for the selected book card."
+  },
+  "selectedBookRead": "Read",
+  "@selectedBookRead": {
+    "description": "Action label to start reading the selected book."
+  },
+  "bookWordCount": "{count, plural, =0{0 words} one{1 word} other{{count} words}}",
+  "@bookWordCount": {
+    "description": "Word count label for a selected book.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingErrorMessage": "Error: {message}",
+  "@readingErrorMessage": {
+    "description": "Generic reading error message with details.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "commonBack": "Back",
+  "@commonBack": {
+    "description": "Generic back button label."
+  },
+  "readingCompletedTitle": "Congratulations!",
+  "@readingCompletedTitle": {
+    "description": "Reading completion dialog title."
+  },
+  "readingCompletedMessage": "You have successfully read the book!",
+  "@readingCompletedMessage": {
+    "description": "Reading completion dialog message."
+  },
+  "readingCompletedAction": "Great!",
+  "@readingCompletedAction": {
+    "description": "Reading completion dialog action."
+  },
+  "readingProgress": "Current progress: {percent}%",
+  "@readingProgress": {
+    "description": "Progress label on the reading screen.",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "readingWordsRead": "Words read: {count}",
+  "@readingWordsRead": {
+    "description": "Words read label on the reading screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readingControlPause": "PAUSE",
+  "@readingControlPause": {
+    "description": "Pause label below the reading control."
+  },
+  "readingControlPlay": "PLAY",
+  "@readingControlPlay": {
+    "description": "Play label below the reading control."
+  },
+  "readingControlExit": "EXIT",
+  "@readingControlExit": {
+    "description": "Exit label below the reading control."
+  },
+  "startStopPauseSemantic": "Pause",
+  "@startStopPauseSemantic": {
+    "description": "Semantic label for the pause button."
+  },
+  "startStopPlaySemantic": "Play",
+  "@startStopPlaySemantic": {
+    "description": "Semantic label for the play button."
+  },
+  "exitButtonSemantic": "Exit reading",
+  "@exitButtonSemantic": {
+    "description": "Semantic label for the exit reading button."
+  },
+  "readingErrorEmptyText": "No text available for reading",
+  "@readingErrorEmptyText": {
+    "description": "Error shown when there is no text to initialize reading."
+  },
+  "mockReadingButtonLabel": "Mock: Open reading (demo)",
+  "@mockReadingButtonLabel": {
+    "description": "Label for the mock reading demo button."
+  },
+  "mockReadingDemoText": "This is demo text for testing RSVP reading.\nYou can check the animation, word transitions, and playback controls.\nEnjoy fast reading without moving your eyes.\nTry changing the speed using the dropdown.\nTap pause if you need to step away.\nAnd come back to reading at any moment.\nSUPERCALIFRAGILISTICEXPIALIDOCIOUSSUPERCALIFRAGILISTICEXPIALIDOCIOUS",
+  "@mockReadingDemoText": {
+    "description": "Demo text used in the mock reading flow."
+  },
+  "mockReadingBookTitle": "Demo book",
+  "@mockReadingBookTitle": {
+    "description": "Book title used in the mock reading flow."
+  },
+  "settingsOpenButtonLabel": "Open settings",
+  "@settingsOpenButtonLabel": {
+    "description": "Tooltip and accessibility label for opening the settings screen."
+  },
+  "settingsPageTitle": "Settings",
+  "@settingsPageTitle": {
+    "description": "Title of the settings page."
+  },
+  "settingsLanguageSectionTitle": "App language",
+  "@settingsLanguageSectionTitle": {
+    "description": "Title of the language settings section."
+  },
+  "settingsLanguageSectionDescription": "Choose the language used in the interface.",
+  "@settingsLanguageSectionDescription": {
+    "description": "Description text on the language settings screen."
+  },
+  "settingsLanguageSystemTitle": "System default",
+  "@settingsLanguageSystemTitle": {
+    "description": "Title for the system locale option."
+  },
+  "settingsLanguageEnglishTitle": "English",
+  "@settingsLanguageEnglishTitle": {
+    "description": "Title for the English locale option."
+  },
+  "settingsLanguageRussianTitle": "Russian",
+  "@settingsLanguageRussianTitle": {
+    "description": "Title for the Russian locale option."
+  },
+  "settingsThemeSectionTitle": "Appearance",
+  "@settingsThemeSectionTitle": {
+    "description": "Title of the theme settings section."
+  },
+  "settingsThemeSectionDescription": "Choose how the app theme should look.",
+  "@settingsThemeSectionDescription": {
+    "description": "Description text on the theme settings screen."
+  },
+  "settingsThemeSystemTitle": "System default",
+  "@settingsThemeSystemTitle": {
+    "description": "Title for the system theme option."
+  },
+  "settingsThemeLightTitle": "Light",
+  "@settingsThemeLightTitle": {
+    "description": "Title for the light theme option."
+  },
+  "settingsThemeDarkTitle": "Dark",
+  "@settingsThemeDarkTitle": {
+    "description": "Title for the dark theme option."
+  }
+}
