@@ -4,7 +4,7 @@ part of 'rsvp_bloc.dart';
 abstract class RsvpState with _$RsvpState {
   const factory RsvpState({
     BookMetaModel? selectedBook,
-    @Default(false) bool isParsing,
+    @Default(false) bool isAddingBook,
 
     RSVPError? lastError,
 

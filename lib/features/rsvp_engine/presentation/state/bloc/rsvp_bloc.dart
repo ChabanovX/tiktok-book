@@ -40,7 +40,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   Future<void> _onAddBook(_AddBook event, Emitter<RsvpState> emit) async {
     emit(
       state.copyWith(
-        isParsing: true,
+        isAddingBook: true,
         lastError: null,
         selectedBook: null,
       ),
@@ -57,7 +57,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
 
     if (bookFile == null) {
       logger.d('User aborted picking the file.');
-      emit(state.copyWith(isParsing: false));
+      emit(state.copyWith(isAddingBook: false));
       return;
     }
 
