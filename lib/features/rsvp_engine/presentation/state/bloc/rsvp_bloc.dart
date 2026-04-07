@@ -37,7 +37,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
   // @override
   // void onEvent(RsvpEvent event) {
   //   super.onEvent(event);
-  //   logger.d('event.hashCode');
+  //   logger.d('tokens: ${state.selectedBook?.tokens}');
   // }
 
   // @override

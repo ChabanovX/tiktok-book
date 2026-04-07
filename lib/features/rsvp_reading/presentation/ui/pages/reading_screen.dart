@@ -39,6 +39,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
   Timer? _progressDebounceTimer;
   late int _lastPersistedIndex = widget.book.currentIndex;
   int? _pendingProgressIndex;
+  bool _isReadingBlocClosed = false;
 
   @override
   void initState() {
@@ -58,10 +59,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
 
   @override
   void dispose() {
-    _flushPendingProgress();
     _progressDebounceTimer?.cancel();
-    _readingBloc.add(const ReadingEvent.dispose());
-    unawaited(_readingBloc.close());
+    _closeReadingBloc();
+    _persistCurrentProgress();
     super.dispose();
   }
 
@@ -151,7 +151,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
   }
 
   void _onExit(BuildContext context) {
-    _flushPendingProgress();
+    _progressDebounceTimer?.cancel();
+    _closeReadingBloc();
+    _persistCurrentProgress();
     getIt<NavigationService>().pop();
   }
 
@@ -213,6 +215,28 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
     );
     _lastPersistedIndex = pendingProgressIndex;
     _pendingProgressIndex = null;
+  }
+
+  void _persistCurrentProgress() {
+    final currentIndex = _readingBloc.state.maybeWhen(
+      ready: (_, currentToken, _, _, _, _, _) => currentToken.index,
+      orElse: () => null,
+    );
+
+    if (currentIndex != null) {
+      _pendingProgressIndex = currentIndex;
+    }
+
+    _flushPendingProgress();
+  }
+
+  void _closeReadingBloc() {
+    if (_isReadingBlocClosed) {
+      return;
+    }
+
+    _isReadingBlocClosed = true;
+    unawaited(_readingBloc.close());
   }
 }
 
