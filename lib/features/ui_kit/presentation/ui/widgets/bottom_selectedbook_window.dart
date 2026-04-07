@@ -5,6 +5,7 @@ import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_tokenizer.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class BottomSelectedbookWindow extends StatelessWidget {
@@ -110,9 +111,10 @@ class BottomSelectedbookWindow extends StatelessWidget {
                       ),
                       onPressed: () {
                         final navigationService = getIt<NavigationService>();
+                        final bionicTokens = getIt<RsvpTokenizer>().tokenizeBionicFromDomain(selectedBook.tokens);
                         unawaited(
                           navigationService.goToReadingScreen(
-                            tokens: selectedBook.tokens,
+                            tokens: bionicTokens,
                             bookTitle: title,
                           ),
                         );

@@ -1,4 +1,4 @@
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 
 class ReadingArguments {
   ReadingArguments({
@@ -6,6 +6,6 @@ class ReadingArguments {
     required this.bookTitle,
   });
 
-  final List<RsvpToken> tokens;
+  final List<RsvpBionicToken> tokens;
   final String bookTitle;
 }
