@@ -25,6 +25,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
        super(const _RsvpState(currentPageState: .initial)) {
     on<_Started>(_onStarted);
     on<_AddBook>(_onAddBook);
+    on<_UpdateBookProgress>(_onUpdateBookProgress);
     on<_RemoveBook>(_onRemoveBook);
     on<_ToggleSelectBook>(_onToggleSelectBook);
     on<_StartAnimation>(_onStartAnimation);
@@ -142,8 +143,42 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     }
   }
 
+  Future<void> _onUpdateBookProgress(_UpdateBookProgress event, Emitter<RsvpState> emit) async {
+    final bookIndex = state.books.indexWhere((book) => book.documentId == event.documentId);
+    if (bookIndex == -1) {
+      return;
+    }
+
+    final currentBook = state.books[bookIndex];
+    if (currentBook.currentIndex == event.currentIndex) {
+      return;
+    }
+
+    try {
+      await _fileRepository.updateBookProgress(
+        documentId: event.documentId,
+        currentIndex: event.currentIndex,
+      );
+
+      final updatedBook = currentBook.copyWith(currentIndex: event.currentIndex);
+      final books = List<BookMetaModel>.from(state.books)..[bookIndex] = updatedBook;
+      final selectedBook = state.selectedBook?.documentId == updatedBook.documentId ? updatedBook : state.selectedBook;
+
+      emit(
+        state.copyWith(
+          books: books,
+          selectedBook: selectedBook,
+          lastError: null,
+          currentPageState: _getCurrentPageState(newBooks: books),
+        ),
+      );
+    } on Exception catch (e) {
+      logger.e(e);
+    }
+  }
+
   void _onToggleSelectBook(_ToggleSelectBook event, Emitter<RsvpState> emit) {
-    final selectedBook = state.selectedBook == event.book ? null : event.book;
+    final selectedBook = state.selectedBook?.documentId == event.book.documentId ? null : event.book;
     emit(state.copyWith(selectedBook: selectedBook));
   }
 
@@ -151,8 +186,9 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     try {
       await _fileRepository.deleteBook(event.book);
 
-      final books = List<BookMetaModel>.from(state.books)..remove(event.book);
-      final selectedBook = state.selectedBook == event.book ? null : state.selectedBook;
+      final books = List<BookMetaModel>.from(state.books)
+        ..removeWhere((book) => book.documentId == event.book.documentId);
+      final selectedBook = state.selectedBook?.documentId == event.book.documentId ? null : state.selectedBook;
 
       emit(state.copyWith(books: books, selectedBook: selectedBook, lastError: null));
       emit(state.copyWith(currentPageState: _getCurrentPageState()));

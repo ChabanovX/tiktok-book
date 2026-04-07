@@ -8,6 +8,10 @@ abstract class FileRepository {
     BookFile bf, {
     List<RsvpToken>? tokens,
   });
+  Future<void> updateBookProgress({
+    required String documentId,
+    required int currentIndex,
+  });
   Future<void> deleteBook(BookMetaModel book);
   Future<BookFile?> loadFileFromLocal(String path);
   Future<List<BookMetaModel>> getAllBooks();

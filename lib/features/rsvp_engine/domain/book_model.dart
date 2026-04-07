@@ -27,4 +27,15 @@ extension BookMetaModelX on BookMetaModel {
 
     return bookFile.name;
   }
+
+  double resolveProgress() {
+    if (tokens.isEmpty || currentIndex <= 0) {
+      return 0.0;
+    }
+
+    final progress = (currentIndex + 1) / tokens.length;
+    if (progress <= 0) return 0.0;
+    if (progress >= 1) return 1.0;
+    return progress;
+  }
 }

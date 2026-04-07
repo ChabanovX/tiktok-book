@@ -38,9 +38,12 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
       return;
     }
 
+    final initialIndex = _resolveInitialIndex(event.tokens, event.initialIndex);
+
     _engine = RsvpEngine(
       tokens: event.tokens,
       wpm: event.initialWpm,
+      initialIndex: initialIndex,
       onTokenChanged: (token) {
         add(UpdateCurrentTokenEvent(token));
       },
@@ -52,9 +55,10 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
     emit(
       ReadingState.ready(
         tokens: event.tokens,
-        currentToken: event.tokens.first,
+        currentToken: event.tokens[initialIndex],
         wpm: event.initialWpm,
         totalWords: event.tokens.length,
+        progress: _calculateProgress(initialIndex, event.tokens.length),
       ),
     );
   }
@@ -202,5 +206,32 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
   Future<void> close() {
     _engine?.dispose();
     return super.close();
+  }
+
+  int _resolveInitialIndex(List<RsvpBionicToken> tokens, int initialIndex) {
+    if (tokens.isEmpty) {
+      return 0;
+    }
+
+    if (initialIndex <= 0) {
+      return 0;
+    }
+
+    if (initialIndex >= tokens.length) {
+      return tokens.length - 1;
+    }
+
+    return initialIndex;
+  }
+
+  double _calculateProgress(int currentIndex, int totalWords) {
+    if (totalWords <= 0 || currentIndex <= 0) {
+      return 0.0;
+    }
+
+    final progress = (currentIndex + 1) / totalWords;
+    if (progress <= 0) return 0.0;
+    if (progress >= 1) return 1.0;
+    return progress;
   }
 }

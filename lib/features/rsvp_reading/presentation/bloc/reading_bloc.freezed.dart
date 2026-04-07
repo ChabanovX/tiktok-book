@@ -146,10 +146,10 @@ return dispose(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<RsvpBionicToken> tokens,  int initialWpm)?  initialize,TResult Function()?  start,TResult Function()?  pause,TResult Function()?  resume,TResult Function()?  next,TResult Function()?  previous,TResult Function( int newWpm)?  changeWpm,TResult Function( RsvpBionicToken token)?  updateCurrentToken,TResult Function()?  completed,TResult Function()?  dispose,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<RsvpBionicToken> tokens,  int initialWpm,  int initialIndex)?  initialize,TResult Function()?  start,TResult Function()?  pause,TResult Function()?  resume,TResult Function()?  next,TResult Function()?  previous,TResult Function( int newWpm)?  changeWpm,TResult Function( RsvpBionicToken token)?  updateCurrentToken,TResult Function()?  completed,TResult Function()?  dispose,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case InitializeReadingEvent() when initialize != null:
-return initialize(_that.tokens,_that.initialWpm);case StartReadingEvent() when start != null:
+return initialize(_that.tokens,_that.initialWpm,_that.initialIndex);case StartReadingEvent() when start != null:
 return start();case PauseReadingEvent() when pause != null:
 return pause();case ResumeReadingEvent() when resume != null:
 return resume();case NextWordEvent() when next != null:
@@ -176,10 +176,10 @@ return dispose();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<RsvpBionicToken> tokens,  int initialWpm)  initialize,required TResult Function()  start,required TResult Function()  pause,required TResult Function()  resume,required TResult Function()  next,required TResult Function()  previous,required TResult Function( int newWpm)  changeWpm,required TResult Function( RsvpBionicToken token)  updateCurrentToken,required TResult Function()  completed,required TResult Function()  dispose,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<RsvpBionicToken> tokens,  int initialWpm,  int initialIndex)  initialize,required TResult Function()  start,required TResult Function()  pause,required TResult Function()  resume,required TResult Function()  next,required TResult Function()  previous,required TResult Function( int newWpm)  changeWpm,required TResult Function( RsvpBionicToken token)  updateCurrentToken,required TResult Function()  completed,required TResult Function()  dispose,}) {final _that = this;
 switch (_that) {
 case InitializeReadingEvent():
-return initialize(_that.tokens,_that.initialWpm);case StartReadingEvent():
+return initialize(_that.tokens,_that.initialWpm,_that.initialIndex);case StartReadingEvent():
 return start();case PauseReadingEvent():
 return pause();case ResumeReadingEvent():
 return resume();case NextWordEvent():
@@ -205,10 +205,10 @@ return dispose();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<RsvpBionicToken> tokens,  int initialWpm)?  initialize,TResult? Function()?  start,TResult? Function()?  pause,TResult? Function()?  resume,TResult? Function()?  next,TResult? Function()?  previous,TResult? Function( int newWpm)?  changeWpm,TResult? Function( RsvpBionicToken token)?  updateCurrentToken,TResult? Function()?  completed,TResult? Function()?  dispose,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<RsvpBionicToken> tokens,  int initialWpm,  int initialIndex)?  initialize,TResult? Function()?  start,TResult? Function()?  pause,TResult? Function()?  resume,TResult? Function()?  next,TResult? Function()?  previous,TResult? Function( int newWpm)?  changeWpm,TResult? Function( RsvpBionicToken token)?  updateCurrentToken,TResult? Function()?  completed,TResult? Function()?  dispose,}) {final _that = this;
 switch (_that) {
 case InitializeReadingEvent() when initialize != null:
-return initialize(_that.tokens,_that.initialWpm);case StartReadingEvent() when start != null:
+return initialize(_that.tokens,_that.initialWpm,_that.initialIndex);case StartReadingEvent() when start != null:
 return start();case PauseReadingEvent() when pause != null:
 return pause();case ResumeReadingEvent() when resume != null:
 return resume();case NextWordEvent() when next != null:
@@ -229,7 +229,7 @@ return dispose();case _:
 
 
 class InitializeReadingEvent implements ReadingEvent {
-  const InitializeReadingEvent({required final  List<RsvpBionicToken> tokens, this.initialWpm = 300}): _tokens = tokens;
+  const InitializeReadingEvent({required final  List<RsvpBionicToken> tokens, this.initialWpm = 300, this.initialIndex = 0}): _tokens = tokens;
   
 
  final  List<RsvpBionicToken> _tokens;
@@ -240,6 +240,7 @@ class InitializeReadingEvent implements ReadingEvent {
 }
 
 @JsonKey() final  int initialWpm;
+@JsonKey() final  int initialIndex;
 
 /// Create a copy of ReadingEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -251,16 +252,16 @@ $InitializeReadingEventCopyWith<InitializeReadingEvent> get copyWith => _$Initia
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InitializeReadingEvent&&const DeepCollectionEquality().equals(other._tokens, _tokens)&&(identical(other.initialWpm, initialWpm) || other.initialWpm == initialWpm));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InitializeReadingEvent&&const DeepCollectionEquality().equals(other._tokens, _tokens)&&(identical(other.initialWpm, initialWpm) || other.initialWpm == initialWpm)&&(identical(other.initialIndex, initialIndex) || other.initialIndex == initialIndex));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_tokens),initialWpm);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_tokens),initialWpm,initialIndex);
 
 @override
 String toString() {
-  return 'ReadingEvent.initialize(tokens: $tokens, initialWpm: $initialWpm)';
+  return 'ReadingEvent.initialize(tokens: $tokens, initialWpm: $initialWpm, initialIndex: $initialIndex)';
 }
 
 
@@ -271,7 +272,7 @@ abstract mixin class $InitializeReadingEventCopyWith<$Res> implements $ReadingEv
   factory $InitializeReadingEventCopyWith(InitializeReadingEvent value, $Res Function(InitializeReadingEvent) _then) = _$InitializeReadingEventCopyWithImpl;
 @useResult
 $Res call({
- List<RsvpBionicToken> tokens, int initialWpm
+ List<RsvpBionicToken> tokens, int initialWpm, int initialIndex
 });
 
 
@@ -288,10 +289,11 @@ class _$InitializeReadingEventCopyWithImpl<$Res>
 
 /// Create a copy of ReadingEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? tokens = null,Object? initialWpm = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? tokens = null,Object? initialWpm = null,Object? initialIndex = null,}) {
   return _then(InitializeReadingEvent(
 tokens: null == tokens ? _self._tokens : tokens // ignore: cast_nullable_to_non_nullable
 as List<RsvpBionicToken>,initialWpm: null == initialWpm ? _self.initialWpm : initialWpm // ignore: cast_nullable_to_non_nullable
+as int,initialIndex: null == initialIndex ? _self.initialIndex : initialIndex // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

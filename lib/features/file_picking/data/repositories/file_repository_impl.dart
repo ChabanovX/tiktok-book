@@ -73,6 +73,17 @@ class FileRepositoryImpl implements FileRepository {
   }
 
   @override
+  Future<void> updateBookProgress({
+    required String documentId,
+    required int currentIndex,
+  }) async {
+    await _bookDbService.updateProgress(
+      documentId: documentId,
+      currentIndex: currentIndex,
+    );
+  }
+
+  @override
   Future<void> deleteBook(BookMetaModel book) async {
     await _bookDbService.deleteBook(book.documentId);
     await _cacheService.deleteBook(book.documentId);

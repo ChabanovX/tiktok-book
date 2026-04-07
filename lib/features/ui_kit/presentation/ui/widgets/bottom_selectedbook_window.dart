@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_tokenizer.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class BottomSelectedbookWindow extends StatelessWidget {
@@ -115,7 +117,9 @@ class BottomSelectedbookWindow extends StatelessWidget {
                         unawaited(
                           navigationService.goToReadingScreen(
                             tokens: bionicTokens,
+                            book: selectedBook,
                             bookTitle: title,
+                            rsvpBloc: context.read<RsvpBloc>(),
                           ),
                         );
                       },

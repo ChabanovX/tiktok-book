@@ -5,6 +5,7 @@ class ReadingEvent with _$ReadingEvent {
   const factory ReadingEvent.initialize({
     required List<RsvpBionicToken> tokens,
     @Default(300) int initialWpm,
+    @Default(0) int initialIndex,
   }) = InitializeReadingEvent;
 
   const factory ReadingEvent.start() = StartReadingEvent;

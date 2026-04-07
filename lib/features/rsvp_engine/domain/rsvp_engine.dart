@@ -7,7 +7,8 @@ class RsvpEngine {
     required this.wpm,
     required this.onTokenChanged,
     this.onCompleted,
-  });
+    int initialIndex = 0,
+  }) : _currentIndex = _normalizeIndex(tokens, initialIndex);
   final List<RsvpBionicToken> tokens;
   final int wpm;
   final void Function(RsvpBionicToken token) onTokenChanged;
@@ -16,17 +17,17 @@ class RsvpEngine {
   late final delay = Duration(milliseconds: (60000 / wpm).round());
 
   Timer? _timer;
-  int _currentIndex = 0;
+  int _currentIndex;
 
   int get currentIndex => _currentIndex;
   bool get isPlaying => _timer?.isActive ?? false;
 
-  void start({int startIndex = 0}) {
+  void start({int? startIndex}) {
     if (tokens.isEmpty) return;
 
     dispose();
 
-    _currentIndex = startIndex.clamp(0, tokens.length - 1);
+    _currentIndex = _normalizeIndex(tokens, startIndex ?? _currentIndex);
     onTokenChanged(tokens[_currentIndex]);
 
     _timer = Timer.periodic(delay, (_) {
@@ -69,5 +70,21 @@ class RsvpEngine {
       _currentIndex--;
       onTokenChanged(tokens[_currentIndex]);
     }
+  }
+
+  static int _normalizeIndex(List<RsvpBionicToken> tokens, int index) {
+    if (tokens.isEmpty) {
+      return 0;
+    }
+
+    if (index <= 0) {
+      return 0;
+    }
+
+    if (index >= tokens.length) {
+      return tokens.length - 1;
+    }
+
+    return index;
   }
 }

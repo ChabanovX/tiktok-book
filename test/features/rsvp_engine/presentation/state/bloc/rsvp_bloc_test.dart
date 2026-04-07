@@ -133,6 +133,12 @@ class _FakeFileRepository implements FileRepository {
     BookFile bf, {
     List<RsvpToken>? tokens,
   }) async => _buildBook(name: bf.name);
+
+  @override
+  Future<void> updateBookProgress({
+    required String documentId,
+    required int currentIndex,
+  }) async {}
 }
 
 // class _FakeBookDbService extends BookDbService {
