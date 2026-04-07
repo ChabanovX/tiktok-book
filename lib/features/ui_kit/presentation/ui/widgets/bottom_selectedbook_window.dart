@@ -104,7 +104,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                     child: CupertinoButton(
                       padding: .zero,
                       child: Text(
-                        l10n.selectedBookRead,
+                        selectedBook.isFinished() ? 'Читать снова' : l10n.selectedBookRead,
                         style: appTheme.mainTextStyle.copyWith(
                           color: appTheme.primaryColor,
                           fontWeight: FontWeight.w700,
@@ -114,10 +114,23 @@ class BottomSelectedbookWindow extends StatelessWidget {
                       onPressed: () {
                         final navigationService = getIt<NavigationService>();
                         final bionicTokens = getIt<RsvpTokenizer>().tokenizeBionicFromDomain(selectedBook.tokens);
+
+                        final BookMetaModel bookToPush;
+
+                        // Update selected book with index = 0 since we read again.
+                        if (selectedBook.isFinished()) {
+                          bookToPush = selectedBook.copyWith(currentIndex: 0);
+                          context.read<RsvpBloc>().add(
+                            RsvpEvent.updateBookProgress(documentId: bookToPush.documentId, currentIndex: 0),
+                          );
+                        } else {
+                          bookToPush = selectedBook;
+                        }
+
                         unawaited(
                           navigationService.goToReadingScreen(
                             tokens: bionicTokens,
-                            book: selectedBook,
+                            book: bookToPush,
                             bookTitle: title,
                             rsvpBloc: context.read<RsvpBloc>(),
                           ),

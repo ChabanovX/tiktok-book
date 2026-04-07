@@ -28,6 +28,8 @@ extension BookMetaModelX on BookMetaModel {
     return bookFile.name;
   }
 
+  bool isFinished() => currentIndex == tokens.length - 1;
+
   double resolveProgress() {
     if (tokens.isEmpty || currentIndex <= 0) {
       return 0.0;
