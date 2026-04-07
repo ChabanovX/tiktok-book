@@ -29,13 +29,13 @@ class MainScreen extends StatelessWidget {
           final bookWidgets = state.books
               .map(
                 (b) => BookItem(
-                  key: ValueKey(b),
+                  key: ValueKey(b.documentId),
                   onTap: () => context.read<RsvpBloc>().add(RsvpEvent.toggleSelectBook(book: b)),
                   onDelete: () => context.read<RsvpBloc>().add(RsvpEvent.removeBook(book: b)),
-                  isSelected: state.selectedBook == b,
+                  isSelected: state.selectedBook?.documentId == b.documentId,
                   title: b.resolveTitle(),
                   author: l10n.bookUnknownAuthor,
-                  progress: 0.0,
+                  progress: b.resolveProgress(),
                 ),
               )
               .toList();

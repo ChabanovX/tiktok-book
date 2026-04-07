@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/core/navigation/reading_arguments.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 
 @singleton
 class NavigationService {
@@ -45,13 +47,17 @@ class NavigationService {
 
   Future<void> goToReadingScreen({
     required List<RsvpBionicToken> tokens,
+    required BookMetaModel book,
     required String bookTitle,
+    required RsvpBloc rsvpBloc,
   }) {
     return pushNamed(
       '/reading',
       arguments: ReadingArguments(
         tokens: tokens,
+        book: book,
         bookTitle: bookTitle,
+        rsvpBloc: rsvpBloc,
       ),
     );
   }

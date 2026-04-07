@@ -155,7 +155,7 @@ class LibraryMainScreen extends StatelessWidget {
                               key: ValueKey('bottom-selected-book-empty'),
                             )
                           : BottomSelectedbookWindow(
-                              key: ValueKey(selectedBook.bookFile.name),
+                              key: ValueKey(selectedBook.documentId),
                               selectedBook: selectedBook,
                             ),
                     ),

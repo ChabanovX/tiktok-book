@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/services/book_converter.dart';
 import 'package:rsvp_flutter_app/services/pdf_parser.dart';
@@ -103,6 +104,7 @@ BookMetaModel _buildBook({required String name}) {
   final file = File('/tmp/${name.toLowerCase().replaceAll(' ', '_')}.txt');
 
   return BookMetaModel(
+    documentId: name.toLowerCase().replaceAll(' ', '_'),
     bookFile: BookFile(
       name: name,
       path: file.path,
@@ -127,7 +129,16 @@ class _FakeFileRepository implements FileRepository {
   Future<BookFile?> pickAndLoadFile() async => null;
 
   @override
-  Future<void> saveFile(BookFile bf) async {}
+  Future<BookMetaModel> saveFile(
+    BookFile bf, {
+    List<RsvpToken>? tokens,
+  }) async => _buildBook(name: bf.name);
+
+  @override
+  Future<void> updateBookProgress({
+    required String documentId,
+    required int currentIndex,
+  }) async {}
 }
 
 // class _FakeBookDbService extends BookDbService {

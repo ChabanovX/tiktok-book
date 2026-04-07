@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/cupertino_picker.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/material_picker.dart';
@@ -15,30 +17,40 @@ import 'package:rsvp_flutter_app/l10n/l10n.dart';
 class ReadingScreenWrapper extends StatefulWidget {
   const ReadingScreenWrapper({
     required this.tokens,
+    required this.book,
     required this.bookTitle,
+    required this.rsvpBloc,
     super.key,
   });
 
   final List<RsvpBionicToken> tokens;
+  final BookMetaModel book;
   final String bookTitle;
+  final RsvpBloc rsvpBloc;
 
   @override
   State<ReadingScreenWrapper> createState() => _ReadingScreenWrapperState();
 }
 
 class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
+  static const Duration _progressDebounceDuration = Duration(milliseconds: 750);
+
   late final ReadingBloc _readingBloc;
+  Timer? _progressDebounceTimer;
+  late int _lastPersistedIndex = widget.book.currentIndex;
+  int? _pendingProgressIndex;
+  bool _isReadingBlocClosed = false;
 
   @override
   void initState() {
     super.initState();
     _readingBloc = getIt<ReadingBloc>();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _readingBloc.add(
           ReadingEvent.initialize(
             tokens: widget.tokens,
+            initialIndex: widget.book.currentIndex,
           ),
         );
       }
@@ -47,8 +59,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
 
   @override
   void dispose() {
-    _readingBloc.add(const ReadingEvent.dispose());
-    unawaited(_readingBloc.close());
+    _progressDebounceTimer?.cancel();
+    _closeReadingBloc();
+    _persistCurrentProgress();
     super.dispose();
   }
 
@@ -59,8 +72,10 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
       child: BlocConsumer<ReadingBloc, ReadingState>(
         listener: (context, state) {
           state.maybeWhen(
-            ready: (_, _, _, _, _, isCompleted, _) {
+            ready: (_, currentToken, _, _, _, isCompleted, _) {
+              _scheduleProgressSync(currentToken.index);
               if (isCompleted) {
+                _flushPendingProgress();
                 _showCompletionDialog(context);
               }
             },
@@ -90,6 +105,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                 wordsRead: currentToken.index + 1,
                 onStartStopTap: () {
                   if (isPlaying) {
+                    _flushPendingProgress();
                     _readingBloc.add(const ReadingEvent.pause());
                   } else {
                     _readingBloc.add(const ReadingEvent.resume());
@@ -135,6 +151,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
   }
 
   void _onExit(BuildContext context) {
+    _progressDebounceTimer?.cancel();
+    _closeReadingBloc();
+    _persistCurrentProgress();
     getIt<NavigationService>().pop();
   }
 
@@ -170,6 +189,54 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
       default:
         return message;
     }
+  }
+
+  void _scheduleProgressSync(int currentIndex) {
+    if (currentIndex == _lastPersistedIndex) {
+      return;
+    }
+
+    _pendingProgressIndex = currentIndex;
+    _progressDebounceTimer?.cancel();
+    _progressDebounceTimer = Timer(_progressDebounceDuration, _flushPendingProgress);
+  }
+
+  void _flushPendingProgress() {
+    final pendingProgressIndex = _pendingProgressIndex;
+    if (pendingProgressIndex == null || pendingProgressIndex == _lastPersistedIndex) {
+      return;
+    }
+
+    widget.rsvpBloc.add(
+      RsvpEvent.updateBookProgress(
+        documentId: widget.book.documentId,
+        currentIndex: pendingProgressIndex,
+      ),
+    );
+    _lastPersistedIndex = pendingProgressIndex;
+    _pendingProgressIndex = null;
+  }
+
+  void _persistCurrentProgress() {
+    final currentIndex = _readingBloc.state.maybeWhen(
+      ready: (_, currentToken, _, _, _, _, _) => currentToken.index,
+      orElse: () => null,
+    );
+
+    if (currentIndex != null) {
+      _pendingProgressIndex = currentIndex;
+    }
+
+    _flushPendingProgress();
+  }
+
+  void _closeReadingBloc() {
+    if (_isReadingBlocClosed) {
+      return;
+    }
+
+    _isReadingBlocClosed = true;
+    unawaited(_readingBloc.close());
   }
 }
 

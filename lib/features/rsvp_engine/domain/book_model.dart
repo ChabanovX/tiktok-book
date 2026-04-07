@@ -8,8 +8,11 @@ part 'book_model.freezed.dart';
 abstract class BookMetaModel with _$BookMetaModel {
   const factory BookMetaModel({
     required BookFile bookFile,
+    required String documentId,
 
     String? name,
+
+    @Default(0) int currentIndex,
 
     @Default([]) List<RsvpToken> tokens,
   }) = _BookMetaModel;
@@ -23,5 +26,18 @@ extension BookMetaModelX on BookMetaModel {
     }
 
     return bookFile.name;
+  }
+
+  bool isFinished() => currentIndex == tokens.length - 1;
+
+  double resolveProgress() {
+    if (tokens.isEmpty || currentIndex <= 0) {
+      return 0.0;
+    }
+
+    final progress = (currentIndex + 1) / tokens.length;
+    if (progress <= 0) return 0.0;
+    if (progress >= 1) return 1.0;
+    return progress;
   }
 }
