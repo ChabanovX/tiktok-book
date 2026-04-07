@@ -24,6 +24,8 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
   Color get errorStateAccentColor;
   Color get desctructionColor;
   TextStyle get titleTextStyle;
+  TextStyle get rsvpTextStyleSemiBold;
+  TextStyle get rsvpTextStyleRegular;
   TextStyle get appBarTitleTextStyle;
   TextStyle get mainTextStyle;
   TextStyle get bookTitleText;
@@ -46,6 +48,8 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
     Color? errorStateAccentColor,
     Color? desctructionColor,
     TextStyle? titleTextStyle,
+    TextStyle? rsvpTextStyleSemiBold,
+    TextStyle? rsvpTextStyleRegular,
     TextStyle? appBarTitleTextStyle,
     TextStyle? mainTextStyle,
     TextStyle? bookTitleText,
@@ -74,6 +78,9 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
           errorStateAccentColor ?? this.errorStateAccentColor,
       desctructionColor: desctructionColor ?? this.desctructionColor,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      rsvpTextStyleSemiBold:
+          rsvpTextStyleSemiBold ?? this.rsvpTextStyleSemiBold,
+      rsvpTextStyleRegular: rsvpTextStyleRegular ?? this.rsvpTextStyleRegular,
       appBarTitleTextStyle: appBarTitleTextStyle ?? this.appBarTitleTextStyle,
       mainTextStyle: mainTextStyle ?? this.mainTextStyle,
       bookTitleText: bookTitleText ?? this.bookTitleText,
@@ -140,6 +147,16 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
         t,
       )!,
       titleTextStyle: TextStyle.lerp(titleTextStyle, other.titleTextStyle, t)!,
+      rsvpTextStyleSemiBold: TextStyle.lerp(
+        rsvpTextStyleSemiBold,
+        other.rsvpTextStyleSemiBold,
+        t,
+      )!,
+      rsvpTextStyleRegular: TextStyle.lerp(
+        rsvpTextStyleRegular,
+        other.rsvpTextStyleRegular,
+        t,
+      )!,
       appBarTitleTextStyle: TextStyle.lerp(
         appBarTitleTextStyle,
         other.appBarTitleTextStyle,
@@ -218,6 +235,14 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
               other.titleTextStyle,
             ) &&
             const DeepCollectionEquality().equals(
+              rsvpTextStyleSemiBold,
+              other.rsvpTextStyleSemiBold,
+            ) &&
+            const DeepCollectionEquality().equals(
+              rsvpTextStyleRegular,
+              other.rsvpTextStyleRegular,
+            ) &&
+            const DeepCollectionEquality().equals(
               appBarTitleTextStyle,
               other.appBarTitleTextStyle,
             ) &&
@@ -241,7 +266,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       runtimeType.hashCode,
       const DeepCollectionEquality().hash(backgroundColor),
       const DeepCollectionEquality().hash(backgroundColor2),
@@ -257,12 +282,14 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       const DeepCollectionEquality().hash(errorStateAccentColor),
       const DeepCollectionEquality().hash(desctructionColor),
       const DeepCollectionEquality().hash(titleTextStyle),
+      const DeepCollectionEquality().hash(rsvpTextStyleSemiBold),
+      const DeepCollectionEquality().hash(rsvpTextStyleRegular),
       const DeepCollectionEquality().hash(appBarTitleTextStyle),
       const DeepCollectionEquality().hash(mainTextStyle),
       const DeepCollectionEquality().hash(bookTitleText),
       const DeepCollectionEquality().hash(subTextStyle),
       const DeepCollectionEquality().hash(buttonTextStyle),
-    );
+    ]);
   }
 }
 
@@ -283,6 +310,8 @@ extension AppThemeBuildContextProps on BuildContext {
   Color get errorStateAccentColor => appTheme.errorStateAccentColor;
   Color get desctructionColor => appTheme.desctructionColor;
   TextStyle get titleTextStyle => appTheme.titleTextStyle;
+  TextStyle get rsvpTextStyleSemiBold => appTheme.rsvpTextStyleSemiBold;
+  TextStyle get rsvpTextStyleRegular => appTheme.rsvpTextStyleRegular;
   TextStyle get appBarTitleTextStyle => appTheme.appBarTitleTextStyle;
   TextStyle get mainTextStyle => appTheme.mainTextStyle;
   TextStyle get bookTitleText => appTheme.bookTitleText;

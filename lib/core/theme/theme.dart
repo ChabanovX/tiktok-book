@@ -21,6 +21,8 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     required this.errorStateAccentColor,
     required this.desctructionColor,
     required this.titleTextStyle,
+    required this.rsvpTextStyleSemiBold,
+    required this.rsvpTextStyleRegular,
     required this.appBarTitleTextStyle,
     required this.mainTextStyle,
     required this.bookTitleText,
@@ -45,7 +47,19 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
       desctructionColor: CupertinoColors.destructiveRed,
       titleTextStyle: TextStyle(
         fontSize: 36,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w700,
+        color: Color.fromRGBO(25, 28, 29, 1),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      rsvpTextStyleSemiBold: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w600,
+        color: Color.fromRGBO(25, 28, 29, 1),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      rsvpTextStyleRegular: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w400,
         color: Color.fromRGBO(25, 28, 29, 1),
         fontFamily: 'SpaceGrotesk',
       ),
@@ -82,6 +96,72 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     );
   }
 
+  factory AppTheme.dark() {
+    return const AppTheme(
+      backgroundColor: Color(0xFF0B1220),
+      backgroundColor2: Color(0xFF121B2D),
+      primaryColor: Color(0xFF8CB4FF),
+      secondaryColor: Color(0xFF4A8DFF),
+      dividerColorMuted: Color.fromRGBO(226, 232, 240, 0.18),
+      addBookCardBorderColor: Color.fromRGBO(74, 141, 255, 0.32),
+      addBookCardBackgroundColor: Color.fromRGBO(74, 141, 255, 0.12),
+      stateDescriptionColor: Color.fromRGBO(226, 232, 240, 0.78),
+      stateCardShadowColor: Color(0x66000000),
+      emptyStateAccentBackgroundColor: Color(0xFF31211B),
+      emptyStateAccentColor: Color(0xFFFFB089),
+      errorStateAccentColor: Color(0xFFFF9A73),
+      desctructionColor: CupertinoColors.systemRed,
+      titleTextStyle: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFFF8FAFC),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      appBarTitleTextStyle: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFFF8FAFC),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      mainTextStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFFF8FAFC),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      rsvpTextStyleSemiBold: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w600,
+        color: Color(0xFFF8FAFC),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      rsvpTextStyleRegular: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFFF8FAFC),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      bookTitleText: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFFE2E8F0),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      subTextStyle: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFFE2E8F0),
+        fontFamily: 'Manrope',
+      ),
+      buttonTextStyle: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF8CB4FF),
+        fontFamily: 'Manrope',
+      ),
+    );
+  }
+
   @override
   final Color backgroundColor;
   @override
@@ -111,6 +191,10 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   @override
   final TextStyle titleTextStyle;
   @override
+  final TextStyle rsvpTextStyleSemiBold;
+  @override
+  final TextStyle rsvpTextStyleRegular;
+  @override
   final TextStyle appBarTitleTextStyle;
   @override
   final TextStyle mainTextStyle;
@@ -123,24 +207,52 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
 }
 
 ThemeData buildLightTheme() {
-  final appTheme = AppTheme.light();
+  return _buildThemeData(
+    appTheme: AppTheme.light(),
+    brightness: Brightness.light,
+  );
+}
+
+ThemeData buildDarkTheme() {
+  return _buildThemeData(
+    appTheme: AppTheme.dark(),
+    brightness: Brightness.dark,
+  );
+}
+
+ThemeData _buildThemeData({
+  required AppTheme appTheme,
+  required Brightness brightness,
+}) {
+  final onSurface = appTheme.mainTextStyle.color ?? const Color.fromRGBO(25, 28, 29, 1);
+  final colorScheme = brightness == Brightness.light
+      ? ColorScheme.light(
+          primary: appTheme.primaryColor,
+          secondary: appTheme.secondaryColor,
+          surface: appTheme.backgroundColor,
+          error: appTheme.errorStateAccentColor,
+          onSecondary: Colors.white,
+          onSurface: onSurface,
+        )
+      : ColorScheme.dark(
+          primary: appTheme.primaryColor,
+          secondary: appTheme.secondaryColor,
+          surface: appTheme.backgroundColor,
+          error: appTheme.errorStateAccentColor,
+          onSecondary: Colors.white,
+          onSurface: onSurface,
+        );
 
   return ThemeData(
     useMaterial3: true,
-    brightness: Brightness.light,
+    brightness: brightness,
     primaryColor: appTheme.primaryColor,
     scaffoldBackgroundColor: appTheme.backgroundColor,
     canvasColor: appTheme.backgroundColor,
     cardColor: appTheme.backgroundColor2,
     dividerColor: appTheme.dividerColorMuted,
     shadowColor: appTheme.stateCardShadowColor,
-    colorScheme: ColorScheme.light(
-      primary: appTheme.primaryColor,
-      secondary: appTheme.secondaryColor,
-      surface: appTheme.backgroundColor,
-      onSecondary: Colors.white,
-      onSurface: appTheme.mainTextStyle.color ?? const Color.fromRGBO(25, 28, 29, 1),
-    ),
+    colorScheme: colorScheme,
     textTheme: TextTheme(
       displayLarge: appTheme.titleTextStyle,
       displayMedium: appTheme.appBarTitleTextStyle,

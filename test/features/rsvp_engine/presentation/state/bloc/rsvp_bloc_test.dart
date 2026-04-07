@@ -115,6 +115,12 @@ BookMetaModel _buildBook({required String name}) {
 
 class _FakeFileRepository implements FileRepository {
   @override
+  Future<void> deleteBook(BookMetaModel book) async {}
+
+  @override
+  Future<List<BookMetaModel>> getAllBooks() async => const [];
+
+  @override
   Future<BookFile?> loadFileFromLocal(String path) async => null;
 
   @override
@@ -123,6 +129,12 @@ class _FakeFileRepository implements FileRepository {
   @override
   Future<void> saveFile(BookFile bf) async {}
 }
+
+// class _FakeBookDbService extends BookDbService {
+//   _FakeBookDbService() : super(_database);
+
+//   static final AppDatabase _database = AppDatabase();
+// }
 
 class _FakeBookConverter extends BookConverter {
   _FakeBookConverter()

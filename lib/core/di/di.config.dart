@@ -26,6 +26,8 @@ import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_
     as _i69;
 import 'package:rsvp_flutter_app/features/file_picking/domain/usecases/import_book_file.dart'
     as _i749;
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_tokenizer.dart'
+    as _i491;
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart'
     as _i422;
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart'
@@ -48,6 +50,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i431.NavigationService>(() => _i431.NavigationService());
     gh.singleton<_i51.FilePickerDataSource>(() => _i51.FilePickerDataSource());
     gh.singleton<_i303.FileLoaderService>(() => _i303.FileLoaderService());
+    gh.singleton<_i491.RsvpTokenizer>(() => const _i491.RsvpTokenizer());
     gh.singleton<_i332.CacheService>(() => _i332.CacheService());
     gh.singleton<_i1019.TextProcessor>(() => _i1019.TextProcessor());
     gh.lazySingleton<_i500.PdfParser>(() => _i500.PdfParser());

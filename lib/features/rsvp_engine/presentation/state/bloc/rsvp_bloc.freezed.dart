@@ -478,7 +478,7 @@ as int,
 /// @nodoc
 mixin _$RsvpState {
 
- BookMetaModel? get selectedBook; bool get isParsing; RSVPError? get lastError; List<BookMetaModel> get books;
+ LibraryMainScreenState get currentPageState; BookMetaModel? get selectedBook; bool get isAddingBook; RSVPError? get lastError; List<BookMetaModel> get books;
 /// Create a copy of RsvpState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -489,16 +489,16 @@ $RsvpStateCopyWith<RsvpState> get copyWith => _$RsvpStateCopyWithImpl<RsvpState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RsvpState&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isParsing, isParsing) || other.isParsing == isParsing)&&(identical(other.lastError, lastError) || other.lastError == lastError)&&const DeepCollectionEquality().equals(other.books, books));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RsvpState&&(identical(other.currentPageState, currentPageState) || other.currentPageState == currentPageState)&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isAddingBook, isAddingBook) || other.isAddingBook == isAddingBook)&&(identical(other.lastError, lastError) || other.lastError == lastError)&&const DeepCollectionEquality().equals(other.books, books));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,selectedBook,isParsing,lastError,const DeepCollectionEquality().hash(books));
+int get hashCode => Object.hash(runtimeType,currentPageState,selectedBook,isAddingBook,lastError,const DeepCollectionEquality().hash(books));
 
 @override
 String toString() {
-  return 'RsvpState(selectedBook: $selectedBook, isParsing: $isParsing, lastError: $lastError, books: $books)';
+  return 'RsvpState(currentPageState: $currentPageState, selectedBook: $selectedBook, isAddingBook: $isAddingBook, lastError: $lastError, books: $books)';
 }
 
 
@@ -509,7 +509,7 @@ abstract mixin class $RsvpStateCopyWith<$Res>  {
   factory $RsvpStateCopyWith(RsvpState value, $Res Function(RsvpState) _then) = _$RsvpStateCopyWithImpl;
 @useResult
 $Res call({
- BookMetaModel? selectedBook, bool isParsing, RSVPError? lastError, List<BookMetaModel> books
+ LibraryMainScreenState currentPageState, BookMetaModel? selectedBook, bool isAddingBook, RSVPError? lastError, List<BookMetaModel> books
 });
 
 
@@ -526,10 +526,11 @@ class _$RsvpStateCopyWithImpl<$Res>
 
 /// Create a copy of RsvpState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? selectedBook = freezed,Object? isParsing = null,Object? lastError = freezed,Object? books = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? currentPageState = null,Object? selectedBook = freezed,Object? isAddingBook = null,Object? lastError = freezed,Object? books = null,}) {
   return _then(_self.copyWith(
-selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
-as BookMetaModel?,isParsing: null == isParsing ? _self.isParsing : isParsing // ignore: cast_nullable_to_non_nullable
+currentPageState: null == currentPageState ? _self.currentPageState : currentPageState // ignore: cast_nullable_to_non_nullable
+as LibraryMainScreenState,selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
+as BookMetaModel?,isAddingBook: null == isAddingBook ? _self.isAddingBook : isAddingBook // ignore: cast_nullable_to_non_nullable
 as bool,lastError: freezed == lastError ? _self.lastError : lastError // ignore: cast_nullable_to_non_nullable
 as RSVPError?,books: null == books ? _self.books : books // ignore: cast_nullable_to_non_nullable
 as List<BookMetaModel>,
@@ -641,10 +642,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BookMetaModel? selectedBook,  bool isParsing,  RSVPError? lastError,  List<BookMetaModel> books)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LibraryMainScreenState currentPageState,  BookMetaModel? selectedBook,  bool isAddingBook,  RSVPError? lastError,  List<BookMetaModel> books)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RsvpState() when $default != null:
-return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);case _:
+return $default(_that.currentPageState,_that.selectedBook,_that.isAddingBook,_that.lastError,_that.books);case _:
   return orElse();
 
 }
@@ -662,10 +663,10 @@ return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BookMetaModel? selectedBook,  bool isParsing,  RSVPError? lastError,  List<BookMetaModel> books)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LibraryMainScreenState currentPageState,  BookMetaModel? selectedBook,  bool isAddingBook,  RSVPError? lastError,  List<BookMetaModel> books)  $default,) {final _that = this;
 switch (_that) {
 case _RsvpState():
-return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);case _:
+return $default(_that.currentPageState,_that.selectedBook,_that.isAddingBook,_that.lastError,_that.books);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -682,10 +683,10 @@ return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BookMetaModel? selectedBook,  bool isParsing,  RSVPError? lastError,  List<BookMetaModel> books)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LibraryMainScreenState currentPageState,  BookMetaModel? selectedBook,  bool isAddingBook,  RSVPError? lastError,  List<BookMetaModel> books)?  $default,) {final _that = this;
 switch (_that) {
 case _RsvpState() when $default != null:
-return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);case _:
+return $default(_that.currentPageState,_that.selectedBook,_that.isAddingBook,_that.lastError,_that.books);case _:
   return null;
 
 }
@@ -697,11 +698,12 @@ return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);
 
 
 class _RsvpState implements RsvpState {
-  const _RsvpState({this.selectedBook, this.isParsing = false, this.lastError, final  List<BookMetaModel> books = const []}): _books = books;
+  const _RsvpState({required this.currentPageState, this.selectedBook, this.isAddingBook = false, this.lastError, final  List<BookMetaModel> books = const []}): _books = books;
   
 
+@override final  LibraryMainScreenState currentPageState;
 @override final  BookMetaModel? selectedBook;
-@override@JsonKey() final  bool isParsing;
+@override@JsonKey() final  bool isAddingBook;
 @override final  RSVPError? lastError;
  final  List<BookMetaModel> _books;
 @override@JsonKey() List<BookMetaModel> get books {
@@ -721,16 +723,16 @@ _$RsvpStateCopyWith<_RsvpState> get copyWith => __$RsvpStateCopyWithImpl<_RsvpSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RsvpState&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isParsing, isParsing) || other.isParsing == isParsing)&&(identical(other.lastError, lastError) || other.lastError == lastError)&&const DeepCollectionEquality().equals(other._books, _books));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RsvpState&&(identical(other.currentPageState, currentPageState) || other.currentPageState == currentPageState)&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isAddingBook, isAddingBook) || other.isAddingBook == isAddingBook)&&(identical(other.lastError, lastError) || other.lastError == lastError)&&const DeepCollectionEquality().equals(other._books, _books));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,selectedBook,isParsing,lastError,const DeepCollectionEquality().hash(_books));
+int get hashCode => Object.hash(runtimeType,currentPageState,selectedBook,isAddingBook,lastError,const DeepCollectionEquality().hash(_books));
 
 @override
 String toString() {
-  return 'RsvpState(selectedBook: $selectedBook, isParsing: $isParsing, lastError: $lastError, books: $books)';
+  return 'RsvpState(currentPageState: $currentPageState, selectedBook: $selectedBook, isAddingBook: $isAddingBook, lastError: $lastError, books: $books)';
 }
 
 
@@ -741,7 +743,7 @@ abstract mixin class _$RsvpStateCopyWith<$Res> implements $RsvpStateCopyWith<$Re
   factory _$RsvpStateCopyWith(_RsvpState value, $Res Function(_RsvpState) _then) = __$RsvpStateCopyWithImpl;
 @override @useResult
 $Res call({
- BookMetaModel? selectedBook, bool isParsing, RSVPError? lastError, List<BookMetaModel> books
+ LibraryMainScreenState currentPageState, BookMetaModel? selectedBook, bool isAddingBook, RSVPError? lastError, List<BookMetaModel> books
 });
 
 
@@ -758,10 +760,11 @@ class __$RsvpStateCopyWithImpl<$Res>
 
 /// Create a copy of RsvpState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? selectedBook = freezed,Object? isParsing = null,Object? lastError = freezed,Object? books = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? currentPageState = null,Object? selectedBook = freezed,Object? isAddingBook = null,Object? lastError = freezed,Object? books = null,}) {
   return _then(_RsvpState(
-selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
-as BookMetaModel?,isParsing: null == isParsing ? _self.isParsing : isParsing // ignore: cast_nullable_to_non_nullable
+currentPageState: null == currentPageState ? _self.currentPageState : currentPageState // ignore: cast_nullable_to_non_nullable
+as LibraryMainScreenState,selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
+as BookMetaModel?,isAddingBook: null == isAddingBook ? _self.isAddingBook : isAddingBook // ignore: cast_nullable_to_non_nullable
 as bool,lastError: freezed == lastError ? _self.lastError : lastError // ignore: cast_nullable_to_non_nullable
 as RSVPError?,books: null == books ? _self._books : books // ignore: cast_nullable_to_non_nullable
 as List<BookMetaModel>,

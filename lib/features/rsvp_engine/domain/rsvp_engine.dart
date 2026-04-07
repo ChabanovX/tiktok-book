@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 
 class RsvpEngine {
   RsvpEngine({
@@ -8,9 +8,9 @@ class RsvpEngine {
     required this.onTokenChanged,
     this.onCompleted,
   });
-  final List<RsvpToken> tokens;
+  final List<RsvpBionicToken> tokens;
   final int wpm;
-  final void Function(RsvpToken token) onTokenChanged;
+  final void Function(RsvpBionicToken token) onTokenChanged;
   final void Function()? onCompleted;
 
   late final delay = Duration(milliseconds: (60000 / wpm).round());

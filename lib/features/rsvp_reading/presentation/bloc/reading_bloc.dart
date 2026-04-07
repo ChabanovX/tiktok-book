@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_engine.dart';
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 
 part 'reading_event.dart';
 part 'reading_state.dart';
 part 'reading_bloc.freezed.dart';
+
+const readingEmptyTextErrorKey = 'reading.emptyText';
 
 @injectable
 class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
@@ -32,7 +34,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
     Emitter<ReadingState> emit,
   ) async {
     if (event.tokens.isEmpty) {
-      emit(const ReadingState.error(message: 'Нет текста для чтения'));
+      emit(const ReadingState.error(message: readingEmptyTextErrorKey));
       return;
     }
 
