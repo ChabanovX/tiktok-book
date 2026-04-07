@@ -63,6 +63,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get selectedBookRead => 'Читать';
 
   @override
+  String get selectedBookReadAgain => 'Читать снова';
+
+  @override
   String bookWordCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

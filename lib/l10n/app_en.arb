@@ -72,6 +72,10 @@
   "@selectedBookRead": {
     "description": "Action label to start reading the selected book."
   },
+  "selectedBookReadAgain": "Read again",
+  "@selectedBookReadAgain": {
+    "description": "Action label to restart reading a finished book."
+  },
   "bookWordCount": "{count, plural, =0{0 words} one{1 word} other{{count} words}}",
   "@bookWordCount": {
     "description": "Word count label for a selected book.",

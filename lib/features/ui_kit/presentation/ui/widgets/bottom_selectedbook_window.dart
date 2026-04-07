@@ -104,7 +104,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                     child: CupertinoButton(
                       padding: .zero,
                       child: Text(
-                        selectedBook.isFinished() ? 'Читать снова' : l10n.selectedBookRead,
+                        selectedBook.isFinished() ? l10n.selectedBookReadAgain : l10n.selectedBookRead,
                         style: appTheme.mainTextStyle.copyWith(
                           color: appTheme.primaryColor,
                           fontWeight: FontWeight.w700,

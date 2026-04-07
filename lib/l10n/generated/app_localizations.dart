@@ -200,6 +200,12 @@ abstract class AppLocalizations {
   /// **'Read'**
   String get selectedBookRead;
 
+  /// Action label to restart reading a finished book.
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get selectedBookReadAgain;
+
   /// Word count label for a selected book.
   ///
   /// In en, this message translates to:
