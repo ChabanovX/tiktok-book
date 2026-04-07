@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/core/logger/logger.dart';
-import 'package:rsvp_flutter_app/features/books/data/database_service.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
