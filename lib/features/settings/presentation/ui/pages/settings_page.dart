@@ -138,6 +138,7 @@ class SettingsPage extends StatelessWidget {
                         isSelected: selectedThemeMode == ThemeMode.dark,
                         onTap: () => appThemeController.setThemeMode(ThemeMode.dark),
                       ),
+                      const SizedBox(height: 150),
                     ],
                   ),
                 ),
