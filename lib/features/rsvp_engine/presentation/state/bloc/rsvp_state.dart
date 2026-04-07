@@ -6,6 +6,8 @@ abstract class RsvpState with _$RsvpState {
     BookMetaModel? selectedBook,
     @Default(false) bool isAddingBook,
 
+    @Default(false) bool isInitializing,
+
     RSVPError? lastError,
 
     @Default([]) List<BookMetaModel> books,
