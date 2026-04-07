@@ -18,7 +18,9 @@ class MainScreen extends StatelessWidget {
       create: (context) => getIt<RsvpBloc>()..add(const RsvpEvent.started()),
       child: BlocBuilder<RsvpBloc, RsvpState>(
         builder: (context, state) {
-          final LibraryMainScreenState screenState = switch (state) {
+          final LibraryMainScreenState screenState = switch (state.currentPageState) {
+            .initial => .initial,
+            .initializing => .initializing,
             _ when state.lastError != null => .importError,
             _ when state.books.isNotEmpty => .nonEmpty,
             _ => .empty,
