@@ -118,6 +118,9 @@ BookMetaModel _buildBook({required String name}) {
 
 class _FakeFileRepository implements FileRepository {
   @override
+  Future<List<BookMetaModel>> getAllBooks() async => const [];
+
+  @override
   Future<BookFile?> loadFileFromLocal(String path) async => null;
 
   @override
