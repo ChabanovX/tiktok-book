@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
@@ -8,6 +7,8 @@ import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/cupertino_picker.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/material_picker.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 
 class ReadingScreenWrapper extends StatefulWidget {
@@ -184,8 +185,6 @@ class ReadingScreen extends StatelessWidget {
   final String wordsReadLabel;
   final int wpm;
 
-  static const List<int> _speedOptions = [200, 250, 300, 350, 400, 450, 500, 550, 600];
-
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
@@ -209,7 +208,6 @@ class ReadingScreen extends StatelessWidget {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final totalHeight = constraints.maxHeight;
-
                   final halfHeight = (totalHeight - 56) / 2;
 
                   final topSpacing = (constraints.maxHeight * 0.10).clamp(72.0, 168.0);
@@ -320,86 +318,13 @@ class ReadingScreen extends StatelessWidget {
       return;
     }
 
-    var selectedWpm = wpm;
-    final initialIndex = _speedOptions.indexOf(wpm);
-    final pickerController = FixedExtentScrollController(
-      initialItem: initialIndex >= 0 ? initialIndex : 0,
-    );
+    final platform = Theme.of(context).platform;
+    if (platform == TargetPlatform.iOS || platform == TargetPlatform.macOS) {
+      await showCupertinoSpeedPicker(context, wpm, onChangeWpm);
+      return;
+    }
 
-    await showCupertinoModalPopup<void>(
-      context: context,
-      builder: (context) {
-        final backgroundColor = CupertinoColors.systemBackground.resolveFrom(context);
-        final separatorColor = CupertinoColors.separator.resolveFrom(context);
-
-        return StatefulBuilder(
-          builder: (context, setModalState) {
-            return Container(
-              height: 300,
-              color: backgroundColor,
-              child: Column(
-                children: [
-                  Container(
-                    height: 52,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: separatorColor),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Cancel'),
-                        ),
-                        Text(
-                          'Reading speed',
-                          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {
-                            onChangeWpm(selectedWpm);
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('Done'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: CupertinoPicker(
-                      scrollController: pickerController,
-                      itemExtent: 44,
-                      useMagnifier: true,
-                      magnification: 1.06,
-                      onSelectedItemChanged: (index) {
-                        setModalState(() {
-                          selectedWpm = _speedOptions[index];
-                        });
-                      },
-                      children: _speedOptions
-                          .map(
-                            (value) => Center(
-                              child: Text('$value WPM'),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
+    await showMaterialSpeedPicker(context, wpm, onChangeWpm);
   }
 }
 
