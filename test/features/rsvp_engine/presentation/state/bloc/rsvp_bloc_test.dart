@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rsvp_flutter_app/core/db/app_database.dart';
+import 'package:rsvp_flutter_app/features/books/data/database_service.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
@@ -16,6 +18,7 @@ void main() {
 
     setUp(() {
       bloc = RsvpBloc(
+        bookDbService: _FakeBookDbService(),
         fileRepository: _FakeFileRepository(),
         bookConverter: _FakeBookConverter(),
       );
@@ -122,6 +125,12 @@ class _FakeFileRepository implements FileRepository {
 
   @override
   Future<void> saveFile(BookFile bf) async {}
+}
+
+class _FakeBookDbService extends BookDbService {
+  _FakeBookDbService() : super(_database);
+
+  static final AppDatabase _database = AppDatabase();
 }
 
 class _FakeBookConverter extends BookConverter {
