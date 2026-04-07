@@ -15,10 +15,12 @@ class MainScreen extends StatelessWidget {
     final l10n = context.l10n;
 
     return BlocProvider(
-      create: (context) => getIt<RsvpBloc>(),
+      create: (context) => getIt<RsvpBloc>()..add(const RsvpEvent.started()),
       child: BlocBuilder<RsvpBloc, RsvpState>(
         builder: (context, state) {
-          final LibraryMainScreenState screenState = switch (state) {
+          final LibraryMainScreenState screenState = switch (state.currentPageState) {
+            .initial => .initial,
+            .initializing => .initializing,
             _ when state.lastError != null => .importError,
             _ when state.books.isNotEmpty => .nonEmpty,
             _ => .empty,

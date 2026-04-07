@@ -10,7 +10,7 @@ void main() {
         MaterialApp(
           theme: buildLightTheme(),
           home: LibraryMainScreen(
-            state: LibraryMainScreenState.nonEmpty,
+            state: .nonEmpty,
             onAddBookTap: () {},
             bookItems: const [
               BookItem(

@@ -128,6 +128,18 @@ abstract class AppLocalizations {
   /// **'Upload a book'**
   String get libraryEmptyButton;
 
+  /// Title shown while the library is loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing your library'**
+  String get libraryLoadingTitle;
+
+  /// Description shown while the library is loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking saved books and preparing everything for reading.'**
+  String get libraryLoadingDescription;
+
   /// Import error state title.
   ///
   /// In en, this message translates to:

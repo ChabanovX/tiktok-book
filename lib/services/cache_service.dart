@@ -46,4 +46,14 @@ class CacheService {
 
     return words;
   }
+
+  Future<void> deleteBook(String id) async {
+    final dir = await getApplicationDocumentsDirectory();
+    final path = '${dir.path}/cache/$id.json';
+    final file = File(path);
+
+    if (file.existsSync()) {
+      await file.delete();
+    }
+  }
 }

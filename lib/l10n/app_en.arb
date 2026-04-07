@@ -24,6 +24,14 @@
   "@libraryEmptyButton": {
     "description": "Button label in the empty library state."
   },
+  "libraryLoadingTitle": "Preparing your library",
+  "@libraryLoadingTitle": {
+    "description": "Title shown while the library is loading."
+  },
+  "libraryLoadingDescription": "Checking saved books and preparing everything for reading.",
+  "@libraryLoadingDescription": {
+    "description": "Description shown while the library is loading."
+  },
   "libraryImportErrorTitle": "Import error",
   "@libraryImportErrorTitle": {
     "description": "Import error state title."

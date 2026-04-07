@@ -24,6 +24,14 @@
   "@libraryEmptyButton": {
     "description": "Кнопка в пустом состоянии библиотеки."
   },
+  "libraryLoadingTitle": "Подготавливаем библиотеку",
+  "@libraryLoadingTitle": {
+    "description": "Заголовок состояния загрузки библиотеки."
+  },
+  "libraryLoadingDescription": "Проверяем сохранённые книги и готовим всё к чтению.",
+  "@libraryLoadingDescription": {
+    "description": "Описание состояния загрузки библиотеки."
+  },
   "libraryImportErrorTitle": "Ошибка импорта",
   "@libraryImportErrorTitle": {
     "description": "Заголовок состояния ошибки импорта."

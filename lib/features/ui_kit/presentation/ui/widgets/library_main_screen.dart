@@ -8,12 +8,6 @@ import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/bottom_
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/primary_button.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
-enum LibraryMainScreenState {
-  nonEmpty,
-  empty,
-  importError,
-}
-
 const Duration _bookSelectionAnimationDuration = Constants.basicAnimationDuration;
 const Curve _bookSelectionAnimationCurve = Constants.basicAnimationCurve;
 
@@ -175,11 +169,21 @@ class LibraryMainScreen extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
+    // For identifying the same widget for unnecessary transition removal.
+    final switcherKey = switch (state) {
+      LibraryMainScreenState.initial => 'loading',
+      LibraryMainScreenState.initializing => 'loading',
+      LibraryMainScreenState.empty => 'empty',
+      LibraryMainScreenState.importError => 'error',
+      LibraryMainScreenState.nonEmpty => 'non_empty',
+    };
+
     return AnimatedSwitcher(
       duration: _bookSelectionAnimationDuration,
       switchInCurve: _bookSelectionAnimationCurve,
       switchOutCurve: _bookSelectionAnimationCurve,
       layoutBuilder: (currentChild, previousChildren) {
+        if (previousChildren.isNotEmpty && currentChild == previousChildren.last) return previousChildren.first;
         return Stack(
           fit: StackFit.expand,
           children: [
@@ -206,7 +210,7 @@ class LibraryMainScreen extends StatelessWidget {
         );
       },
       child: KeyedSubtree(
-        key: ValueKey(state),
+        key: ValueKey(switcherKey),
         child: _buildBodyContent(context),
       ),
     );
@@ -222,6 +226,8 @@ class LibraryMainScreen extends StatelessWidget {
     final resolvedEmptyTitle = emptyTitle ?? l10n.libraryEmptyTitle;
     final resolvedEmptyDescription = emptyDescription ?? l10n.libraryEmptyDescription;
     final resolvedEmptyButtonLabel = emptyButtonLabel ?? l10n.libraryEmptyButton;
+    final resolvedLoadingTitle = l10n.libraryLoadingTitle;
+    final resolvedLoadingDescription = l10n.libraryLoadingDescription;
     final resolvedImportErrorTitle = importErrorTitle ?? l10n.libraryImportErrorTitle;
     final resolvedImportErrorDescription = importErrorDescription ?? l10n.libraryImportErrorDescription;
     final resolvedImportErrorButtonLabel = importErrorButtonLabel ?? l10n.libraryImportErrorButton;
@@ -269,6 +275,17 @@ class LibraryMainScreen extends StatelessWidget {
               description: resolvedImportErrorDescription,
               buttonLabel: resolvedImportErrorButtonLabel,
               onButtonTap: onStateActionTap,
+            ),
+          ),
+        );
+      case LibraryMainScreenState.initial:
+      case LibraryMainScreenState.initializing:
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 336),
+            child: _LoadingStateContent(
+              title: resolvedLoadingTitle,
+              description: resolvedLoadingDescription,
             ),
           ),
         );
@@ -340,6 +357,45 @@ class _StateContent extends StatelessWidget {
   }
 }
 
+class _LoadingStateContent extends StatelessWidget {
+  const _LoadingStateContent({
+    required this.title,
+    required this.description,
+  });
+
+  final String title;
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    final appTheme = context.appTheme;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const _LoadingLibraryIllustration(),
+        const SizedBox(height: 28),
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: appTheme.titleTextStyle,
+        ),
+        const SizedBox(height: 12),
+        Opacity(
+          opacity: 0.82,
+          child: Text(
+            description,
+            textAlign: TextAlign.center,
+            style: appTheme.subTextStyle.copyWith(
+              color: appTheme.stateDescriptionColor,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _EmptyLibraryIllustration extends StatelessWidget {
   const _EmptyLibraryIllustration();
 
@@ -389,6 +445,82 @@ class _EmptyLibraryIllustration extends StatelessWidget {
               Icons.bolt_rounded,
               color: accentColor,
               size: 22,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LoadingLibraryIllustration extends StatelessWidget {
+  const _LoadingLibraryIllustration();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appTheme = context.appTheme;
+    final cardColor = appTheme.backgroundColor2;
+    final shadowColor = appTheme.stateCardShadowColor;
+
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      children: [
+        Container(
+          height: 124,
+          width: 124,
+          decoration: BoxDecoration(
+            color: cardColor,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: shadowColor,
+                blurRadius: 24,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  height: 74,
+                  width: 74,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 4,
+                    color: appTheme.secondaryColor,
+                    backgroundColor: appTheme.secondaryColor.withValues(alpha: 0.16),
+                  ),
+                ),
+                Icon(
+                  Icons.auto_stories_rounded,
+                  color: appTheme.primaryColor,
+                  size: 34,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          top: -8,
+          right: -8,
+          child: Container(
+            height: 38,
+            width: 38,
+            decoration: BoxDecoration(
+              color: appTheme.addBookCardBackgroundColor,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: cardColor,
+                width: 4,
+              ),
+            ),
+            child: Icon(
+              Icons.sync_rounded,
+              color: theme.colorScheme.primary,
+              size: 18,
             ),
           ),
         ),
