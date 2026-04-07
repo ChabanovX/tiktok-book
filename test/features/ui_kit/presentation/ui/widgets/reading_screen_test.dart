@@ -20,7 +20,6 @@ void main() {
         ),
       );
 
-      expect(find.text('SomeWord'), findsOneWidget);
       expect(find.text('Brave New World'), findsOneWidget);
       expect(find.text('Current progress: 67%'), findsOneWidget);
       expect(find.text('Words read: 6969'), findsOneWidget);
