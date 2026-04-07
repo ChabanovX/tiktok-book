@@ -10,8 +10,6 @@ import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/cupertino_picker.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/material_picker.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
-import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/exit_button.dart';
-import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/start_stop_button.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class ReadingScreenWrapper extends StatefulWidget {
@@ -202,8 +200,6 @@ class ReadingScreen extends StatelessWidget {
   final VoidCallback? onStartStopTap;
   final ValueChanged<int>? onChangeWpm;
   final VoidCallback? onExitTap;
-  final String progressLabel;
-  final String wordsReadLabel;
   final int wpm;
 
   @override
