@@ -39,7 +39,7 @@ class MockReadingButton extends StatelessWidget {
     ''';
 
     final navigationService = getIt<NavigationService>();
-    final tokenizer = RsvpTokenizer();
+    final tokenizer = getIt<RsvpTokenizer>();
     final tokens = tokenizer.tokenize(demoText);
 
     unawaited(

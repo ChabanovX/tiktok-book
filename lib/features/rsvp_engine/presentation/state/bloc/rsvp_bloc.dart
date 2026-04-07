@@ -8,7 +8,6 @@ import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file
 import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_error.dart';
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_tokenizer.dart';
 import 'package:rsvp_flutter_app/services/book_converter.dart';
 
