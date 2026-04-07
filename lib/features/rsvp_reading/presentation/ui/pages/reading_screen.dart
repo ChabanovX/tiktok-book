@@ -82,7 +82,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
 
               return ReadingScreen(
                 state: screenState,
-                currentWord: currentToken.text,
+                currentWord: currentToken,
                 bookTitle: widget.bookTitle,
                 progress: progress,
                 wordsRead: currentToken.index + 1,
@@ -186,7 +186,7 @@ class ReadingScreen extends StatelessWidget {
   });
 
   final ReadingScreenState state;
-  final String currentWord;
+  final RsvpToken currentWord;
   final String bookTitle;
   final double progress;
   final int wordsRead;
@@ -263,11 +263,17 @@ class ReadingScreen extends StatelessWidget {
                           SizedBox(
                             height: 56,
                             child: Center(
-                              child: Text(
-                                currentWord,
-                                textAlign: TextAlign.center,
-                                style: appTheme.titleTextStyle,
+                              child: BionicWordWidget(
+                                token: currentWord,
+                                boldStyle: appTheme.titleTextStyle.copyWith(color: appTheme.primaryColor),
+                                semiboldStyle: appTheme.rsvpTextStyleSemiBold.copyWith(color: appTheme.primaryColor),
+                                baseStyle: appTheme.rsvpTextStyleRegular,
                               ),
+                              // Text(
+                              //   currentWord,
+                              //   textAlign: TextAlign.center,
+                              //   style: appTheme.titleTextStyle,
+                              // ),
                             ),
                           ),
                           SizedBox(
@@ -346,6 +352,52 @@ class _ReadingControl extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class BionicWordWidget extends StatelessWidget {
+  const BionicWordWidget({
+    required this.token,
+    required this.baseStyle,
+    this.boldStyle,
+    this.semiboldStyle,
+    this.textAlign = TextAlign.center,
+    super.key,
+  });
+
+  final RsvpToken token;
+  final TextStyle baseStyle;
+  final TextStyle? boldStyle;
+  final TextStyle? semiboldStyle;
+  final TextAlign textAlign;
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      textAlign: textAlign,
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: token.boldText,
+            style: (boldStyle ?? baseStyle).copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          TextSpan(
+            text: token.semiboldText,
+            style: (semiboldStyle ?? baseStyle).copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          TextSpan(
+            text: token.regularRext,
+            style: baseStyle.copyWith(
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

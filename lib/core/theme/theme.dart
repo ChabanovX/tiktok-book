@@ -21,6 +21,8 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     required this.errorStateAccentColor,
     required this.desctructionColor,
     required this.titleTextStyle,
+    required this.rsvpTextStyleSemiBold,
+    required this.rsvpTextStyleRegular,
     required this.appBarTitleTextStyle,
     required this.mainTextStyle,
     required this.bookTitleText,
@@ -45,7 +47,19 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
       desctructionColor: CupertinoColors.destructiveRed,
       titleTextStyle: TextStyle(
         fontSize: 36,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w700,
+        color: Color.fromRGBO(25, 28, 29, 1),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      rsvpTextStyleSemiBold: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w600,
+        color: Color.fromRGBO(25, 28, 29, 1),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      rsvpTextStyleRegular: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w400,
         color: Color.fromRGBO(25, 28, 29, 1),
         fontFamily: 'SpaceGrotesk',
       ),
@@ -115,6 +129,18 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
         color: Color(0xFFF8FAFC),
         fontFamily: 'SpaceGrotesk',
       ),
+      rsvpTextStyleSemiBold: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w600,
+        color: Color(0xFFF8FAFC),
+        fontFamily: 'SpaceGrotesk',
+      ),
+      rsvpTextStyleRegular: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFFF8FAFC),
+        fontFamily: 'SpaceGrotesk',
+      ),
       bookTitleText: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w400,
@@ -164,6 +190,10 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   final Color desctructionColor;
   @override
   final TextStyle titleTextStyle;
+  @override
+  final TextStyle rsvpTextStyleSemiBold;
+  @override
+  final TextStyle rsvpTextStyleRegular;
   @override
   final TextStyle appBarTitleTextStyle;
   @override

@@ -58,6 +58,8 @@ flutter:
           weight: 400
         - asset: assets/fonts/SpaceGrotesk-Bold.ttf
           weight: 700
+        - asset: assets/fonts/SpaceGrotesk-SemiBold.ttf
+          weight: 600
     - family: Manrope
       fonts:
         - asset: assets/fonts/Manrope-Regular.ttf
