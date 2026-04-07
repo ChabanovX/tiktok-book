@@ -250,7 +250,7 @@ class ReadingScreen extends StatelessWidget {
                                 boldStyle: appTheme.titleTextStyle.copyWith(color: appTheme.primaryColor),
                                 semiboldStyle: appTheme.rsvpTextStyleSemiBold.copyWith(color: appTheme.primaryColor),
                                 baseStyle: appTheme.rsvpTextStyleRegular,
-                              )
+                              ),
                               // Text(
                               //   currentWord,
                               //   textAlign: TextAlign.center,
@@ -335,7 +335,6 @@ class _ReadingControl extends StatelessWidget {
     );
   }
 }
-
 
 class BionicWordWidget extends StatelessWidget {
   const BionicWordWidget({

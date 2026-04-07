@@ -5,10 +5,10 @@ class RsvpToken {
     required this.regularRext,
     required this.index,
   });
-  
+
   final String boldText;
   final String semiboldText;
   final String regularRext;
 
-   final int index;
+  final int index;
 }
