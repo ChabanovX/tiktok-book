@@ -134,6 +134,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
 
         _engine = RsvpEngine(
           tokens: readyState.tokens,
+          initialIndex: currentIndex,
           wpm: event.newWpm,
           onTokenChanged: (token) {
             add(UpdateCurrentTokenEvent(token));
