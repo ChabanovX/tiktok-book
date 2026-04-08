@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rsvp_flutter_app/core/constants.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/edit_book_info_window.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class BookItem extends StatelessWidget {
@@ -12,6 +15,9 @@ class BookItem extends StatelessWidget {
     required this.progress,
     this.onTap,
     this.onDelete,
+    this.onEditSubmit,
+    this.editInitialTitle,
+    this.editInitialAuthor,
     this.isSelected = false,
     this.icon = Icons.menu_book_outlined,
     this.finishedLabel,
@@ -26,6 +32,9 @@ class BookItem extends StatelessWidget {
   final double progress;
   final VoidCallback? onTap;
   final VoidCallback? onDelete;
+  final void Function(String? newName, String? newAuthor)? onEditSubmit;
+  final String? editInitialTitle;
+  final String? editInitialAuthor;
   final bool isSelected;
   final IconData icon;
   final String? finishedLabel;
@@ -161,7 +170,11 @@ class BookItem extends StatelessWidget {
                               ),
                       ),
                       const SizedBox(width: 8),
-                      const _EditButton(),
+                      _EditButton(
+                        initialTitle: editInitialTitle ?? title,
+                        initialAuthor: editInitialAuthor,
+                        onSubmit: onEditSubmit,
+                      ),
                     ],
                   ),
                 ],
@@ -220,29 +233,54 @@ class _CompletedBadge extends StatelessWidget {
 }
 
 class _EditButton extends StatelessWidget {
-  const _EditButton();
+  const _EditButton({
+    this.initialTitle,
+    this.initialAuthor,
+    this.onSubmit,
+  });
+
+  final String? initialTitle;
+  final String? initialAuthor;
+  final void Function(String? newName, String? newAuthor)? onSubmit;
 
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
+    final l10n = context.l10n;
+    final isEnabled = onSubmit != null;
+    final iconColor = isEnabled ? appTheme.primaryColor : appTheme.primaryColor.withValues(alpha: 0.45);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-      decoration: BoxDecoration(
-        color: appTheme.primaryColor.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: CupertinoButton(
-        sizeStyle: .small,
-        padding: .zero,
-        child: const Row(
-          children: [
-            Icon(CupertinoIcons.pen),
-            // SizedBox(width: 4),
-            // Text('edit'),
-          ],
+    return Tooltip(
+      message: l10n.bookItemEdit,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+        decoration: BoxDecoration(
+          color: appTheme.primaryColor.withValues(alpha: isEnabled ? 0.1 : 0.04),
+          borderRadius: BorderRadius.circular(14),
         ),
-        onPressed: () {},
+        child: CupertinoButton(
+          sizeStyle: .small,
+          padding: .zero,
+          onPressed: !isEnabled
+              ? null
+              : () {
+                  unawaited(
+                    showDialog<void>(
+                      context: context,
+                      builder: (context) => EditBookInfoWindow(
+                        initialTitle: initialTitle,
+                        initialAuthor: initialAuthor,
+                        onSubmit: (newName, newAuthor) => onSubmit?.call(newName, newAuthor),
+                      ),
+                    ),
+                  );
+                },
+          child: Row(
+            children: [
+              Icon(CupertinoIcons.pen, color: iconColor),
+            ],
+          ),
+        ),
       ),
     );
   }
