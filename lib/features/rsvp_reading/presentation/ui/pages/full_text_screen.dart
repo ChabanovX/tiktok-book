@@ -49,54 +49,49 @@ class _FullTextScreenState extends State<FullTextScreen> {
 
           _handleScroll(currentIndex);
 
-          return RawScrollbar(
-            thumbVisibility: true,
-            thickness: 6,
-            radius: const Radius.circular(4),
-            child: ScrollablePositionedList.builder(
-              itemCount: widget.tokens.length,
-              itemScrollController: _scrollController,
-              itemPositionsListener: _positionsListener,
-              padding: const EdgeInsets.all(16),
-              itemBuilder: (context, index) {
-                final token = widget.tokens[index];
+          return ScrollablePositionedList.builder(
+            itemCount: widget.tokens.length,
+            itemScrollController: _scrollController,
+            itemPositionsListener: _positionsListener,
+            padding: const EdgeInsets.all(16),
+            itemBuilder: (context, index) {
+              final token = widget.tokens[index];
 
-                final isCurrent = index == currentIndex;
+              final isCurrent = index == currentIndex;
 
-                return GestureDetector(
-                  onTap: () {
-                    bloc.add(
-                      ReadingEvent.jumpToIndex(index),
-                    );
+              return GestureDetector(
+                onTap: () {
+                  bloc.add(
+                    ReadingEvent.jumpToIndex(index),
+                  );
 
-                    Navigator.pop(context);
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(
-                      milliseconds: 150,
-                    ),
-                    curve: Curves.easeInOut,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 6,
-                      horizontal: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isCurrent ? appTheme.primaryColor : null,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Align(
-                      child: Text(
-                        _tokenToText(token),
-                        textAlign: TextAlign.center,
-                        style: appTheme.mainTextStyle.copyWith(
-                          color: isCurrent ? appTheme.backgroundColor : appTheme.mainTextStyle.color,
-                        ),
+                  Navigator.pop(context);
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(
+                    milliseconds: 150,
+                  ),
+                  curve: Curves.easeInOut,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 6,
+                    horizontal: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isCurrent ? appTheme.primaryColor : null,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Align(
+                    child: Text(
+                      _tokenToText(token),
+                      textAlign: TextAlign.center,
+                      style: appTheme.mainTextStyle.copyWith(
+                        color: isCurrent ? appTheme.backgroundColor : appTheme.mainTextStyle.color,
                       ),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           );
         },
       ),

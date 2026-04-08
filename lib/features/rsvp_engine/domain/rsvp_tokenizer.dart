@@ -60,6 +60,10 @@ class RsvpTokenizer {
   String _getSemiboldPart(String word, double boldPercentage, double semiboldPercentage) {
     if (word.isEmpty) return '';
 
+    if (word.length <= 2) {
+      return '';
+    }
+
     final boldLength = _calculateLength(word.length, boldPercentage);
     final semiboldLength = _calculateLength(word.length, semiboldPercentage);
     final totalLength = boldLength + semiboldLength;
@@ -73,6 +77,10 @@ class RsvpTokenizer {
 
   String _getRegularPart(String word, double boldPercentage, double semiboldPercentage) {
     if (word.isEmpty) return '';
+
+    if (word.length <= 2) {
+      return word.substring(1);
+    }
 
     final boldLength = _calculateLength(word.length, boldPercentage);
     final semiboldLength = _calculateLength(word.length, semiboldPercentage);
