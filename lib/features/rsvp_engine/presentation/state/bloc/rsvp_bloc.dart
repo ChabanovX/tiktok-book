@@ -66,7 +66,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
           lastError: error,
         ),
       );
-      logger.e(e);
+      logger.e(e.toString());
     }
   }
 
