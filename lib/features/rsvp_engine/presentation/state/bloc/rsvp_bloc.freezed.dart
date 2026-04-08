@@ -55,13 +55,14 @@ extension RsvpEventPatterns on RsvpEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _AddBook value)?  addBook,TResult Function( _UpdateBookProgress value)?  updateBookProgress,TResult Function( _RemoveBook value)?  removeBook,TResult Function( _ToggleSelectBook value)?  toggleSelectBook,TResult Function( _StartAnimation value)?  startAnimation,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _AddBook value)?  addBook,TResult Function( _UpdateBookProgress value)?  updateBookProgress,TResult Function( _UpdateBookInfo value)?  updateBookInfo,TResult Function( _RemoveBook value)?  removeBook,TResult Function( _ToggleSelectBook value)?  toggleSelectBook,TResult Function( _StartAnimation value)?  startAnimation,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _AddBook() when addBook != null:
 return addBook(_that);case _UpdateBookProgress() when updateBookProgress != null:
-return updateBookProgress(_that);case _RemoveBook() when removeBook != null:
+return updateBookProgress(_that);case _UpdateBookInfo() when updateBookInfo != null:
+return updateBookInfo(_that);case _RemoveBook() when removeBook != null:
 return removeBook(_that);case _ToggleSelectBook() when toggleSelectBook != null:
 return toggleSelectBook(_that);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that);case _:
@@ -82,13 +83,14 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _AddBook value)  addBook,required TResult Function( _UpdateBookProgress value)  updateBookProgress,required TResult Function( _RemoveBook value)  removeBook,required TResult Function( _ToggleSelectBook value)  toggleSelectBook,required TResult Function( _StartAnimation value)  startAnimation,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _AddBook value)  addBook,required TResult Function( _UpdateBookProgress value)  updateBookProgress,required TResult Function( _UpdateBookInfo value)  updateBookInfo,required TResult Function( _RemoveBook value)  removeBook,required TResult Function( _ToggleSelectBook value)  toggleSelectBook,required TResult Function( _StartAnimation value)  startAnimation,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _AddBook():
 return addBook(_that);case _UpdateBookProgress():
-return updateBookProgress(_that);case _RemoveBook():
+return updateBookProgress(_that);case _UpdateBookInfo():
+return updateBookInfo(_that);case _RemoveBook():
 return removeBook(_that);case _ToggleSelectBook():
 return toggleSelectBook(_that);case _StartAnimation():
 return startAnimation(_that);case _:
@@ -108,13 +110,14 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _AddBook value)?  addBook,TResult? Function( _UpdateBookProgress value)?  updateBookProgress,TResult? Function( _RemoveBook value)?  removeBook,TResult? Function( _ToggleSelectBook value)?  toggleSelectBook,TResult? Function( _StartAnimation value)?  startAnimation,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _AddBook value)?  addBook,TResult? Function( _UpdateBookProgress value)?  updateBookProgress,TResult? Function( _UpdateBookInfo value)?  updateBookInfo,TResult? Function( _RemoveBook value)?  removeBook,TResult? Function( _ToggleSelectBook value)?  toggleSelectBook,TResult? Function( _StartAnimation value)?  startAnimation,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _AddBook() when addBook != null:
 return addBook(_that);case _UpdateBookProgress() when updateBookProgress != null:
-return updateBookProgress(_that);case _RemoveBook() when removeBook != null:
+return updateBookProgress(_that);case _UpdateBookInfo() when updateBookInfo != null:
+return updateBookInfo(_that);case _RemoveBook() when removeBook != null:
 return removeBook(_that);case _ToggleSelectBook() when toggleSelectBook != null:
 return toggleSelectBook(_that);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that);case _:
@@ -134,12 +137,13 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  addBook,TResult Function( String documentId,  int currentIndex)?  updateBookProgress,TResult Function( BookMetaModel book)?  removeBook,TResult Function( BookMetaModel book)?  toggleSelectBook,TResult Function( int bookID)?  startAnimation,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  addBook,TResult Function( String documentId,  int currentIndex)?  updateBookProgress,TResult Function( String documentId,  String? newName,  String? newAuthor)?  updateBookInfo,TResult Function( BookMetaModel book)?  removeBook,TResult Function( BookMetaModel book)?  toggleSelectBook,TResult Function( int bookID)?  startAnimation,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddBook() when addBook != null:
 return addBook();case _UpdateBookProgress() when updateBookProgress != null:
-return updateBookProgress(_that.documentId,_that.currentIndex);case _RemoveBook() when removeBook != null:
+return updateBookProgress(_that.documentId,_that.currentIndex);case _UpdateBookInfo() when updateBookInfo != null:
+return updateBookInfo(_that.documentId,_that.newName,_that.newAuthor);case _RemoveBook() when removeBook != null:
 return removeBook(_that.book);case _ToggleSelectBook() when toggleSelectBook != null:
 return toggleSelectBook(_that.book);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that.bookID);case _:
@@ -160,12 +164,13 @@ return startAnimation(_that.bookID);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  addBook,required TResult Function( String documentId,  int currentIndex)  updateBookProgress,required TResult Function( BookMetaModel book)  removeBook,required TResult Function( BookMetaModel book)  toggleSelectBook,required TResult Function( int bookID)  startAnimation,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  addBook,required TResult Function( String documentId,  int currentIndex)  updateBookProgress,required TResult Function( String documentId,  String? newName,  String? newAuthor)  updateBookInfo,required TResult Function( BookMetaModel book)  removeBook,required TResult Function( BookMetaModel book)  toggleSelectBook,required TResult Function( int bookID)  startAnimation,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _AddBook():
 return addBook();case _UpdateBookProgress():
-return updateBookProgress(_that.documentId,_that.currentIndex);case _RemoveBook():
+return updateBookProgress(_that.documentId,_that.currentIndex);case _UpdateBookInfo():
+return updateBookInfo(_that.documentId,_that.newName,_that.newAuthor);case _RemoveBook():
 return removeBook(_that.book);case _ToggleSelectBook():
 return toggleSelectBook(_that.book);case _StartAnimation():
 return startAnimation(_that.bookID);case _:
@@ -185,12 +190,13 @@ return startAnimation(_that.bookID);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  addBook,TResult? Function( String documentId,  int currentIndex)?  updateBookProgress,TResult? Function( BookMetaModel book)?  removeBook,TResult? Function( BookMetaModel book)?  toggleSelectBook,TResult? Function( int bookID)?  startAnimation,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  addBook,TResult? Function( String documentId,  int currentIndex)?  updateBookProgress,TResult? Function( String documentId,  String? newName,  String? newAuthor)?  updateBookInfo,TResult? Function( BookMetaModel book)?  removeBook,TResult? Function( BookMetaModel book)?  toggleSelectBook,TResult? Function( int bookID)?  startAnimation,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddBook() when addBook != null:
 return addBook();case _UpdateBookProgress() when updateBookProgress != null:
-return updateBookProgress(_that.documentId,_that.currentIndex);case _RemoveBook() when removeBook != null:
+return updateBookProgress(_that.documentId,_that.currentIndex);case _UpdateBookInfo() when updateBookInfo != null:
+return updateBookInfo(_that.documentId,_that.newName,_that.newAuthor);case _RemoveBook() when removeBook != null:
 return removeBook(_that.book);case _ToggleSelectBook() when toggleSelectBook != null:
 return toggleSelectBook(_that.book);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that.bookID);case _:
@@ -327,6 +333,76 @@ class __$UpdateBookProgressCopyWithImpl<$Res>
 documentId: null == documentId ? _self.documentId : documentId // ignore: cast_nullable_to_non_nullable
 as String,currentIndex: null == currentIndex ? _self.currentIndex : currentIndex // ignore: cast_nullable_to_non_nullable
 as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _UpdateBookInfo implements RsvpEvent {
+  const _UpdateBookInfo({required this.documentId, this.newName, this.newAuthor});
+  
+
+ final  String documentId;
+ final  String? newName;
+ final  String? newAuthor;
+
+/// Create a copy of RsvpEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UpdateBookInfoCopyWith<_UpdateBookInfo> get copyWith => __$UpdateBookInfoCopyWithImpl<_UpdateBookInfo>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateBookInfo&&(identical(other.documentId, documentId) || other.documentId == documentId)&&(identical(other.newName, newName) || other.newName == newName)&&(identical(other.newAuthor, newAuthor) || other.newAuthor == newAuthor));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,documentId,newName,newAuthor);
+
+@override
+String toString() {
+  return 'RsvpEvent.updateBookInfo(documentId: $documentId, newName: $newName, newAuthor: $newAuthor)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UpdateBookInfoCopyWith<$Res> implements $RsvpEventCopyWith<$Res> {
+  factory _$UpdateBookInfoCopyWith(_UpdateBookInfo value, $Res Function(_UpdateBookInfo) _then) = __$UpdateBookInfoCopyWithImpl;
+@useResult
+$Res call({
+ String documentId, String? newName, String? newAuthor
+});
+
+
+
+
+}
+/// @nodoc
+class __$UpdateBookInfoCopyWithImpl<$Res>
+    implements _$UpdateBookInfoCopyWith<$Res> {
+  __$UpdateBookInfoCopyWithImpl(this._self, this._then);
+
+  final _UpdateBookInfo _self;
+  final $Res Function(_UpdateBookInfo) _then;
+
+/// Create a copy of RsvpEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? documentId = null,Object? newName = freezed,Object? newAuthor = freezed,}) {
+  return _then(_UpdateBookInfo(
+documentId: null == documentId ? _self.documentId : documentId // ignore: cast_nullable_to_non_nullable
+as String,newName: freezed == newName ? _self.newName : newName // ignore: cast_nullable_to_non_nullable
+as String?,newAuthor: freezed == newAuthor ? _self.newAuthor : newAuthor // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
