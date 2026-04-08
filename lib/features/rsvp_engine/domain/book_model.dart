@@ -11,6 +11,7 @@ abstract class BookMetaModel with _$BookMetaModel {
     required String documentId,
 
     String? name,
+    String? author,
 
     @Default(0) int currentIndex,
 
@@ -26,6 +27,15 @@ extension BookMetaModelX on BookMetaModel {
     }
 
     return bookFile.name;
+  }
+
+  String? resolveAuthor() {
+    final author = this.author?.trim();
+    if (author == null || author.isEmpty) {
+      return null;
+    }
+
+    return author;
   }
 
   bool isFinished() => currentIndex == tokens.length - 1;

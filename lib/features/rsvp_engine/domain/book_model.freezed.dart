@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BookMetaModel {
 
- BookFile get bookFile; String get documentId; String? get name; int get currentIndex; List<RsvpToken> get tokens;
+ BookFile get bookFile; String get documentId; String? get name; String? get author; int get currentIndex; List<RsvpToken> get tokens;
 /// Create a copy of BookMetaModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $BookMetaModelCopyWith<BookMetaModel> get copyWith => _$BookMetaModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookMetaModel&&(identical(other.bookFile, bookFile) || other.bookFile == bookFile)&&(identical(other.documentId, documentId) || other.documentId == documentId)&&(identical(other.name, name) || other.name == name)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex)&&const DeepCollectionEquality().equals(other.tokens, tokens));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookMetaModel&&(identical(other.bookFile, bookFile) || other.bookFile == bookFile)&&(identical(other.documentId, documentId) || other.documentId == documentId)&&(identical(other.name, name) || other.name == name)&&(identical(other.author, author) || other.author == author)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex)&&const DeepCollectionEquality().equals(other.tokens, tokens));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,bookFile,documentId,name,currentIndex,const DeepCollectionEquality().hash(tokens));
+int get hashCode => Object.hash(runtimeType,bookFile,documentId,name,author,currentIndex,const DeepCollectionEquality().hash(tokens));
 
 @override
 String toString() {
-  return 'BookMetaModel(bookFile: $bookFile, documentId: $documentId, name: $name, currentIndex: $currentIndex, tokens: $tokens)';
+  return 'BookMetaModel(bookFile: $bookFile, documentId: $documentId, name: $name, author: $author, currentIndex: $currentIndex, tokens: $tokens)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $BookMetaModelCopyWith<$Res>  {
   factory $BookMetaModelCopyWith(BookMetaModel value, $Res Function(BookMetaModel) _then) = _$BookMetaModelCopyWithImpl;
 @useResult
 $Res call({
- BookFile bookFile, String documentId, String? name, int currentIndex, List<RsvpToken> tokens
+ BookFile bookFile, String documentId, String? name, String? author, int currentIndex, List<RsvpToken> tokens
 });
 
 
@@ -62,11 +62,12 @@ class _$BookMetaModelCopyWithImpl<$Res>
 
 /// Create a copy of BookMetaModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? bookFile = null,Object? documentId = null,Object? name = freezed,Object? currentIndex = null,Object? tokens = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? bookFile = null,Object? documentId = null,Object? name = freezed,Object? author = freezed,Object? currentIndex = null,Object? tokens = null,}) {
   return _then(_self.copyWith(
 bookFile: null == bookFile ? _self.bookFile : bookFile // ignore: cast_nullable_to_non_nullable
 as BookFile,documentId: null == documentId ? _self.documentId : documentId // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,author: freezed == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
 as String?,currentIndex: null == currentIndex ? _self.currentIndex : currentIndex // ignore: cast_nullable_to_non_nullable
 as int,tokens: null == tokens ? _self.tokens : tokens // ignore: cast_nullable_to_non_nullable
 as List<RsvpToken>,
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BookFile bookFile,  String documentId,  String? name,  int currentIndex,  List<RsvpToken> tokens)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BookFile bookFile,  String documentId,  String? name,  String? author,  int currentIndex,  List<RsvpToken> tokens)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BookMetaModel() when $default != null:
-return $default(_that.bookFile,_that.documentId,_that.name,_that.currentIndex,_that.tokens);case _:
+return $default(_that.bookFile,_that.documentId,_that.name,_that.author,_that.currentIndex,_that.tokens);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.bookFile,_that.documentId,_that.name,_that.currentIndex,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BookFile bookFile,  String documentId,  String? name,  int currentIndex,  List<RsvpToken> tokens)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BookFile bookFile,  String documentId,  String? name,  String? author,  int currentIndex,  List<RsvpToken> tokens)  $default,) {final _that = this;
 switch (_that) {
 case _BookMetaModel():
-return $default(_that.bookFile,_that.documentId,_that.name,_that.currentIndex,_that.tokens);case _:
+return $default(_that.bookFile,_that.documentId,_that.name,_that.author,_that.currentIndex,_that.tokens);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +196,10 @@ return $default(_that.bookFile,_that.documentId,_that.name,_that.currentIndex,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BookFile bookFile,  String documentId,  String? name,  int currentIndex,  List<RsvpToken> tokens)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BookFile bookFile,  String documentId,  String? name,  String? author,  int currentIndex,  List<RsvpToken> tokens)?  $default,) {final _that = this;
 switch (_that) {
 case _BookMetaModel() when $default != null:
-return $default(_that.bookFile,_that.documentId,_that.name,_that.currentIndex,_that.tokens);case _:
+return $default(_that.bookFile,_that.documentId,_that.name,_that.author,_that.currentIndex,_that.tokens);case _:
   return null;
 
 }
@@ -210,12 +211,13 @@ return $default(_that.bookFile,_that.documentId,_that.name,_that.currentIndex,_t
 
 
 class _BookMetaModel implements BookMetaModel {
-  const _BookMetaModel({required this.bookFile, required this.documentId, this.name, this.currentIndex = 0, final  List<RsvpToken> tokens = const []}): _tokens = tokens;
+  const _BookMetaModel({required this.bookFile, required this.documentId, this.name, this.author, this.currentIndex = 0, final  List<RsvpToken> tokens = const []}): _tokens = tokens;
   
 
 @override final  BookFile bookFile;
 @override final  String documentId;
 @override final  String? name;
+@override final  String? author;
 @override@JsonKey() final  int currentIndex;
  final  List<RsvpToken> _tokens;
 @override@JsonKey() List<RsvpToken> get tokens {
@@ -235,16 +237,16 @@ _$BookMetaModelCopyWith<_BookMetaModel> get copyWith => __$BookMetaModelCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookMetaModel&&(identical(other.bookFile, bookFile) || other.bookFile == bookFile)&&(identical(other.documentId, documentId) || other.documentId == documentId)&&(identical(other.name, name) || other.name == name)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex)&&const DeepCollectionEquality().equals(other._tokens, _tokens));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookMetaModel&&(identical(other.bookFile, bookFile) || other.bookFile == bookFile)&&(identical(other.documentId, documentId) || other.documentId == documentId)&&(identical(other.name, name) || other.name == name)&&(identical(other.author, author) || other.author == author)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex)&&const DeepCollectionEquality().equals(other._tokens, _tokens));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,bookFile,documentId,name,currentIndex,const DeepCollectionEquality().hash(_tokens));
+int get hashCode => Object.hash(runtimeType,bookFile,documentId,name,author,currentIndex,const DeepCollectionEquality().hash(_tokens));
 
 @override
 String toString() {
-  return 'BookMetaModel(bookFile: $bookFile, documentId: $documentId, name: $name, currentIndex: $currentIndex, tokens: $tokens)';
+  return 'BookMetaModel(bookFile: $bookFile, documentId: $documentId, name: $name, author: $author, currentIndex: $currentIndex, tokens: $tokens)';
 }
 
 
@@ -255,7 +257,7 @@ abstract mixin class _$BookMetaModelCopyWith<$Res> implements $BookMetaModelCopy
   factory _$BookMetaModelCopyWith(_BookMetaModel value, $Res Function(_BookMetaModel) _then) = __$BookMetaModelCopyWithImpl;
 @override @useResult
 $Res call({
- BookFile bookFile, String documentId, String? name, int currentIndex, List<RsvpToken> tokens
+ BookFile bookFile, String documentId, String? name, String? author, int currentIndex, List<RsvpToken> tokens
 });
 
 
@@ -272,11 +274,12 @@ class __$BookMetaModelCopyWithImpl<$Res>
 
 /// Create a copy of BookMetaModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? bookFile = null,Object? documentId = null,Object? name = freezed,Object? currentIndex = null,Object? tokens = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? bookFile = null,Object? documentId = null,Object? name = freezed,Object? author = freezed,Object? currentIndex = null,Object? tokens = null,}) {
   return _then(_BookMetaModel(
 bookFile: null == bookFile ? _self.bookFile : bookFile // ignore: cast_nullable_to_non_nullable
 as BookFile,documentId: null == documentId ? _self.documentId : documentId // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,author: freezed == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
 as String?,currentIndex: null == currentIndex ? _self.currentIndex : currentIndex // ignore: cast_nullable_to_non_nullable
 as int,tokens: null == tokens ? _self._tokens : tokens // ignore: cast_nullable_to_non_nullable
 as List<RsvpToken>,
