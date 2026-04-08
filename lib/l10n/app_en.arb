@@ -218,5 +218,17 @@
   },
   "fullTextTitle": "Full text",
   "readingControlFullText": "Full text",
-  "fullTextButtonSemantic": "View text"
+  "fullTextButtonSemantic": "View text",
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Generic cancel action label."
+  },
+  "readingSpeed": "Reading speed",
+  "@readingSpeed": {
+    "description": "Label for the reading speed control."
+  },
+  "done": "Done",
+  "@done": {
+    "description": "Generic done action label."
+  }
 }

@@ -181,4 +181,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fullTextButtonSemantic => 'Просмотр текста';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get readingSpeed => 'Скорость чтения';
+
+  @override
+  String get done => 'Готово';
 }

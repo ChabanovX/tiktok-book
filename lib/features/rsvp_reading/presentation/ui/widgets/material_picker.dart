@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 const List<int> _speedOptions = [200, 250, 300, 350, 400, 450, 500, 550, 600];
 
@@ -22,6 +23,7 @@ Future<void> showMaterialSpeedPicker(
       borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
     ),
     builder: (context) {
+      final l10n = context.l10n;
       return StatefulBuilder(
         builder: (context, setModalState) {
           return SafeArea(
@@ -44,7 +46,7 @@ Future<void> showMaterialSpeedPicker(
                     child: Row(
                       children: [
                         Text(
-                          'Reading speed',
+                          l10n.readingSpeed,
                           style: appTheme.buttonTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -99,7 +101,7 @@ Future<void> showMaterialSpeedPicker(
                         Expanded(
                           child: TextButton(
                             onPressed: () => Navigator.of(context).pop(),
-                            child: const Text('Cancel'),
+                            child: Text(l10n.cancel),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -109,7 +111,7 @@ Future<void> showMaterialSpeedPicker(
                               onChangeWpm(selectedWpm);
                               Navigator.of(context).pop();
                             },
-                            child: const Text('Done'),
+                            child: Text(l10n.done),
                           ),
                         ),
                       ],

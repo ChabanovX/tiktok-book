@@ -179,4 +179,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fullTextButtonSemantic => 'View text';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get readingSpeed => 'Reading speed';
+
+  @override
+  String get done => 'Done';
 }

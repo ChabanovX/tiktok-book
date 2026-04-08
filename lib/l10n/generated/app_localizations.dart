@@ -403,6 +403,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View text'**
   String get fullTextButtonSemantic;
+
+  /// Generic cancel action label.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Label for the reading speed control.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading speed'**
+  String get readingSpeed;
+
+  /// Generic done action label.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

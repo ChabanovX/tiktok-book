@@ -218,5 +218,17 @@
   },
   "fullTextTitle": "Полный текст",
   "readingControlFullText": "Текст",
-  "fullTextButtonSemantic": "Просмотр текста"
+  "fullTextButtonSemantic": "Просмотр текста",
+  "cancel": "Отмена",
+  "@cancel": {
+    "description": "Универсальная подпись действия отмены."
+  },
+  "readingSpeed": "Скорость чтения",
+  "@readingSpeed": {
+    "description": "Подпись элемента управления скоростью чтения."
+  },
+  "done": "Готово",
+  "@done": {
+    "description": "Универсальная подпись действия завершения."
+  }
 }

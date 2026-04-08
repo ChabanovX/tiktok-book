@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 const List<int> _speedOptions = [200, 250, 300, 350, 400, 450, 500, 550, 600];
 
@@ -18,6 +19,7 @@ Future<void> showCupertinoSpeedPicker(
     builder: (context) {
       final backgroundColor = CupertinoColors.systemBackground.resolveFrom(context);
       final separatorColor = CupertinoColors.separator.resolveFrom(context);
+      final l10n = context.l10n;
 
       return StatefulBuilder(
         builder: (context, setModalState) {
@@ -40,10 +42,10 @@ Future<void> showCupertinoSpeedPicker(
                       CupertinoButton(
                         padding: EdgeInsets.zero,
                         onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('Cancel'),
+                        child: Text(l10n.cancel),
                       ),
                       Text(
-                        'Reading speed',
+                        l10n.readingSpeed,
                         style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -55,7 +57,7 @@ Future<void> showCupertinoSpeedPicker(
                           onChangeWpm(selectedWpm);
                           Navigator.of(context).pop();
                         },
-                        child: const Text('Done'),
+                        child: Text(l10n.done),
                       ),
                     ],
                   ),

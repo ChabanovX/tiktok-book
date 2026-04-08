@@ -29,6 +29,7 @@ class MainApp extends StatelessWidget {
           themeMode: appThemeController.themeMode,
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
+          debugShowCheckedModeBanner: false,
         );
       },
     );
