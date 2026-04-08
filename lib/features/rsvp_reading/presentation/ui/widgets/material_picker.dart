@@ -45,7 +45,7 @@ Future<void> showMaterialSpeedPicker(
                     child: Row(
                       children: [
                         Text(
-                          l10n.readingSpeedPickerTitle,
+                          l10n.readingSpeed,
                           style: appTheme.buttonTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -100,7 +100,7 @@ Future<void> showMaterialSpeedPicker(
                         Expanded(
                           child: TextButton(
                             onPressed: () => Navigator.of(context).pop(),
-                            child: Text(l10n.commonCancel),
+                            child: Text(l10n.cancel),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -110,7 +110,7 @@ Future<void> showMaterialSpeedPicker(
                               onChangeWpm(selectedWpm);
                               Navigator.of(context).pop();
                             },
-                            child: Text(l10n.commonDone),
+                            child: Text(l10n.done),
                           ),
                         ),
                       ],

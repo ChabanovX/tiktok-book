@@ -98,14 +98,6 @@
   "@commonBack": {
     "description": "Универсальная подпись кнопки назад."
   },
-  "commonCancel": "Отмена",
-  "@commonCancel": {
-    "description": "Универсальная подпись кнопки отмены."
-  },
-  "commonDone": "Готово",
-  "@commonDone": {
-    "description": "Универсальная подпись кнопки подтверждения."
-  },
   "readingCompletedTitle": "Поздравляем!",
   "@readingCompletedTitle": {
     "description": "Заголовок диалога об окончании чтения."
@@ -235,10 +227,6 @@
   "settingsReadingSpeedDefaultTitle": "Скорость по умолчанию",
   "@settingsReadingSpeedDefaultTitle": {
     "description": "Название настройки скорости чтения по умолчанию."
-  },
-  "readingSpeedPickerTitle": "Скорость чтения",
-  "@readingSpeedPickerTitle": {
-    "description": "Заголовок пикера скорости чтения."
   },
   "fullTextTitle": "Полный текст",
   "readingControlFullText": "Текст",

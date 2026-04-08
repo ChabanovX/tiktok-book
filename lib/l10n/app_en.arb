@@ -98,14 +98,6 @@
   "@commonBack": {
     "description": "Generic back button label."
   },
-  "commonCancel": "Cancel",
-  "@commonCancel": {
-    "description": "Generic cancel button label."
-  },
-  "commonDone": "Done",
-  "@commonDone": {
-    "description": "Generic done button label."
-  },
   "readingCompletedTitle": "Congratulations!",
   "@readingCompletedTitle": {
     "description": "Reading completion dialog title."
@@ -235,10 +227,6 @@
   "settingsReadingSpeedDefaultTitle": "Default speed",
   "@settingsReadingSpeedDefaultTitle": {
     "description": "Title for the default reading speed option."
-  },
-  "readingSpeedPickerTitle": "Reading speed",
-  "@readingSpeedPickerTitle": {
-    "description": "Title shown in the reading speed picker."
   },
   "fullTextTitle": "Full text",
   "readingControlFullText": "Full text",

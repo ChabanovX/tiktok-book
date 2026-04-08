@@ -41,10 +41,10 @@ Future<void> showCupertinoSpeedPicker(
                       CupertinoButton(
                         padding: EdgeInsets.zero,
                         onPressed: () => Navigator.of(context).pop(),
-                        child: Text(l10n.commonCancel),
+                        child: Text(l10n.cancel),
                       ),
                       Text(
-                        l10n.readingSpeedPickerTitle,
+                        l10n.readingSpeed,
                         style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -56,7 +56,7 @@ Future<void> showCupertinoSpeedPicker(
                           onChangeWpm(selectedWpm);
                           Navigator.of(context).pop();
                         },
-                        child: Text(l10n.commonDone),
+                        child: Text(l10n.done),
                       ),
                     ],
                   ),

@@ -86,12 +86,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonBack => 'Back';
 
   @override
-  String get commonCancel => 'Cancel';
-
-  @override
-  String get commonDone => 'Done';
-
-  @override
   String get readingCompletedTitle => 'Congratulations!';
 
   @override
@@ -186,9 +180,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsReadingSpeedDefaultTitle => 'Default speed';
-
-  @override
-  String get readingSpeedPickerTitle => 'Reading speed';
 
   @override
   String get fullTextTitle => 'Full text';
