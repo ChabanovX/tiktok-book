@@ -1,7 +1,8 @@
-import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:cross_file/cross_file.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:injectable/injectable.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:rsvp_flutter_app/core/db/app_database.dart';
 import 'package:rsvp_flutter_app/core/logger/logger.dart';
 import 'package:rsvp_flutter_app/features/books/data/database_service.dart';
@@ -28,11 +29,11 @@ class FileRepositoryImpl implements FileRepository {
       final result = await FilePicker.platform.pickFiles(
         allowedExtensions: ['pdf', 'txt'],
         type: FileType.custom,
+        withData: true,
       );
 
-      if (result != null && result.files.single.path != null) {
-        final path = result.files.single.path!;
-        return await _loaderService.loadFile(path);
+      if (result != null) {
+        return _loaderService.loadXFile(result.xFiles.single);
       }
 
       return null;
@@ -44,10 +45,7 @@ class FileRepositoryImpl implements FileRepository {
   @override
   Future<BookFile?> loadFileFromLocal(String path) async {
     try {
-      if (_loaderService.fileExists(path)) {
-        return await _loaderService.loadFile(path);
-      }
-      return null;
+      return await _loaderService.loadFile(path);
     } catch (e) {
       throw Exception('Failed to load file from local: $e');
     }
@@ -111,14 +109,19 @@ class FileRepositoryImpl implements FileRepository {
 
   Future<BookMetaModel> _buildBookMetaModel(Book book) async {
     final words = await _cacheService.loadBook(book.documentId);
-    final cacheFile = await _resolveCacheFile(book.documentId);
+    final fileExtension = _resolveFileExtension(book.bookTitle);
+    final cacheFile = XFile.fromData(
+      Uint8List(0),
+      name: book.bookTitle,
+      path: 'cache://${book.documentId}.$fileExtension',
+    );
 
     return BookMetaModel(
       bookFile: BookFile(
         name: book.bookTitle,
         path: cacheFile.path,
-        fileExtension: _resolveFileExtension(book.bookTitle),
-        size: await cacheFile.length(),
+        fileExtension: fileExtension,
+        size: 0,
         file: cacheFile,
       ),
       documentId: book.documentId,
@@ -135,13 +138,8 @@ class FileRepositoryImpl implements FileRepository {
     );
   }
 
-  Future<File> _resolveCacheFile(String documentId) async {
-    final dir = await getApplicationDocumentsDirectory();
-    return File('${dir.path}/cache/$documentId.json');
-  }
-
   Future<List<RsvpToken>> _buildTokensFromFile(BookFile bookFile) async {
-    final words = await _converter.convert(bookFile.file);
+    final words = await _converter.convert(bookFile);
     return List.generate(
       words.length,
       (index) => RsvpToken(

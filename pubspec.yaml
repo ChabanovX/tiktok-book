@@ -8,9 +8,11 @@ environment:
 
 dependencies:
   bloc: ^9.2.0
+  cross_file: ^0.3.5+2
   cupertino_icons: ^1.0.9
   dio: ^5.9.2
   drift: ^2.32.1
+  drift_flutter: ^0.3.0
   equatable: ^2.0.0
   file_picker: ^10.3.10
   flutter:
@@ -37,7 +39,6 @@ dev_dependencies:
   bloc_lint: ^0.4.0
   build_runner: ^2.13.1
   drift_dev: ^2.32.1
-  drift_flutter: ^0.3.0
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^6.0.0
   flutter_native_splash: ^2.4.0

@@ -1,64 +1,42 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/services.dart';
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rsvp_flutter_app/core/db/app_database.dart';
 import 'package:rsvp_flutter_app/services/cache_service.dart';
+import 'package:rsvp_flutter_app/services/legacy_book_cache_store.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  const channel = MethodChannel('plugins.flutter.io/path_provider');
-
   group('CacheService', () {
     late CacheService cacheService;
-    late Directory tempDir;
+    late AppDatabase database;
 
     setUp(() async {
-      cacheService = CacheService();
-      tempDir = await Directory.systemTemp.createTemp('cache_service_test');
-
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, (
-        methodCall,
-      ) async {
-        if (methodCall.method == 'getApplicationDocumentsDirectory') {
-          return tempDir.path;
-        }
-        return null;
-      });
+      database = AppDatabase.forTesting(NativeDatabase.memory());
+      cacheService = CacheService.withDependencies(
+        database: database,
+        legacyCacheStore: const _FakeLegacyBookCacheStore(),
+      );
     });
 
     tearDown(() async {
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-        channel,
-        null,
-      );
-
-      if (tempDir.existsSync()) {
-        await tempDir.delete(recursive: true);
-      }
+      await database.close();
     });
 
-    test('caches words to json file and returns metadata', () async {
+    test('caches words in drift and returns metadata', () async {
       final result = await cacheService.cacheBook(['one', 'two', 'three']);
 
       expect(result.$1, isNotEmpty);
-      expect(result.$2, endsWith('.json'));
+      expect(result.$2, 'db://book-cache/${result.$1}');
       expect(result.$3, 3);
 
-      final file = File(result.$2);
-      expect(file.existsSync(), isTrue);
-      expect(jsonDecode(await file.readAsString()), ['one', 'two', 'three']);
+      expect(await cacheService.loadBook(result.$1), ['one', 'two', 'three']);
     });
 
     test('loads cached book by id', () async {
-      final cacheDir = Directory('${tempDir.path}/cache')..createSync(recursive: true);
-      final file = File('${cacheDir.path}/book-1.json');
-      await file.writeAsString(jsonEncode(['alpha', 'beta']));
+      final result = await cacheService.cacheBook(['alpha', 'beta']);
 
-      final result = await cacheService.loadBook('book-1');
-
-      expect(result, ['alpha', 'beta']);
+      expect(await cacheService.loadBook(result.$1), ['alpha', 'beta']);
     });
 
     test('throws when cached book file is missing', () async {
@@ -68,4 +46,14 @@ void main() {
       );
     });
   });
+}
+
+class _FakeLegacyBookCacheStore implements LegacyBookCacheStore {
+  const _FakeLegacyBookCacheStore();
+
+  @override
+  Future<void> deleteBook(String id) async {}
+
+  @override
+  Future<List<String>?> loadBook(String id) async => null;
 }
