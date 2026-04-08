@@ -73,8 +73,8 @@ class NavigationService {
   }
 
   Future<void> goToFullTextScreen({
-    required List<RsvpToken> tokens,
-    required ReadingBloc readingBloc, 
+    required List<RsvpBionicToken> tokens,
+    required ReadingBloc readingBloc,
   }) {
     return pushNamed(
       '/full_text',

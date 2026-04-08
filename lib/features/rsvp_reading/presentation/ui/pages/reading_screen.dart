@@ -68,7 +68,6 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider.value(
       value: _readingBloc,
       child: BlocConsumer<ReadingBloc, ReadingState>(
@@ -106,10 +105,10 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                 progress: progress,
                 wordsRead: currentToken.index + 1,
                 onStartStopTap: () {
-                  if(!isCompleted) {
-                     if (isPlaying) {
+                  if (!isCompleted) {
+                    if (isPlaying) {
                       _flushPendingProgress();
-                    _readingBloc.add(const ReadingEvent.pause());
+                      _readingBloc.add(const ReadingEvent.pause());
                     } else {
                       _readingBloc.add(const ReadingEvent.resume());
                     }
@@ -161,9 +160,6 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
     );
   }
 
-
-
-  
   void _onExit(BuildContext context) {
     _progressDebounceTimer?.cancel();
     _closeReadingBloc();
@@ -266,8 +262,8 @@ class ReadingScreen extends StatelessWidget {
     required this.bookTitle,
     required this.progress,
     required this.wordsRead,
-    this.onFullTextTap,
     required this.wpm,
+    this.onFullTextTap,
     this.onStartStopTap,
     this.onChangeWpm,
     this.onExitTap,
@@ -283,7 +279,7 @@ class ReadingScreen extends StatelessWidget {
   final VoidCallback? onStartStopTap;
   final ValueChanged<int>? onChangeWpm;
   final VoidCallback? onExitTap;
-  
+  final int wpm;
 
   @override
   Widget build(BuildContext context) {
@@ -388,7 +384,7 @@ class ReadingScreen extends StatelessWidget {
                                         onTap: onFullTextTap,
                                         size: 60,
                                         borderRadius: 14,
-                                      )
+                                      ),
                                     ),
                                     const SizedBox(width: 48),
                                     _ReadingControl(

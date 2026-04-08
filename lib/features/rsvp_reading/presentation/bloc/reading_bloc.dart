@@ -189,8 +189,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
       ready: (readyState) {
         final token = readyState.tokens[event.index];
 
-        final progress =
-            (event.index + 1) / readyState.totalWords;
+        final progress = (event.index + 1) / readyState.totalWords;
 
         emit(
           readyState.copyWith(

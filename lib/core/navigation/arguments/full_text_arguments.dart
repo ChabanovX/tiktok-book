@@ -1,4 +1,4 @@
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
 
 class FullTextArguments {
@@ -7,6 +7,6 @@ class FullTextArguments {
     required this.readingBloc,
   });
 
-  final List<RsvpToken> tokens;
+  final List<RsvpBionicToken> tokens;
   final ReadingBloc readingBloc;
 }

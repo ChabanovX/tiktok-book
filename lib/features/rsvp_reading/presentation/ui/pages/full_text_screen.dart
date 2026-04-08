@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/theme/build_context_getter.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
@@ -14,30 +15,23 @@ class FullTextScreen extends StatefulWidget {
     super.key,
   });
 
-  final List<RsvpToken> tokens;
+  final List<RsvpBionicToken> tokens;
 
   @override
-  State<FullTextScreen> createState() =>
-      _FullTextScreenState();
+  State<FullTextScreen> createState() => _FullTextScreenState();
 }
 
-class _FullTextScreenState
-    extends State<FullTextScreen> {
-  final ItemScrollController
-      _scrollController =
-      ItemScrollController();
+class _FullTextScreenState extends State<FullTextScreen> {
+  final ItemScrollController _scrollController = ItemScrollController();
 
-  final ItemPositionsListener
-      _positionsListener =
-      ItemPositionsListener.create();
+  final ItemPositionsListener _positionsListener = ItemPositionsListener.create();
 
   bool _didInitialScroll = false;
   int? _lastIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    final bloc =
-        context.read<ReadingBloc>();
+    final bloc = context.read<ReadingBloc>();
     final l10n = context.l10n;
     final appTheme = context.appTheme;
     return Scaffold(
@@ -47,14 +41,10 @@ class _FullTextScreenState
           style: appTheme.appBarTitleTextStyle,
         ),
       ),
-      body: BlocBuilder<
-          ReadingBloc,
-          ReadingState>(
+      body: BlocBuilder<ReadingBloc, ReadingState>(
         builder: (context, state) {
-          final currentIndex =
-              state.maybeWhen(
-            ready: (_, token, _, _, _, _, _) =>
-                token.index,
+          final currentIndex = state.maybeWhen(
+            ready: (_, token, _, _, _, _, _) => token.index,
             orElse: () => 0,
           );
 
@@ -66,26 +56,20 @@ class _FullTextScreenState
             radius: const Radius.circular(4),
             child: ScrollablePositionedList.builder(
               itemCount: widget.tokens.length,
-              itemScrollController:
-                  _scrollController,
-              itemPositionsListener:
-                  _positionsListener,
-              padding:
-                  const EdgeInsets.all(16),
+              itemScrollController: _scrollController,
+              itemPositionsListener: _positionsListener,
+              padding: const EdgeInsets.all(16),
               itemBuilder: (context, index) {
-                final token =
-                    widget.tokens[index];
-            
-                final isCurrent =
-                    index == currentIndex;
-            
+                final token = widget.tokens[index];
+
+                final isCurrent = index == currentIndex;
+
                 return GestureDetector(
                   onTap: () {
                     bloc.add(
-                      ReadingEvent
-                          .jumpToIndex(index),
+                      ReadingEvent.jumpToIndex(index),
                     );
-            
+
                     Navigator.pop(context);
                   },
                   child: AnimatedContainer(
@@ -99,18 +83,14 @@ class _FullTextScreenState
                     ),
                     decoration: BoxDecoration(
                       color: isCurrent ? appTheme.primaryColor : null,
-                      borderRadius:
-                          BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Align(
                       child: Text(
                         _tokenToText(token),
                         textAlign: TextAlign.center,
                         style: appTheme.mainTextStyle.copyWith(
-                          color: isCurrent
-                              ? appTheme.backgroundColor
-                              : appTheme.mainTextStyle
-                                  .color,
+                          color: isCurrent ? appTheme.backgroundColor : appTheme.mainTextStyle.color,
                         ),
                       ),
                     ),
@@ -126,8 +106,7 @@ class _FullTextScreenState
 
   void _handleScroll(int index) {
     if (!_didInitialScroll) {
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!_scrollController.isAttached) return;
 
         _scrollController.jumpTo(
@@ -147,21 +126,20 @@ class _FullTextScreenState
     _lastIndex = index;
 
     if (_scrollController.isAttached) {
-      unawaited(_scrollController.scrollTo(
-        index: index,
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeInOut,
-        alignment: 0.3,
-      ));
+      unawaited(
+        _scrollController.scrollTo(
+          index: index,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          alignment: 0.3,
+        ),
+      );
     }
   }
 
-  String _tokenToText(
-      RsvpToken token) {
+  String _tokenToText(RsvpBionicToken token) {
     return '${token.boldText}'
         '${token.semiboldText}'
-        '${token.regularRext}';
+        '${token.regularText}';
   }
 }
-
-

@@ -40,7 +40,7 @@ class AppRouter {
           builder: (_) => const SettingsPage(),
           settings: settings,
         );
-      
+
       case '/full_text':
         if (settings.arguments is! FullTextArguments) {
           return MaterialPageRoute(
