@@ -5,40 +5,53 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
-import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/exit_button.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/cupertino_picker.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/material_picker.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/full_text_button.dart';
-import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/start_stop_button.dart';
+import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class ReadingScreenWrapper extends StatefulWidget {
   const ReadingScreenWrapper({
     required this.tokens,
+    required this.book,
     required this.bookTitle,
+    required this.rsvpBloc,
     super.key,
   });
 
-  final List<RsvpToken> tokens;
+  final List<RsvpBionicToken> tokens;
+  final BookMetaModel book;
   final String bookTitle;
+  final RsvpBloc rsvpBloc;
 
   @override
   State<ReadingScreenWrapper> createState() => _ReadingScreenWrapperState();
 }
 
 class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
+  static const Duration _progressDebounceDuration = Duration(milliseconds: 750);
+
   late final ReadingBloc _readingBloc;
+  Timer? _progressDebounceTimer;
+  late int _lastPersistedIndex = widget.book.currentIndex;
+  int? _pendingProgressIndex;
+  bool _isReadingBlocClosed = false;
 
   @override
   void initState() {
     super.initState();
     _readingBloc = getIt<ReadingBloc>();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _readingBloc.add(
           ReadingEvent.initialize(
             tokens: widget.tokens,
+            initialIndex: widget.book.currentIndex,
           ),
         );
       }
@@ -47,8 +60,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
 
   @override
   void dispose() {
-    _readingBloc.add(const ReadingEvent.dispose());
-    unawaited(_readingBloc.close());
+    _progressDebounceTimer?.cancel();
+    _closeReadingBloc();
+    _persistCurrentProgress();
     super.dispose();
   }
 
@@ -60,8 +74,10 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
       child: BlocConsumer<ReadingBloc, ReadingState>(
         listener: (context, state) {
           state.maybeWhen(
-            ready: (_, _, _, _, _, isCompleted, _) {
+            ready: (_, currentToken, _, _, _, isCompleted, _) {
+              _scheduleProgressSync(currentToken.index);
               if (isCompleted) {
+                _flushPendingProgress();
                 _showCompletionDialog(context);
               }
             },
@@ -86,12 +102,14 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                 state: screenState,
                 currentWord: currentToken,
                 bookTitle: widget.bookTitle,
+                wpm: wpm,
                 progress: progress,
                 wordsRead: currentToken.index + 1,
                 onStartStopTap: () {
                   if(!isCompleted) {
                      if (isPlaying) {
-                      _readingBloc.add(const ReadingEvent.pause());
+                      _flushPendingProgress();
+                    _readingBloc.add(const ReadingEvent.pause());
                     } else {
                       _readingBloc.add(const ReadingEvent.resume());
                     }
@@ -103,6 +121,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                     tokens: tokens,
                     readingBloc: _readingBloc,
                   );
+                },
+                onChangeWpm: (newWpm) {
+                  _readingBloc.add(ReadingEvent.changeWpm(newWpm));
                 },
                 onExitTap: () => _onExit(context),
               );
@@ -144,6 +165,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
 
   
   void _onExit(BuildContext context) {
+    _progressDebounceTimer?.cancel();
+    _closeReadingBloc();
+    _persistCurrentProgress();
     getIt<NavigationService>().pop();
   }
 
@@ -180,6 +204,54 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
         return message;
     }
   }
+
+  void _scheduleProgressSync(int currentIndex) {
+    if (currentIndex == _lastPersistedIndex) {
+      return;
+    }
+
+    _pendingProgressIndex = currentIndex;
+    _progressDebounceTimer?.cancel();
+    _progressDebounceTimer = Timer(_progressDebounceDuration, _flushPendingProgress);
+  }
+
+  void _flushPendingProgress() {
+    final pendingProgressIndex = _pendingProgressIndex;
+    if (pendingProgressIndex == null || pendingProgressIndex == _lastPersistedIndex) {
+      return;
+    }
+
+    widget.rsvpBloc.add(
+      RsvpEvent.updateBookProgress(
+        documentId: widget.book.documentId,
+        currentIndex: pendingProgressIndex,
+      ),
+    );
+    _lastPersistedIndex = pendingProgressIndex;
+    _pendingProgressIndex = null;
+  }
+
+  void _persistCurrentProgress() {
+    final currentIndex = _readingBloc.state.maybeWhen(
+      ready: (_, currentToken, _, _, _, _, _) => currentToken.index,
+      orElse: () => null,
+    );
+
+    if (currentIndex != null) {
+      _pendingProgressIndex = currentIndex;
+    }
+
+    _flushPendingProgress();
+  }
+
+  void _closeReadingBloc() {
+    if (_isReadingBlocClosed) {
+      return;
+    }
+
+    _isReadingBlocClosed = true;
+    unawaited(_readingBloc.close());
+  }
 }
 
 enum ReadingScreenState {
@@ -195,18 +267,21 @@ class ReadingScreen extends StatelessWidget {
     required this.progress,
     required this.wordsRead,
     this.onFullTextTap,
+    required this.wpm,
     this.onStartStopTap,
+    this.onChangeWpm,
     this.onExitTap,
     super.key,
   });
 
   final ReadingScreenState state;
-  final RsvpToken currentWord;
+  final RsvpBionicToken currentWord;
   final String bookTitle;
   final double progress;
   final int wordsRead;
   final VoidCallback? onFullTextTap;
   final VoidCallback? onStartStopTap;
+  final ValueChanged<int>? onChangeWpm;
   final VoidCallback? onExitTap;
   
 
@@ -234,7 +309,6 @@ class ReadingScreen extends StatelessWidget {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final totalHeight = constraints.maxHeight;
-
                   final halfHeight = (totalHeight - 56) / 2;
 
                   final topSpacing = (constraints.maxHeight * 0.10).clamp(72.0, 168.0);
@@ -250,7 +324,12 @@ class ReadingScreen extends StatelessWidget {
                             height: halfHeight - 14,
                             child: Column(
                               children: [
-                                SizedBox(height: topSpacing),
+                                SizedBox(height: topSpacing / 2),
+                                SpeedButton(
+                                  wpm: wpm,
+                                  onTap: onChangeWpm == null ? null : () => _showSpeedPicker(context),
+                                ),
+                                SizedBox(height: topSpacing / 2),
                                 Text(
                                   bookTitle,
                                   textAlign: TextAlign.center,
@@ -353,6 +432,21 @@ class ReadingScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> _showSpeedPicker(BuildContext context) async {
+    final onChangeWpm = this.onChangeWpm;
+    if (onChangeWpm == null) {
+      return;
+    }
+
+    final platform = Theme.of(context).platform;
+    if (platform == TargetPlatform.iOS || platform == TargetPlatform.macOS) {
+      await showCupertinoSpeedPicker(context, wpm, onChangeWpm);
+      return;
+    }
+
+    await showMaterialSpeedPicker(context, wpm, onChangeWpm);
+  }
 }
 
 class _ReadingControl extends StatelessWidget {
@@ -395,7 +489,7 @@ class BionicWordWidget extends StatelessWidget {
     super.key,
   });
 
-  final RsvpToken token;
+  final RsvpBionicToken token;
   final TextStyle baseStyle;
   final TextStyle? boldStyle;
   final TextStyle? semiboldStyle;
@@ -420,7 +514,7 @@ class BionicWordWidget extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: token.regularRext,
+            text: token.regularText,
             style: baseStyle.copyWith(
               fontWeight: FontWeight.normal,
             ),

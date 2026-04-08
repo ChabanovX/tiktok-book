@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/navigation/navigation_service.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_tokenizer.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
 class BottomSelectedbookWindow extends StatelessWidget {
@@ -101,7 +104,7 @@ class BottomSelectedbookWindow extends StatelessWidget {
                     child: CupertinoButton(
                       padding: .zero,
                       child: Text(
-                        l10n.selectedBookRead,
+                        selectedBook.isFinished() ? l10n.selectedBookReadAgain : l10n.selectedBookRead,
                         style: appTheme.mainTextStyle.copyWith(
                           color: appTheme.primaryColor,
                           fontWeight: FontWeight.w700,
@@ -110,10 +113,26 @@ class BottomSelectedbookWindow extends StatelessWidget {
                       ),
                       onPressed: () {
                         final navigationService = getIt<NavigationService>();
+                        final bionicTokens = getIt<RsvpTokenizer>().tokenizeBionicFromDomain(selectedBook.tokens);
+
+                        final BookMetaModel bookToPush;
+
+                        // Update selected book with index = 0 since we read again.
+                        if (selectedBook.isFinished()) {
+                          bookToPush = selectedBook.copyWith(currentIndex: 0);
+                          context.read<RsvpBloc>().add(
+                            RsvpEvent.updateBookProgress(documentId: bookToPush.documentId, currentIndex: 0),
+                          );
+                        } else {
+                          bookToPush = selectedBook;
+                        }
+
                         unawaited(
                           navigationService.goToReadingScreen(
-                            tokens: selectedBook.tokens,
+                            tokens: bionicTokens,
+                            book: bookToPush,
                             bookTitle: title,
+                            rsvpBloc: context.read<RsvpBloc>(),
                           ),
                         );
                       },

@@ -24,6 +24,14 @@
   "@libraryEmptyButton": {
     "description": "Button label in the empty library state."
   },
+  "libraryLoadingTitle": "Preparing your library",
+  "@libraryLoadingTitle": {
+    "description": "Title shown while the library is loading."
+  },
+  "libraryLoadingDescription": "Checking saved books and preparing everything for reading.",
+  "@libraryLoadingDescription": {
+    "description": "Description shown while the library is loading."
+  },
   "libraryImportErrorTitle": "Import error",
   "@libraryImportErrorTitle": {
     "description": "Import error state title."
@@ -63,6 +71,10 @@
   "selectedBookRead": "Read",
   "@selectedBookRead": {
     "description": "Action label to start reading the selected book."
+  },
+  "selectedBookReadAgain": "Read again",
+  "@selectedBookReadAgain": {
+    "description": "Action label to restart reading a finished book."
   },
   "bookWordCount": "{count, plural, =0{0 words} one{1 word} other{{count} words}}",
   "@bookWordCount": {

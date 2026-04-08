@@ -24,6 +24,14 @@
   "@libraryEmptyButton": {
     "description": "Кнопка в пустом состоянии библиотеки."
   },
+  "libraryLoadingTitle": "Подготавливаем библиотеку",
+  "@libraryLoadingTitle": {
+    "description": "Заголовок состояния загрузки библиотеки."
+  },
+  "libraryLoadingDescription": "Проверяем сохранённые книги и готовим всё к чтению.",
+  "@libraryLoadingDescription": {
+    "description": "Описание состояния загрузки библиотеки."
+  },
   "libraryImportErrorTitle": "Ошибка импорта",
   "@libraryImportErrorTitle": {
     "description": "Заголовок состояния ошибки импорта."
@@ -63,6 +71,10 @@
   "selectedBookRead": "Читать",
   "@selectedBookRead": {
     "description": "Кнопка запуска чтения выбранной книги."
+  },
+  "selectedBookReadAgain": "Читать снова",
+  "@selectedBookReadAgain": {
+    "description": "Кнопка перезапуска чтения завершенной книги."
   },
   "bookWordCount": "{count, plural, =0{0 слов} one{{count} слово} few{{count} слова} many{{count} слов} other{{count} слова}}",
   "@bookWordCount": {

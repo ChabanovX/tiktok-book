@@ -27,6 +27,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get libraryEmptyButton => 'Загрузить книгу';
 
   @override
+  String get libraryLoadingTitle => 'Подготавливаем библиотеку';
+
+  @override
+  String get libraryLoadingDescription => 'Проверяем сохранённые книги и готовим всё к чтению.';
+
+  @override
   String get libraryImportErrorTitle => 'Ошибка импорта';
 
   @override
@@ -55,6 +61,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get selectedBookRead => 'Читать';
+
+  @override
+  String get selectedBookReadAgain => 'Читать снова';
 
   @override
   String bookWordCount(int count) {

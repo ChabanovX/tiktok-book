@@ -28,7 +28,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ReadingScreenWrapper(
             tokens: args.tokens,
+            book: args.book,
             bookTitle: args.bookTitle,
+            rsvpBloc: args.rsvpBloc,
           ),
           settings: settings,
         );

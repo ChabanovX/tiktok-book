@@ -55,12 +55,13 @@ extension RsvpEventPatterns on RsvpEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _AddBook value)?  addBook,TResult Function( _RemoveBook value)?  removeBook,TResult Function( _ToggleSelectBook value)?  toggleSelectBook,TResult Function( _StartAnimation value)?  startAnimation,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _AddBook value)?  addBook,TResult Function( _UpdateBookProgress value)?  updateBookProgress,TResult Function( _RemoveBook value)?  removeBook,TResult Function( _ToggleSelectBook value)?  toggleSelectBook,TResult Function( _StartAnimation value)?  startAnimation,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _AddBook() when addBook != null:
-return addBook(_that);case _RemoveBook() when removeBook != null:
+return addBook(_that);case _UpdateBookProgress() when updateBookProgress != null:
+return updateBookProgress(_that);case _RemoveBook() when removeBook != null:
 return removeBook(_that);case _ToggleSelectBook() when toggleSelectBook != null:
 return toggleSelectBook(_that);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that);case _:
@@ -81,12 +82,13 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _AddBook value)  addBook,required TResult Function( _RemoveBook value)  removeBook,required TResult Function( _ToggleSelectBook value)  toggleSelectBook,required TResult Function( _StartAnimation value)  startAnimation,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _AddBook value)  addBook,required TResult Function( _UpdateBookProgress value)  updateBookProgress,required TResult Function( _RemoveBook value)  removeBook,required TResult Function( _ToggleSelectBook value)  toggleSelectBook,required TResult Function( _StartAnimation value)  startAnimation,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _AddBook():
-return addBook(_that);case _RemoveBook():
+return addBook(_that);case _UpdateBookProgress():
+return updateBookProgress(_that);case _RemoveBook():
 return removeBook(_that);case _ToggleSelectBook():
 return toggleSelectBook(_that);case _StartAnimation():
 return startAnimation(_that);case _:
@@ -106,12 +108,13 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _AddBook value)?  addBook,TResult? Function( _RemoveBook value)?  removeBook,TResult? Function( _ToggleSelectBook value)?  toggleSelectBook,TResult? Function( _StartAnimation value)?  startAnimation,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _AddBook value)?  addBook,TResult? Function( _UpdateBookProgress value)?  updateBookProgress,TResult? Function( _RemoveBook value)?  removeBook,TResult? Function( _ToggleSelectBook value)?  toggleSelectBook,TResult? Function( _StartAnimation value)?  startAnimation,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _AddBook() when addBook != null:
-return addBook(_that);case _RemoveBook() when removeBook != null:
+return addBook(_that);case _UpdateBookProgress() when updateBookProgress != null:
+return updateBookProgress(_that);case _RemoveBook() when removeBook != null:
 return removeBook(_that);case _ToggleSelectBook() when toggleSelectBook != null:
 return toggleSelectBook(_that);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that);case _:
@@ -131,11 +134,12 @@ return startAnimation(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  addBook,TResult Function( BookMetaModel book)?  removeBook,TResult Function( BookMetaModel book)?  toggleSelectBook,TResult Function( int bookID)?  startAnimation,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  addBook,TResult Function( String documentId,  int currentIndex)?  updateBookProgress,TResult Function( BookMetaModel book)?  removeBook,TResult Function( BookMetaModel book)?  toggleSelectBook,TResult Function( int bookID)?  startAnimation,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddBook() when addBook != null:
-return addBook();case _RemoveBook() when removeBook != null:
+return addBook();case _UpdateBookProgress() when updateBookProgress != null:
+return updateBookProgress(_that.documentId,_that.currentIndex);case _RemoveBook() when removeBook != null:
 return removeBook(_that.book);case _ToggleSelectBook() when toggleSelectBook != null:
 return toggleSelectBook(_that.book);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that.bookID);case _:
@@ -156,11 +160,12 @@ return startAnimation(_that.bookID);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  addBook,required TResult Function( BookMetaModel book)  removeBook,required TResult Function( BookMetaModel book)  toggleSelectBook,required TResult Function( int bookID)  startAnimation,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  addBook,required TResult Function( String documentId,  int currentIndex)  updateBookProgress,required TResult Function( BookMetaModel book)  removeBook,required TResult Function( BookMetaModel book)  toggleSelectBook,required TResult Function( int bookID)  startAnimation,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _AddBook():
-return addBook();case _RemoveBook():
+return addBook();case _UpdateBookProgress():
+return updateBookProgress(_that.documentId,_that.currentIndex);case _RemoveBook():
 return removeBook(_that.book);case _ToggleSelectBook():
 return toggleSelectBook(_that.book);case _StartAnimation():
 return startAnimation(_that.bookID);case _:
@@ -180,11 +185,12 @@ return startAnimation(_that.bookID);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  addBook,TResult? Function( BookMetaModel book)?  removeBook,TResult? Function( BookMetaModel book)?  toggleSelectBook,TResult? Function( int bookID)?  startAnimation,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  addBook,TResult? Function( String documentId,  int currentIndex)?  updateBookProgress,TResult? Function( BookMetaModel book)?  removeBook,TResult? Function( BookMetaModel book)?  toggleSelectBook,TResult? Function( int bookID)?  startAnimation,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddBook() when addBook != null:
-return addBook();case _RemoveBook() when removeBook != null:
+return addBook();case _UpdateBookProgress() when updateBookProgress != null:
+return updateBookProgress(_that.documentId,_that.currentIndex);case _RemoveBook() when removeBook != null:
 return removeBook(_that.book);case _ToggleSelectBook() when toggleSelectBook != null:
 return toggleSelectBook(_that.book);case _StartAnimation() when startAnimation != null:
 return startAnimation(_that.bookID);case _:
@@ -258,6 +264,74 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _UpdateBookProgress implements RsvpEvent {
+  const _UpdateBookProgress({required this.documentId, required this.currentIndex});
+  
+
+ final  String documentId;
+ final  int currentIndex;
+
+/// Create a copy of RsvpEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UpdateBookProgressCopyWith<_UpdateBookProgress> get copyWith => __$UpdateBookProgressCopyWithImpl<_UpdateBookProgress>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateBookProgress&&(identical(other.documentId, documentId) || other.documentId == documentId)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,documentId,currentIndex);
+
+@override
+String toString() {
+  return 'RsvpEvent.updateBookProgress(documentId: $documentId, currentIndex: $currentIndex)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UpdateBookProgressCopyWith<$Res> implements $RsvpEventCopyWith<$Res> {
+  factory _$UpdateBookProgressCopyWith(_UpdateBookProgress value, $Res Function(_UpdateBookProgress) _then) = __$UpdateBookProgressCopyWithImpl;
+@useResult
+$Res call({
+ String documentId, int currentIndex
+});
+
+
+
+
+}
+/// @nodoc
+class __$UpdateBookProgressCopyWithImpl<$Res>
+    implements _$UpdateBookProgressCopyWith<$Res> {
+  __$UpdateBookProgressCopyWithImpl(this._self, this._then);
+
+  final _UpdateBookProgress _self;
+  final $Res Function(_UpdateBookProgress) _then;
+
+/// Create a copy of RsvpEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? documentId = null,Object? currentIndex = null,}) {
+  return _then(_UpdateBookProgress(
+documentId: null == documentId ? _self.documentId : documentId // ignore: cast_nullable_to_non_nullable
+as String,currentIndex: null == currentIndex ? _self.currentIndex : currentIndex // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
@@ -478,7 +552,7 @@ as int,
 /// @nodoc
 mixin _$RsvpState {
 
- BookMetaModel? get selectedBook; bool get isParsing; RSVPError? get lastError; List<BookMetaModel> get books;
+ LibraryMainScreenState get currentPageState; BookMetaModel? get selectedBook; bool get isAddingBook; RSVPError? get lastError; List<BookMetaModel> get books;
 /// Create a copy of RsvpState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -489,16 +563,16 @@ $RsvpStateCopyWith<RsvpState> get copyWith => _$RsvpStateCopyWithImpl<RsvpState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RsvpState&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isParsing, isParsing) || other.isParsing == isParsing)&&(identical(other.lastError, lastError) || other.lastError == lastError)&&const DeepCollectionEquality().equals(other.books, books));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RsvpState&&(identical(other.currentPageState, currentPageState) || other.currentPageState == currentPageState)&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isAddingBook, isAddingBook) || other.isAddingBook == isAddingBook)&&(identical(other.lastError, lastError) || other.lastError == lastError)&&const DeepCollectionEquality().equals(other.books, books));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,selectedBook,isParsing,lastError,const DeepCollectionEquality().hash(books));
+int get hashCode => Object.hash(runtimeType,currentPageState,selectedBook,isAddingBook,lastError,const DeepCollectionEquality().hash(books));
 
 @override
 String toString() {
-  return 'RsvpState(selectedBook: $selectedBook, isParsing: $isParsing, lastError: $lastError, books: $books)';
+  return 'RsvpState(currentPageState: $currentPageState, selectedBook: $selectedBook, isAddingBook: $isAddingBook, lastError: $lastError, books: $books)';
 }
 
 
@@ -509,7 +583,7 @@ abstract mixin class $RsvpStateCopyWith<$Res>  {
   factory $RsvpStateCopyWith(RsvpState value, $Res Function(RsvpState) _then) = _$RsvpStateCopyWithImpl;
 @useResult
 $Res call({
- BookMetaModel? selectedBook, bool isParsing, RSVPError? lastError, List<BookMetaModel> books
+ LibraryMainScreenState currentPageState, BookMetaModel? selectedBook, bool isAddingBook, RSVPError? lastError, List<BookMetaModel> books
 });
 
 
@@ -526,10 +600,11 @@ class _$RsvpStateCopyWithImpl<$Res>
 
 /// Create a copy of RsvpState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? selectedBook = freezed,Object? isParsing = null,Object? lastError = freezed,Object? books = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? currentPageState = null,Object? selectedBook = freezed,Object? isAddingBook = null,Object? lastError = freezed,Object? books = null,}) {
   return _then(_self.copyWith(
-selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
-as BookMetaModel?,isParsing: null == isParsing ? _self.isParsing : isParsing // ignore: cast_nullable_to_non_nullable
+currentPageState: null == currentPageState ? _self.currentPageState : currentPageState // ignore: cast_nullable_to_non_nullable
+as LibraryMainScreenState,selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
+as BookMetaModel?,isAddingBook: null == isAddingBook ? _self.isAddingBook : isAddingBook // ignore: cast_nullable_to_non_nullable
 as bool,lastError: freezed == lastError ? _self.lastError : lastError // ignore: cast_nullable_to_non_nullable
 as RSVPError?,books: null == books ? _self.books : books // ignore: cast_nullable_to_non_nullable
 as List<BookMetaModel>,
@@ -641,10 +716,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BookMetaModel? selectedBook,  bool isParsing,  RSVPError? lastError,  List<BookMetaModel> books)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LibraryMainScreenState currentPageState,  BookMetaModel? selectedBook,  bool isAddingBook,  RSVPError? lastError,  List<BookMetaModel> books)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RsvpState() when $default != null:
-return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);case _:
+return $default(_that.currentPageState,_that.selectedBook,_that.isAddingBook,_that.lastError,_that.books);case _:
   return orElse();
 
 }
@@ -662,10 +737,10 @@ return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BookMetaModel? selectedBook,  bool isParsing,  RSVPError? lastError,  List<BookMetaModel> books)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LibraryMainScreenState currentPageState,  BookMetaModel? selectedBook,  bool isAddingBook,  RSVPError? lastError,  List<BookMetaModel> books)  $default,) {final _that = this;
 switch (_that) {
 case _RsvpState():
-return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);case _:
+return $default(_that.currentPageState,_that.selectedBook,_that.isAddingBook,_that.lastError,_that.books);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -682,10 +757,10 @@ return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BookMetaModel? selectedBook,  bool isParsing,  RSVPError? lastError,  List<BookMetaModel> books)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LibraryMainScreenState currentPageState,  BookMetaModel? selectedBook,  bool isAddingBook,  RSVPError? lastError,  List<BookMetaModel> books)?  $default,) {final _that = this;
 switch (_that) {
 case _RsvpState() when $default != null:
-return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);case _:
+return $default(_that.currentPageState,_that.selectedBook,_that.isAddingBook,_that.lastError,_that.books);case _:
   return null;
 
 }
@@ -697,11 +772,12 @@ return $default(_that.selectedBook,_that.isParsing,_that.lastError,_that.books);
 
 
 class _RsvpState implements RsvpState {
-  const _RsvpState({this.selectedBook, this.isParsing = false, this.lastError, final  List<BookMetaModel> books = const []}): _books = books;
+  const _RsvpState({required this.currentPageState, this.selectedBook, this.isAddingBook = false, this.lastError, final  List<BookMetaModel> books = const []}): _books = books;
   
 
+@override final  LibraryMainScreenState currentPageState;
 @override final  BookMetaModel? selectedBook;
-@override@JsonKey() final  bool isParsing;
+@override@JsonKey() final  bool isAddingBook;
 @override final  RSVPError? lastError;
  final  List<BookMetaModel> _books;
 @override@JsonKey() List<BookMetaModel> get books {
@@ -721,16 +797,16 @@ _$RsvpStateCopyWith<_RsvpState> get copyWith => __$RsvpStateCopyWithImpl<_RsvpSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RsvpState&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isParsing, isParsing) || other.isParsing == isParsing)&&(identical(other.lastError, lastError) || other.lastError == lastError)&&const DeepCollectionEquality().equals(other._books, _books));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RsvpState&&(identical(other.currentPageState, currentPageState) || other.currentPageState == currentPageState)&&(identical(other.selectedBook, selectedBook) || other.selectedBook == selectedBook)&&(identical(other.isAddingBook, isAddingBook) || other.isAddingBook == isAddingBook)&&(identical(other.lastError, lastError) || other.lastError == lastError)&&const DeepCollectionEquality().equals(other._books, _books));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,selectedBook,isParsing,lastError,const DeepCollectionEquality().hash(_books));
+int get hashCode => Object.hash(runtimeType,currentPageState,selectedBook,isAddingBook,lastError,const DeepCollectionEquality().hash(_books));
 
 @override
 String toString() {
-  return 'RsvpState(selectedBook: $selectedBook, isParsing: $isParsing, lastError: $lastError, books: $books)';
+  return 'RsvpState(currentPageState: $currentPageState, selectedBook: $selectedBook, isAddingBook: $isAddingBook, lastError: $lastError, books: $books)';
 }
 
 
@@ -741,7 +817,7 @@ abstract mixin class _$RsvpStateCopyWith<$Res> implements $RsvpStateCopyWith<$Re
   factory _$RsvpStateCopyWith(_RsvpState value, $Res Function(_RsvpState) _then) = __$RsvpStateCopyWithImpl;
 @override @useResult
 $Res call({
- BookMetaModel? selectedBook, bool isParsing, RSVPError? lastError, List<BookMetaModel> books
+ LibraryMainScreenState currentPageState, BookMetaModel? selectedBook, bool isAddingBook, RSVPError? lastError, List<BookMetaModel> books
 });
 
 
@@ -758,10 +834,11 @@ class __$RsvpStateCopyWithImpl<$Res>
 
 /// Create a copy of RsvpState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? selectedBook = freezed,Object? isParsing = null,Object? lastError = freezed,Object? books = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? currentPageState = null,Object? selectedBook = freezed,Object? isAddingBook = null,Object? lastError = freezed,Object? books = null,}) {
   return _then(_RsvpState(
-selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
-as BookMetaModel?,isParsing: null == isParsing ? _self.isParsing : isParsing // ignore: cast_nullable_to_non_nullable
+currentPageState: null == currentPageState ? _self.currentPageState : currentPageState // ignore: cast_nullable_to_non_nullable
+as LibraryMainScreenState,selectedBook: freezed == selectedBook ? _self.selectedBook : selectedBook // ignore: cast_nullable_to_non_nullable
+as BookMetaModel?,isAddingBook: null == isAddingBook ? _self.isAddingBook : isAddingBook // ignore: cast_nullable_to_non_nullable
 as bool,lastError: freezed == lastError ? _self.lastError : lastError // ignore: cast_nullable_to_non_nullable
 as RSVPError?,books: null == books ? _self._books : books // ignore: cast_nullable_to_non_nullable
 as List<BookMetaModel>,

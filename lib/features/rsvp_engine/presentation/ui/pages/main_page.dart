@@ -15,10 +15,12 @@ class MainScreen extends StatelessWidget {
     final l10n = context.l10n;
 
     return BlocProvider(
-      create: (context) => getIt<RsvpBloc>(),
+      create: (context) => getIt<RsvpBloc>()..add(const RsvpEvent.started()),
       child: BlocBuilder<RsvpBloc, RsvpState>(
         builder: (context, state) {
-          final LibraryMainScreenState screenState = switch (state) {
+          final LibraryMainScreenState screenState = switch (state.currentPageState) {
+            .initial => .initial,
+            .initializing => .initializing,
             _ when state.lastError != null => .importError,
             _ when state.books.isNotEmpty => .nonEmpty,
             _ => .empty,
@@ -27,13 +29,13 @@ class MainScreen extends StatelessWidget {
           final bookWidgets = state.books
               .map(
                 (b) => BookItem(
-                  key: ValueKey(b),
+                  key: ValueKey(b.documentId),
                   onTap: () => context.read<RsvpBloc>().add(RsvpEvent.toggleSelectBook(book: b)),
                   onDelete: () => context.read<RsvpBloc>().add(RsvpEvent.removeBook(book: b)),
-                  isSelected: state.selectedBook == b,
+                  isSelected: state.selectedBook?.documentId == b.documentId,
                   title: b.resolveTitle(),
                   author: l10n.bookUnknownAuthor,
-                  progress: 0.0,
+                  progress: b.resolveProgress(),
                 ),
               )
               .toList();

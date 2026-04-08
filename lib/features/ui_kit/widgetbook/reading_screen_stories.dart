@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -11,12 +11,13 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 Widget readingScreenReadingUseCase(BuildContext context) {
   return ReadingScreen(
     state: ReadingScreenState.reading,
-    currentWord: const RsvpToken(boldText: 'He', semiboldText: 'll', regularRext: 'oo', index: 0),
+    currentWord: const RsvpBionicToken(boldText: 'He', semiboldText: 'll', regularText: 'oo', index: 0),
     bookTitle: 'Brave New World',
     progress: 0.67,
     wordsRead: 6969,
     onStartStopTap: () {},
     onExitTap: () {},
+    wpm: 400,
   );
 }
 
@@ -28,11 +29,12 @@ Widget readingScreenReadingUseCase(BuildContext context) {
 Widget readingScreenPausedUseCase(BuildContext context) {
   return ReadingScreen(
     state: ReadingScreenState.paused,
-    currentWord: const RsvpToken(boldText: 'He', semiboldText: 'll', regularRext: 'oo', index: 0),
+    currentWord: const RsvpBionicToken(boldText: 'He', semiboldText: 'll', regularText: 'oo', index: 0),
     bookTitle: 'Brave New World',
     progress: 0.67,
     wordsRead: 6969,
     onStartStopTap: () {},
     onExitTap: () {},
+    wpm: 400,
   );
 }

@@ -5,8 +5,8 @@ class ReadingState with _$ReadingState {
   const factory ReadingState.initial() = _Initial;
 
   const factory ReadingState.ready({
-    required List<RsvpToken> tokens,
-    required RsvpToken currentToken,
+    required List<RsvpBionicToken> tokens,
+    required RsvpBionicToken currentToken,
     required int wpm,
     required int totalWords,
     @Default(false) bool isPlaying,

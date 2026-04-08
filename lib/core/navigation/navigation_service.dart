@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/core/navigation/arguments/full_text_arguments.dart';
 import 'package:rsvp_flutter_app/core/navigation/arguments/reading_arguments.dart';
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
 
 @singleton
@@ -46,14 +48,18 @@ class NavigationService {
   }
 
   Future<void> goToReadingScreen({
-    required List<RsvpToken> tokens,
+    required List<RsvpBionicToken> tokens,
+    required BookMetaModel book,
     required String bookTitle,
+    required RsvpBloc rsvpBloc,
   }) {
     return pushNamed(
       '/reading',
       arguments: ReadingArguments(
         tokens: tokens,
+        book: book,
         bookTitle: bookTitle,
+        rsvpBloc: rsvpBloc,
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 
 class RsvpEngine {
   RsvpEngine({
@@ -7,26 +7,27 @@ class RsvpEngine {
     required this.wpm,
     required this.onTokenChanged,
     this.onCompleted,
-  });
-  final List<RsvpToken> tokens;
+    int initialIndex = 0,
+  }) : _currentIndex = _normalizeIndex(tokens, initialIndex);
+  final List<RsvpBionicToken> tokens;
   final int wpm;
-  final void Function(RsvpToken token) onTokenChanged;
+  final void Function(RsvpBionicToken token) onTokenChanged;
   final void Function()? onCompleted;
 
   late final delay = Duration(milliseconds: (60000 / wpm).round());
 
   Timer? _timer;
-  int _currentIndex = 0;
+  int _currentIndex;
 
   int get currentIndex => _currentIndex;
   bool get isPlaying => _timer?.isActive ?? false;
 
-  void start({int startIndex = 0}) {
+  void start({int? startIndex}) {
     if (tokens.isEmpty) return;
 
     dispose();
 
-    _currentIndex = startIndex.clamp(0, tokens.length - 1);
+    _currentIndex = _normalizeIndex(tokens, startIndex ?? _currentIndex);
     onTokenChanged(tokens[_currentIndex]);
 
     _timer = Timer.periodic(delay, (_) {
@@ -84,5 +85,21 @@ class RsvpEngine {
     if (wasPlaying) {
       resume();
     }
+  }
+
+  static int _normalizeIndex(List<RsvpBionicToken> tokens, int index) {
+    if (tokens.isEmpty) {
+      return 0;
+    }
+
+    if (index <= 0) {
+      return 0;
+    }
+
+    if (index >= tokens.length) {
+      return tokens.length - 1;
+    }
+
+    return index;
   }
 }
