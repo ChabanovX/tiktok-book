@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rsvp_flutter_app/core/constants.dart';
@@ -137,25 +138,32 @@ class BookItem extends StatelessWidget {
                       style: appTheme.subTextStyle,
                     ),
                   ),
-                  const SizedBox(height: 14),
-                  if (isFinished)
-                    Opacity(
-                      opacity: 0.65,
-                      child: Text(
-                        resolvedFinishedLabel,
-                        style: appTheme.subTextStyle,
+                  // const SizedBox(height: 14),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: isFinished
+                            ? Opacity(
+                                opacity: 0.65,
+                                child: Text(
+                                  resolvedFinishedLabel,
+                                  style: appTheme.subTextStyle,
+                                ),
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(999),
+                                child: LinearProgressIndicator(
+                                  value: clampedProgress,
+                                  minHeight: 4,
+                                  color: appTheme.secondaryColor,
+                                  backgroundColor: appTheme.backgroundColor,
+                                ),
+                              ),
                       ),
-                    )
-                  else
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(999),
-                      child: LinearProgressIndicator(
-                        value: clampedProgress,
-                        minHeight: 4,
-                        color: appTheme.secondaryColor,
-                        backgroundColor: appTheme.backgroundColor,
-                      ),
-                    ),
+                      const SizedBox(width: 8),
+                      const _EditButton(),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -207,6 +215,35 @@ class _CompletedBadge extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: Icon(Icons.check_rounded, color: iconColor, size: 16),
+    );
+  }
+}
+
+class _EditButton extends StatelessWidget {
+  const _EditButton();
+
+  @override
+  Widget build(BuildContext context) {
+    final appTheme = context.appTheme;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+      decoration: BoxDecoration(
+        color: appTheme.primaryColor.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: CupertinoButton(
+        sizeStyle: .small,
+        padding: .zero,
+        child: const Row(
+          children: [
+            Icon(CupertinoIcons.pen),
+            // SizedBox(width: 4),
+            // Text('edit'),
+          ],
+        ),
+        onPressed: () {},
+      ),
     );
   }
 }
