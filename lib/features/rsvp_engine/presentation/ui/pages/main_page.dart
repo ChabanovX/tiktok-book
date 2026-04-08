@@ -34,7 +34,7 @@ class MainScreen extends StatelessWidget {
                   onDelete: () => context.read<RsvpBloc>().add(RsvpEvent.removeBook(book: b)),
                   isSelected: state.selectedBook?.documentId == b.documentId,
                   title: b.resolveTitle(),
-                  author: l10n.bookUnknownAuthor,
+                  author: b.resolveAuthor() ?? l10n.bookUnknownAuthor,
                   progress: b.resolveProgress(),
                 ),
               )
