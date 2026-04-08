@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 import 'package:rsvp_flutter_app/widgetbook.directories.g.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   runApp(const WidgetbookApp());
 }
 

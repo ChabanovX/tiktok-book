@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rsvp_flutter_app/app.dart';
 import 'package:rsvp_flutter_app/core/di/di.dart';
 import 'package:rsvp_flutter_app/core/theme/app_theme_controller.dart';
@@ -7,6 +8,10 @@ import 'package:rsvp_flutter_app/l10n/app_locale_controller.dart';
 
 Future<void> main() async {
   final binding = WidgetsFlutterBinding.ensureInitialized()..deferFirstFrame();
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
   setupServiceLocator();
   await Future.wait([
