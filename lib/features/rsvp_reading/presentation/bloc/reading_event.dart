@@ -16,4 +16,5 @@ class ReadingEvent with _$ReadingEvent {
   const factory ReadingEvent.updateCurrentToken(RsvpToken token) = UpdateCurrentTokenEvent;
   const factory ReadingEvent.completed() = ReadingCompletedEvent;
   const factory ReadingEvent.dispose() = DisposeReadingEvent;
+  const factory ReadingEvent.jumpToIndex(int index) = JumpToIndexEvent;
 }

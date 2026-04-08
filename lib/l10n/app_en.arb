@@ -203,5 +203,8 @@
   "settingsThemeDarkTitle": "Dark",
   "@settingsThemeDarkTitle": {
     "description": "Title for the dark theme option."
-  }
+  },
+  "fullTextTitle": "Full text",
+  "readingControlFullText": "Full text",
+  "fullTextButtonSemantic": "View text"
 }

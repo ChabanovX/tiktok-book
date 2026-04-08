@@ -367,6 +367,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark'**
   String get settingsThemeDarkTitle;
+
+  /// No description provided for @fullTextTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Full text'**
+  String get fullTextTitle;
+
+  /// No description provided for @readingControlFullText.
+  ///
+  /// In en, this message translates to:
+  /// **'Full text'**
+  String get readingControlFullText;
+
+  /// No description provided for @fullTextButtonSemantic.
+  ///
+  /// In en, this message translates to:
+  /// **'View text'**
+  String get fullTextButtonSemantic;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -55,7 +55,7 @@ extension ReadingEventPatterns on ReadingEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( InitializeReadingEvent value)?  initialize,TResult Function( StartReadingEvent value)?  start,TResult Function( PauseReadingEvent value)?  pause,TResult Function( ResumeReadingEvent value)?  resume,TResult Function( NextWordEvent value)?  next,TResult Function( PreviousWordEvent value)?  previous,TResult Function( ChangeWpmEvent value)?  changeWpm,TResult Function( UpdateCurrentTokenEvent value)?  updateCurrentToken,TResult Function( ReadingCompletedEvent value)?  completed,TResult Function( DisposeReadingEvent value)?  dispose,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( InitializeReadingEvent value)?  initialize,TResult Function( StartReadingEvent value)?  start,TResult Function( PauseReadingEvent value)?  pause,TResult Function( ResumeReadingEvent value)?  resume,TResult Function( NextWordEvent value)?  next,TResult Function( PreviousWordEvent value)?  previous,TResult Function( ChangeWpmEvent value)?  changeWpm,TResult Function( UpdateCurrentTokenEvent value)?  updateCurrentToken,TResult Function( ReadingCompletedEvent value)?  completed,TResult Function( DisposeReadingEvent value)?  dispose,TResult Function( JumpToIndexEvent value)?  jumpToIndex,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case InitializeReadingEvent() when initialize != null:
@@ -68,7 +68,8 @@ return previous(_that);case ChangeWpmEvent() when changeWpm != null:
 return changeWpm(_that);case UpdateCurrentTokenEvent() when updateCurrentToken != null:
 return updateCurrentToken(_that);case ReadingCompletedEvent() when completed != null:
 return completed(_that);case DisposeReadingEvent() when dispose != null:
-return dispose(_that);case _:
+return dispose(_that);case JumpToIndexEvent() when jumpToIndex != null:
+return jumpToIndex(_that);case _:
   return orElse();
 
 }
@@ -86,7 +87,7 @@ return dispose(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( InitializeReadingEvent value)  initialize,required TResult Function( StartReadingEvent value)  start,required TResult Function( PauseReadingEvent value)  pause,required TResult Function( ResumeReadingEvent value)  resume,required TResult Function( NextWordEvent value)  next,required TResult Function( PreviousWordEvent value)  previous,required TResult Function( ChangeWpmEvent value)  changeWpm,required TResult Function( UpdateCurrentTokenEvent value)  updateCurrentToken,required TResult Function( ReadingCompletedEvent value)  completed,required TResult Function( DisposeReadingEvent value)  dispose,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( InitializeReadingEvent value)  initialize,required TResult Function( StartReadingEvent value)  start,required TResult Function( PauseReadingEvent value)  pause,required TResult Function( ResumeReadingEvent value)  resume,required TResult Function( NextWordEvent value)  next,required TResult Function( PreviousWordEvent value)  previous,required TResult Function( ChangeWpmEvent value)  changeWpm,required TResult Function( UpdateCurrentTokenEvent value)  updateCurrentToken,required TResult Function( ReadingCompletedEvent value)  completed,required TResult Function( DisposeReadingEvent value)  dispose,required TResult Function( JumpToIndexEvent value)  jumpToIndex,}){
 final _that = this;
 switch (_that) {
 case InitializeReadingEvent():
@@ -99,7 +100,8 @@ return previous(_that);case ChangeWpmEvent():
 return changeWpm(_that);case UpdateCurrentTokenEvent():
 return updateCurrentToken(_that);case ReadingCompletedEvent():
 return completed(_that);case DisposeReadingEvent():
-return dispose(_that);case _:
+return dispose(_that);case JumpToIndexEvent():
+return jumpToIndex(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -116,7 +118,7 @@ return dispose(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( InitializeReadingEvent value)?  initialize,TResult? Function( StartReadingEvent value)?  start,TResult? Function( PauseReadingEvent value)?  pause,TResult? Function( ResumeReadingEvent value)?  resume,TResult? Function( NextWordEvent value)?  next,TResult? Function( PreviousWordEvent value)?  previous,TResult? Function( ChangeWpmEvent value)?  changeWpm,TResult? Function( UpdateCurrentTokenEvent value)?  updateCurrentToken,TResult? Function( ReadingCompletedEvent value)?  completed,TResult? Function( DisposeReadingEvent value)?  dispose,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( InitializeReadingEvent value)?  initialize,TResult? Function( StartReadingEvent value)?  start,TResult? Function( PauseReadingEvent value)?  pause,TResult? Function( ResumeReadingEvent value)?  resume,TResult? Function( NextWordEvent value)?  next,TResult? Function( PreviousWordEvent value)?  previous,TResult? Function( ChangeWpmEvent value)?  changeWpm,TResult? Function( UpdateCurrentTokenEvent value)?  updateCurrentToken,TResult? Function( ReadingCompletedEvent value)?  completed,TResult? Function( DisposeReadingEvent value)?  dispose,TResult? Function( JumpToIndexEvent value)?  jumpToIndex,}){
 final _that = this;
 switch (_that) {
 case InitializeReadingEvent() when initialize != null:
@@ -129,7 +131,8 @@ return previous(_that);case ChangeWpmEvent() when changeWpm != null:
 return changeWpm(_that);case UpdateCurrentTokenEvent() when updateCurrentToken != null:
 return updateCurrentToken(_that);case ReadingCompletedEvent() when completed != null:
 return completed(_that);case DisposeReadingEvent() when dispose != null:
-return dispose(_that);case _:
+return dispose(_that);case JumpToIndexEvent() when jumpToIndex != null:
+return jumpToIndex(_that);case _:
   return null;
 
 }
@@ -146,7 +149,7 @@ return dispose(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<RsvpToken> tokens,  int initialWpm)?  initialize,TResult Function()?  start,TResult Function()?  pause,TResult Function()?  resume,TResult Function()?  next,TResult Function()?  previous,TResult Function( int newWpm)?  changeWpm,TResult Function( RsvpToken token)?  updateCurrentToken,TResult Function()?  completed,TResult Function()?  dispose,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<RsvpToken> tokens,  int initialWpm)?  initialize,TResult Function()?  start,TResult Function()?  pause,TResult Function()?  resume,TResult Function()?  next,TResult Function()?  previous,TResult Function( int newWpm)?  changeWpm,TResult Function( RsvpToken token)?  updateCurrentToken,TResult Function()?  completed,TResult Function()?  dispose,TResult Function( int index)?  jumpToIndex,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case InitializeReadingEvent() when initialize != null:
 return initialize(_that.tokens,_that.initialWpm);case StartReadingEvent() when start != null:
@@ -158,7 +161,8 @@ return previous();case ChangeWpmEvent() when changeWpm != null:
 return changeWpm(_that.newWpm);case UpdateCurrentTokenEvent() when updateCurrentToken != null:
 return updateCurrentToken(_that.token);case ReadingCompletedEvent() when completed != null:
 return completed();case DisposeReadingEvent() when dispose != null:
-return dispose();case _:
+return dispose();case JumpToIndexEvent() when jumpToIndex != null:
+return jumpToIndex(_that.index);case _:
   return orElse();
 
 }
@@ -176,7 +180,7 @@ return dispose();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<RsvpToken> tokens,  int initialWpm)  initialize,required TResult Function()  start,required TResult Function()  pause,required TResult Function()  resume,required TResult Function()  next,required TResult Function()  previous,required TResult Function( int newWpm)  changeWpm,required TResult Function( RsvpToken token)  updateCurrentToken,required TResult Function()  completed,required TResult Function()  dispose,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<RsvpToken> tokens,  int initialWpm)  initialize,required TResult Function()  start,required TResult Function()  pause,required TResult Function()  resume,required TResult Function()  next,required TResult Function()  previous,required TResult Function( int newWpm)  changeWpm,required TResult Function( RsvpToken token)  updateCurrentToken,required TResult Function()  completed,required TResult Function()  dispose,required TResult Function( int index)  jumpToIndex,}) {final _that = this;
 switch (_that) {
 case InitializeReadingEvent():
 return initialize(_that.tokens,_that.initialWpm);case StartReadingEvent():
@@ -188,7 +192,8 @@ return previous();case ChangeWpmEvent():
 return changeWpm(_that.newWpm);case UpdateCurrentTokenEvent():
 return updateCurrentToken(_that.token);case ReadingCompletedEvent():
 return completed();case DisposeReadingEvent():
-return dispose();case _:
+return dispose();case JumpToIndexEvent():
+return jumpToIndex(_that.index);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,7 +210,7 @@ return dispose();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<RsvpToken> tokens,  int initialWpm)?  initialize,TResult? Function()?  start,TResult? Function()?  pause,TResult? Function()?  resume,TResult? Function()?  next,TResult? Function()?  previous,TResult? Function( int newWpm)?  changeWpm,TResult? Function( RsvpToken token)?  updateCurrentToken,TResult? Function()?  completed,TResult? Function()?  dispose,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<RsvpToken> tokens,  int initialWpm)?  initialize,TResult? Function()?  start,TResult? Function()?  pause,TResult? Function()?  resume,TResult? Function()?  next,TResult? Function()?  previous,TResult? Function( int newWpm)?  changeWpm,TResult? Function( RsvpToken token)?  updateCurrentToken,TResult? Function()?  completed,TResult? Function()?  dispose,TResult? Function( int index)?  jumpToIndex,}) {final _that = this;
 switch (_that) {
 case InitializeReadingEvent() when initialize != null:
 return initialize(_that.tokens,_that.initialWpm);case StartReadingEvent() when start != null:
@@ -217,7 +222,8 @@ return previous();case ChangeWpmEvent() when changeWpm != null:
 return changeWpm(_that.newWpm);case UpdateCurrentTokenEvent() when updateCurrentToken != null:
 return updateCurrentToken(_that.token);case ReadingCompletedEvent() when completed != null:
 return completed();case DisposeReadingEvent() when dispose != null:
-return dispose();case _:
+return dispose();case JumpToIndexEvent() when jumpToIndex != null:
+return jumpToIndex(_that.index);case _:
   return null;
 
 }
@@ -654,6 +660,72 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class JumpToIndexEvent implements ReadingEvent {
+  const JumpToIndexEvent(this.index);
+  
+
+ final  int index;
+
+/// Create a copy of ReadingEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$JumpToIndexEventCopyWith<JumpToIndexEvent> get copyWith => _$JumpToIndexEventCopyWithImpl<JumpToIndexEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is JumpToIndexEvent&&(identical(other.index, index) || other.index == index));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,index);
+
+@override
+String toString() {
+  return 'ReadingEvent.jumpToIndex(index: $index)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $JumpToIndexEventCopyWith<$Res> implements $ReadingEventCopyWith<$Res> {
+  factory $JumpToIndexEventCopyWith(JumpToIndexEvent value, $Res Function(JumpToIndexEvent) _then) = _$JumpToIndexEventCopyWithImpl;
+@useResult
+$Res call({
+ int index
+});
+
+
+
+
+}
+/// @nodoc
+class _$JumpToIndexEventCopyWithImpl<$Res>
+    implements $JumpToIndexEventCopyWith<$Res> {
+  _$JumpToIndexEventCopyWithImpl(this._self, this._then);
+
+  final JumpToIndexEvent _self;
+  final $Res Function(JumpToIndexEvent) _then;
+
+/// Create a copy of ReadingEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? index = null,}) {
+  return _then(JumpToIndexEvent(
+null == index ? _self.index : index // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
 
 /// @nodoc
 mixin _$ReadingState {

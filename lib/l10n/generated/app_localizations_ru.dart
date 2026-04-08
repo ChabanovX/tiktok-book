@@ -163,4 +163,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsThemeDarkTitle => 'Тёмная';
+
+  @override
+  String get fullTextTitle => 'Полный текст';
+
+  @override
+  String get readingControlFullText => 'Текст';
+
+  @override
+  String get fullTextButtonSemantic => 'Просмотр текста';
 }

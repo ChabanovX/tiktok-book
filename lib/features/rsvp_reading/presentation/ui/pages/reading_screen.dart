@@ -8,6 +8,7 @@ import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/exit_button.dart';
+import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/full_text_button.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/start_stop_button.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
 
@@ -53,6 +54,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider.value(
       value: _readingBloc,
       child: BlocConsumer<ReadingBloc, ReadingState>(
@@ -87,11 +89,20 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                 progress: progress,
                 wordsRead: currentToken.index + 1,
                 onStartStopTap: () {
-                  if (isPlaying) {
-                    _readingBloc.add(const ReadingEvent.pause());
-                  } else {
-                    _readingBloc.add(const ReadingEvent.resume());
+                  if(!isCompleted) {
+                     if (isPlaying) {
+                      _readingBloc.add(const ReadingEvent.pause());
+                    } else {
+                      _readingBloc.add(const ReadingEvent.resume());
+                    }
                   }
+                },
+                onFullTextTap: () async {
+                  final navigatorService = getIt<NavigationService>();
+                  await navigatorService.goToFullTextScreen(
+                    tokens: tokens,
+                    readingBloc: _readingBloc,
+                  );
                 },
                 onExitTap: () => _onExit(context),
               );
@@ -129,6 +140,9 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
     );
   }
 
+
+
+  
   void _onExit(BuildContext context) {
     getIt<NavigationService>().pop();
   }
@@ -180,6 +194,7 @@ class ReadingScreen extends StatelessWidget {
     required this.bookTitle,
     required this.progress,
     required this.wordsRead,
+    this.onFullTextTap,
     this.onStartStopTap,
     this.onExitTap,
     super.key,
@@ -190,8 +205,10 @@ class ReadingScreen extends StatelessWidget {
   final String bookTitle;
   final double progress;
   final int wordsRead;
+  final VoidCallback? onFullTextTap;
   final VoidCallback? onStartStopTap;
   final VoidCallback? onExitTap;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -221,7 +238,7 @@ class ReadingScreen extends StatelessWidget {
                   final halfHeight = (totalHeight - 56) / 2;
 
                   final topSpacing = (constraints.maxHeight * 0.10).clamp(72.0, 168.0);
-                  final bottomSpacing = (constraints.maxHeight * 0.18).clamp(56.0, 144.0);
+                  final bottomSpacing = (constraints.maxHeight * 0.10).clamp(56.0, 144.0);
 
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
@@ -286,6 +303,17 @@ class ReadingScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     _ReadingControl(
+                                      // label: "",
+                                      label: l10n.readingControlFullText,
+                                      child: FullTextButton(
+                                        onTap: onFullTextTap,
+                                        size: 60,
+                                        borderRadius: 14,
+                                      )
+                                    ),
+                                    const SizedBox(width: 48),
+                                    _ReadingControl(
+                                      // label: "",
                                       label: state == ReadingScreenState.reading
                                           ? l10n.readingControlPause
                                           : l10n.readingControlPlay,
@@ -300,6 +328,7 @@ class ReadingScreen extends StatelessWidget {
                                     const SizedBox(width: 48),
                                     _ReadingControl(
                                       label: l10n.readingControlExit,
+                                      // label: "",
                                       child: ExitButton(
                                         onTap: onExitTap,
                                         size: 60,

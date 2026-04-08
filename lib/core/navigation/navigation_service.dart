@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rsvp_flutter_app/core/navigation/reading_arguments.dart';
+import 'package:rsvp_flutter_app/core/navigation/arguments/full_text_arguments.dart';
+import 'package:rsvp_flutter_app/core/navigation/arguments/reading_arguments.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_token_model.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
 
 @singleton
 class NavigationService {
@@ -62,6 +64,19 @@ class NavigationService {
 
   Future<void> goToSettingsScreen() {
     return pushNamed('/settings');
+  }
+
+  Future<void> goToFullTextScreen({
+    required List<RsvpToken> tokens,
+    required ReadingBloc readingBloc, 
+  }) {
+    return pushNamed(
+      '/full_text',
+      arguments: FullTextArguments(
+        tokens: tokens,
+        readingBloc: readingBloc,
+      ),
+    );
   }
 
   bool canPop() {
