@@ -32,9 +32,20 @@ class MainScreen extends StatelessWidget {
                   key: ValueKey(b.documentId),
                   onTap: () => context.read<RsvpBloc>().add(RsvpEvent.toggleSelectBook(book: b)),
                   onDelete: () => context.read<RsvpBloc>().add(RsvpEvent.removeBook(book: b)),
+                  onEditSubmit: (newName, newAuthor) {
+                    context.read<RsvpBloc>().add(
+                      RsvpEvent.updateBookInfo(
+                        documentId: b.documentId,
+                        newName: newName,
+                        newAuthor: newAuthor,
+                      ),
+                    );
+                  },
                   isSelected: state.selectedBook?.documentId == b.documentId,
+                  editInitialTitle: b.name ?? b.resolveTitle(),
+                  editInitialAuthor: b.author,
                   title: b.resolveTitle(),
-                  author: l10n.bookUnknownAuthor,
+                  author: b.resolveAuthor() ?? l10n.bookUnknownAuthor,
                   progress: b.resolveProgress(),
                 ),
               )

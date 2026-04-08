@@ -26,6 +26,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     on<_Started>(_onStarted);
     on<_AddBook>(_onAddBook);
     on<_UpdateBookProgress>(_onUpdateBookProgress);
+    on<_UpdateBookInfo>(_onUpdateBookInfo);
     on<_RemoveBook>(_onRemoveBook);
     on<_ToggleSelectBook>(_onToggleSelectBook);
     on<_StartAnimation>(_onStartAnimation);
@@ -177,6 +178,49 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     }
   }
 
+  Future<void> _onUpdateBookInfo(_UpdateBookInfo event, Emitter<RsvpState> emit) async {
+    final bookIndex = state.books.indexWhere((book) => book.documentId == event.documentId);
+    if (bookIndex == -1) {
+      return;
+    }
+
+    final currentBook = state.books[bookIndex];
+    final newName = _normalizeBookInfoValue(event.newName);
+    final newAuthor = _normalizeBookInfoValue(event.newAuthor);
+
+    final hasNameUpdate = newName != null && newName != currentBook.name;
+    final hasAuthorUpdate = newAuthor != null && newAuthor != currentBook.author;
+    if (!hasNameUpdate && !hasAuthorUpdate) {
+      return;
+    }
+
+    try {
+      await _fileRepository.updateBookInfo(
+        documentId: event.documentId,
+        newName: hasNameUpdate ? newName : null,
+        newAuthor: hasAuthorUpdate ? newAuthor : null,
+      );
+
+      final updatedBook = currentBook.copyWith(
+        name: hasNameUpdate ? newName : currentBook.name,
+        author: hasAuthorUpdate ? newAuthor : currentBook.author,
+      );
+      final books = List<BookMetaModel>.from(state.books)..[bookIndex] = updatedBook;
+      final selectedBook = state.selectedBook?.documentId == updatedBook.documentId ? updatedBook : state.selectedBook;
+
+      emit(
+        state.copyWith(
+          books: books,
+          selectedBook: selectedBook,
+          lastError: null,
+          currentPageState: _getCurrentPageState(newBooks: books),
+        ),
+      );
+    } on Exception catch (e) {
+      logger.e(e);
+    }
+  }
+
   void _onToggleSelectBook(_ToggleSelectBook event, Emitter<RsvpState> emit) {
     final selectedBook = state.selectedBook?.documentId == event.book.documentId ? null : event.book;
     emit(state.copyWith(selectedBook: selectedBook));
@@ -208,6 +252,15 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
 
   void _onStartAnimation(_StartAnimation event, Emitter<RsvpState> emit) {
     // Either simply emit new state with animationShouldStartPlaying = true
+  }
+
+  String? _normalizeBookInfoValue(String? value) {
+    final normalizedValue = value?.trim();
+    if (normalizedValue == null || normalizedValue.isEmpty) {
+      return null;
+    }
+
+    return normalizedValue;
   }
 
   LibraryMainScreenState _getCurrentPageState({

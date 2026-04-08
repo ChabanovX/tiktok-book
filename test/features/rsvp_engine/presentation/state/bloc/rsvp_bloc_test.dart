@@ -139,6 +139,13 @@ class _FakeFileRepository implements FileRepository {
     required String documentId,
     required int currentIndex,
   }) async {}
+
+  @override
+  Future<void> updateBookInfo({
+    required String documentId,
+    String? newName,
+    String? newAuthor,
+  }) async {}
 }
 
 // class _FakeBookDbService extends BookDbService {

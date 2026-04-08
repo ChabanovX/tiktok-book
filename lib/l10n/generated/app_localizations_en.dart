@@ -51,10 +51,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookItemDelete => 'Delete';
 
   @override
+  String get bookItemEdit => 'Edit';
+
+  @override
   String get bookUnknownTitle => 'Unknown book';
 
   @override
   String get bookUnknownAuthor => 'Unknown author';
+
+  @override
+  String get bookEditTitle => 'Edit book info';
+
+  @override
+  String get bookEditNameLabel => 'Book title';
+
+  @override
+  String get bookEditAuthorLabel => 'Author';
 
   @override
   String get selectedBookTitle => 'Selected book';

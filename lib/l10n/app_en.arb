@@ -56,6 +56,10 @@
   "@bookItemDelete": {
     "description": "Delete action label for a book item."
   },
+  "bookItemEdit": "Edit",
+  "@bookItemEdit": {
+    "description": "Edit action label for a book item."
+  },
   "bookUnknownTitle": "Unknown book",
   "@bookUnknownTitle": {
     "description": "Fallback book title when none is available."
@@ -63,6 +67,18 @@
   "bookUnknownAuthor": "Unknown author",
   "@bookUnknownAuthor": {
     "description": "Fallback author when none is available."
+  },
+  "bookEditTitle": "Edit book info",
+  "@bookEditTitle": {
+    "description": "Title of the book info edit dialog."
+  },
+  "bookEditNameLabel": "Book title",
+  "@bookEditNameLabel": {
+    "description": "Label for the editable book title field."
+  },
+  "bookEditAuthorLabel": "Author",
+  "@bookEditAuthorLabel": {
+    "description": "Label for the editable author field."
   },
   "selectedBookTitle": "Selected book",
   "@selectedBookTitle": {

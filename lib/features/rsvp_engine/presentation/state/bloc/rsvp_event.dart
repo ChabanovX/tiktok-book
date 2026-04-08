@@ -8,6 +8,11 @@ class RsvpEvent with _$RsvpEvent {
     required String documentId,
     required int currentIndex,
   }) = _UpdateBookProgress;
+  const factory RsvpEvent.updateBookInfo({
+    required String documentId,
+    String? newName,
+    String? newAuthor,
+  }) = _UpdateBookInfo;
   const factory RsvpEvent.removeBook({required BookMetaModel book}) = _RemoveBook;
   const factory RsvpEvent.toggleSelectBook({required BookMetaModel book}) = _ToggleSelectBook;
   const factory RsvpEvent.startAnimation({required int bookID}) = _StartAnimation;

@@ -176,6 +176,12 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get bookItemDelete;
 
+  /// Edit action label for a book item.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get bookItemEdit;
+
   /// Fallback book title when none is available.
   ///
   /// In en, this message translates to:
@@ -187,6 +193,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown author'**
   String get bookUnknownAuthor;
+
+  /// Title of the book info edit dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit book info'**
+  String get bookEditTitle;
+
+  /// Label for the editable book title field.
+  ///
+  /// In en, this message translates to:
+  /// **'Book title'**
+  String get bookEditNameLabel;
+
+  /// Label for the editable author field.
+  ///
+  /// In en, this message translates to:
+  /// **'Author'**
+  String get bookEditAuthorLabel;
 
   /// Section title for the selected book card.
   ///

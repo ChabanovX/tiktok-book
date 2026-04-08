@@ -12,6 +12,11 @@ abstract class FileRepository {
     required String documentId,
     required int currentIndex,
   });
+  Future<void> updateBookInfo({
+    required String documentId,
+    String? newName,
+    String? newAuthor,
+  });
   Future<void> deleteBook(BookMetaModel book);
   Future<BookFile?> loadFileFromLocal(String path);
   Future<List<BookMetaModel>> getAllBooks();
