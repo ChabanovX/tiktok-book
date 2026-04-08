@@ -4,7 +4,7 @@ part of 'reading_bloc.dart';
 class ReadingEvent with _$ReadingEvent {
   const factory ReadingEvent.initialize({
     required List<RsvpBionicToken> tokens,
-    @Default(300) int initialWpm,
+    @Default(defaultReadingWpm) int initialWpm,
     @Default(0) int initialIndex,
   }) = InitializeReadingEvent;
 

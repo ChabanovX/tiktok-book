@@ -174,6 +174,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsThemeDarkTitle => 'Тёмная';
 
   @override
+  String get settingsReadingSpeedSectionTitle => 'Скорость чтения';
+
+  @override
+  String get settingsReadingSpeedSectionDescription =>
+      'Выберите скорость по умолчанию, с которой будут начинаться новые сессии чтения.';
+
+  @override
+  String get settingsReadingSpeedDefaultTitle => 'Скорость по умолчанию';
+
+  @override
   String get fullTextTitle => 'Полный текст';
 
   @override

@@ -216,6 +216,18 @@
   "@settingsThemeDarkTitle": {
     "description": "Заголовок варианта тёмной темы."
   },
+  "settingsReadingSpeedSectionTitle": "Скорость чтения",
+  "@settingsReadingSpeedSectionTitle": {
+    "description": "Заголовок секции выбора скорости чтения."
+  },
+  "settingsReadingSpeedSectionDescription": "Выберите скорость по умолчанию, с которой будут начинаться новые сессии чтения.",
+  "@settingsReadingSpeedSectionDescription": {
+    "description": "Описание секции выбора скорости чтения."
+  },
+  "settingsReadingSpeedDefaultTitle": "Скорость по умолчанию",
+  "@settingsReadingSpeedDefaultTitle": {
+    "description": "Название настройки скорости чтения по умолчанию."
+  },
   "fullTextTitle": "Полный текст",
   "readingControlFullText": "Текст",
   "fullTextButtonSemantic": "Просмотр текста",

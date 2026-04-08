@@ -62,16 +62,24 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       primaryColor: primaryColor ?? this.primaryColor,
       secondaryColor: secondaryColor ?? this.secondaryColor,
       dividerColorMuted: dividerColorMuted ?? this.dividerColorMuted,
-      addBookCardBorderColor: addBookCardBorderColor ?? this.addBookCardBorderColor,
-      addBookCardBackgroundColor: addBookCardBackgroundColor ?? this.addBookCardBackgroundColor,
-      stateDescriptionColor: stateDescriptionColor ?? this.stateDescriptionColor,
+      addBookCardBorderColor:
+          addBookCardBorderColor ?? this.addBookCardBorderColor,
+      addBookCardBackgroundColor:
+          addBookCardBackgroundColor ?? this.addBookCardBackgroundColor,
+      stateDescriptionColor:
+          stateDescriptionColor ?? this.stateDescriptionColor,
       stateCardShadowColor: stateCardShadowColor ?? this.stateCardShadowColor,
-      emptyStateAccentBackgroundColor: emptyStateAccentBackgroundColor ?? this.emptyStateAccentBackgroundColor,
-      emptyStateAccentColor: emptyStateAccentColor ?? this.emptyStateAccentColor,
-      errorStateAccentColor: errorStateAccentColor ?? this.errorStateAccentColor,
+      emptyStateAccentBackgroundColor:
+          emptyStateAccentBackgroundColor ??
+          this.emptyStateAccentBackgroundColor,
+      emptyStateAccentColor:
+          emptyStateAccentColor ?? this.emptyStateAccentColor,
+      errorStateAccentColor:
+          errorStateAccentColor ?? this.errorStateAccentColor,
       desctructionColor: desctructionColor ?? this.desctructionColor,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-      rsvpTextStyleSemiBold: rsvpTextStyleSemiBold ?? this.rsvpTextStyleSemiBold,
+      rsvpTextStyleSemiBold:
+          rsvpTextStyleSemiBold ?? this.rsvpTextStyleSemiBold,
       rsvpTextStyleRegular: rsvpTextStyleRegular ?? this.rsvpTextStyleRegular,
       appBarTitleTextStyle: appBarTitleTextStyle ?? this.appBarTitleTextStyle,
       mainTextStyle: mainTextStyle ?? this.mainTextStyle,
@@ -296,7 +304,8 @@ extension AppThemeBuildContextProps on BuildContext {
   Color get addBookCardBackgroundColor => appTheme.addBookCardBackgroundColor;
   Color get stateDescriptionColor => appTheme.stateDescriptionColor;
   Color get stateCardShadowColor => appTheme.stateCardShadowColor;
-  Color get emptyStateAccentBackgroundColor => appTheme.emptyStateAccentBackgroundColor;
+  Color get emptyStateAccentBackgroundColor =>
+      appTheme.emptyStateAccentBackgroundColor;
   Color get emptyStateAccentColor => appTheme.emptyStateAccentColor;
   Color get errorStateAccentColor => appTheme.errorStateAccentColor;
   Color get desctructionColor => appTheme.desctructionColor;

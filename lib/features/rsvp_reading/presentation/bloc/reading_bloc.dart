@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_engine.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/reading_speed.dart';
 
 part 'reading_event.dart';
 part 'reading_state.dart';

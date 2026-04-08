@@ -8,9 +8,9 @@ import 'package:rsvp_flutter_app/core/theme/theme.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/book_model.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/domain/rsvp_bionic_token.dart';
 import 'package:rsvp_flutter_app/features/rsvp_engine/presentation/state/bloc/rsvp_bloc.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/app_reading_speed_controller.dart';
 import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/bloc/reading_bloc.dart';
-import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/cupertino_picker.dart';
-import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/material_picker.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/presentation/ui/widgets/speed_picker.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/presentation/ui/widgets/full_text_button.dart';
 import 'package:rsvp_flutter_app/features/ui_kit/ui_kit.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
@@ -51,6 +51,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
         _readingBloc.add(
           ReadingEvent.initialize(
             tokens: widget.tokens,
+            initialWpm: appReadingSpeedController.wpm,
             initialIndex: widget.book.currentIndex,
           ),
         );
@@ -122,6 +123,7 @@ class _ReadingScreenWrapperState extends State<ReadingScreenWrapper> {
                   );
                 },
                 onChangeWpm: (newWpm) {
+                  // appReadingSpeedController.setWpm(newWpm);
                   _readingBloc.add(ReadingEvent.changeWpm(newWpm));
                 },
                 onExitTap: () => _onExit(context),
@@ -435,13 +437,7 @@ class ReadingScreen extends StatelessWidget {
       return;
     }
 
-    final platform = Theme.of(context).platform;
-    if (platform == TargetPlatform.iOS || platform == TargetPlatform.macOS) {
-      await showCupertinoSpeedPicker(context, wpm, onChangeWpm);
-      return;
-    }
-
-    await showMaterialSpeedPicker(context, wpm, onChangeWpm);
+    await showAdaptiveSpeedPicker(context, wpm, onChangeWpm);
   }
 }
 

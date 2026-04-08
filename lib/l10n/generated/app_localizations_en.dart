@@ -172,6 +172,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsThemeDarkTitle => 'Dark';
 
   @override
+  String get settingsReadingSpeedSectionTitle => 'Reading speed';
+
+  @override
+  String get settingsReadingSpeedSectionDescription =>
+      'Choose the default speed used when a new reading session starts.';
+
+  @override
+  String get settingsReadingSpeedDefaultTitle => 'Default speed';
+
+  @override
   String get fullTextTitle => 'Full text';
 
   @override
