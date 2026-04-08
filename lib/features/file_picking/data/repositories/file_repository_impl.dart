@@ -84,6 +84,19 @@ class FileRepositoryImpl implements FileRepository {
   }
 
   @override
+  Future<void> updateBookInfo({
+    required String documentId,
+    String? newName,
+    String? newAuthor,
+  }) async {
+    await _bookDbService.updateBookInfo(
+      documentId: documentId,
+      newName: newName,
+      newAuthor: newAuthor,
+    );
+  }
+
+  @override
   Future<void> deleteBook(BookMetaModel book) async {
     await _bookDbService.deleteBook(book.documentId);
     await _cacheService.deleteBook(book.documentId);
@@ -110,6 +123,7 @@ class FileRepositoryImpl implements FileRepository {
       ),
       documentId: book.documentId,
       name: book.bookTitle,
+      author: book.authorName,
       currentIndex: book.currentIndex,
       tokens: List.generate(
         words.length,

@@ -49,6 +49,23 @@ class BookDbService {
     );
   }
 
+  Future<void> updateBookInfo({
+    required String documentId,
+    String? newName,
+    String? newAuthor,
+  }) async {
+    if (newName == null && newAuthor == null) {
+      return;
+    }
+
+    await (_db.update(_db.books)..where((tbl) => tbl.documentId.equals(documentId))).write(
+      BooksCompanion(
+        bookTitle: newName == null ? const Value.absent() : Value(newName),
+        authorName: newAuthor == null ? const Value.absent() : Value(newAuthor),
+      ),
+    );
+  }
+
   Future<void> deleteBook(String documentId) async {
     await (_db.delete(_db.books)..where((tbl) => tbl.documentId.equals(documentId))).go();
   }
