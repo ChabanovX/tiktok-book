@@ -56,6 +56,10 @@
   "@bookItemDelete": {
     "description": "Подпись действия удаления книги."
   },
+  "bookItemEdit": "Редактировать",
+  "@bookItemEdit": {
+    "description": "Подпись действия редактирования книги."
+  },
   "bookUnknownTitle": "Неизвестная книга",
   "@bookUnknownTitle": {
     "description": "Резервное название книги."
@@ -63,6 +67,18 @@
   "bookUnknownAuthor": "Неизвестный автор",
   "@bookUnknownAuthor": {
     "description": "Резервное имя автора."
+  },
+  "bookEditTitle": "Редактировать книгу",
+  "@bookEditTitle": {
+    "description": "Заголовок окна редактирования данных книги."
+  },
+  "bookEditNameLabel": "Название книги",
+  "@bookEditNameLabel": {
+    "description": "Подпись поля редактирования названия книги."
+  },
+  "bookEditAuthorLabel": "Автор",
+  "@bookEditAuthorLabel": {
+    "description": "Подпись поля редактирования автора."
   },
   "selectedBookTitle": "Выбрана книга",
   "@selectedBookTitle": {

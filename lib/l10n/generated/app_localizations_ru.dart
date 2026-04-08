@@ -51,10 +51,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get bookItemDelete => 'Удалить';
 
   @override
+  String get bookItemEdit => 'Редактировать';
+
+  @override
   String get bookUnknownTitle => 'Неизвестная книга';
 
   @override
   String get bookUnknownAuthor => 'Неизвестный автор';
+
+  @override
+  String get bookEditTitle => 'Редактировать книгу';
+
+  @override
+  String get bookEditNameLabel => 'Название книги';
+
+  @override
+  String get bookEditAuthorLabel => 'Автор';
 
   @override
   String get selectedBookTitle => 'Выбрана книга';
