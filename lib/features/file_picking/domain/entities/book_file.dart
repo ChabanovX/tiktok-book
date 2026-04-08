@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:cross_file/cross_file.dart';
 
 class BookFile {
   BookFile({
@@ -12,7 +12,7 @@ class BookFile {
   final String name;
   final String path;
   final String fileExtension;
-  final File file;
+  final XFile file;
   final int size;
 
   bool get isPdf => fileExtension.toLowerCase() == 'pdf';

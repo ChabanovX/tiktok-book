@@ -97,7 +97,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     logger.d('Successfully picked file. Starting the parsing...');
     final List<RsvpToken> tokens;
     try {
-      final words = await _bookConverter.convert(bookFile.file);
+      final words = await _bookConverter.convert(bookFile);
       tokens = List.generate(
         words.length,
         (index) => RsvpToken(

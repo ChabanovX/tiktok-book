@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:cross_file/cross_file.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,10 +8,9 @@ class FilePickerDataSource {
     return FilePicker.platform.pickFiles(
       allowedExtensions: ['pdf', 'txt'],
       type: FileType.custom,
+      withData: true,
     );
   }
 
-  File getFileFromResult(FilePickerResult result) {
-    return File(result.files.single.path!);
-  }
+  XFile getFileFromResult(FilePickerResult result) => result.xFiles.single;
 }

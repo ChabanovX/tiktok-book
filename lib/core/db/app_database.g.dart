@@ -380,15 +380,235 @@ class BooksCompanion extends UpdateCompanion<Book> {
   }
 }
 
+class $BookCachesTable extends BookCaches
+    with TableInfo<$BookCachesTable, BookCache> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BookCachesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _documentIdMeta = const VerificationMeta(
+    'documentId',
+  );
+  @override
+  late final GeneratedColumn<String> documentId = GeneratedColumn<String>(
+    'document_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _wordsJsonMeta = const VerificationMeta(
+    'wordsJson',
+  );
+  @override
+  late final GeneratedColumn<String> wordsJson = GeneratedColumn<String>(
+    'words_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [documentId, wordsJson];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'book_caches';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<BookCache> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('document_id')) {
+      context.handle(
+        _documentIdMeta,
+        documentId.isAcceptableOrUnknown(data['document_id']!, _documentIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_documentIdMeta);
+    }
+    if (data.containsKey('words_json')) {
+      context.handle(
+        _wordsJsonMeta,
+        wordsJson.isAcceptableOrUnknown(data['words_json']!, _wordsJsonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_wordsJsonMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {documentId};
+  @override
+  BookCache map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BookCache(
+      documentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}document_id'],
+      )!,
+      wordsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}words_json'],
+      )!,
+    );
+  }
+
+  @override
+  $BookCachesTable createAlias(String alias) {
+    return $BookCachesTable(attachedDatabase, alias);
+  }
+}
+
+class BookCache extends DataClass implements Insertable<BookCache> {
+  final String documentId;
+  final String wordsJson;
+  const BookCache({required this.documentId, required this.wordsJson});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['document_id'] = Variable<String>(documentId);
+    map['words_json'] = Variable<String>(wordsJson);
+    return map;
+  }
+
+  BookCachesCompanion toCompanion(bool nullToAbsent) {
+    return BookCachesCompanion(
+      documentId: Value(documentId),
+      wordsJson: Value(wordsJson),
+    );
+  }
+
+  factory BookCache.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BookCache(
+      documentId: serializer.fromJson<String>(json['documentId']),
+      wordsJson: serializer.fromJson<String>(json['wordsJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'documentId': serializer.toJson<String>(documentId),
+      'wordsJson': serializer.toJson<String>(wordsJson),
+    };
+  }
+
+  BookCache copyWith({String? documentId, String? wordsJson}) => BookCache(
+    documentId: documentId ?? this.documentId,
+    wordsJson: wordsJson ?? this.wordsJson,
+  );
+  BookCache copyWithCompanion(BookCachesCompanion data) {
+    return BookCache(
+      documentId: data.documentId.present
+          ? data.documentId.value
+          : this.documentId,
+      wordsJson: data.wordsJson.present ? data.wordsJson.value : this.wordsJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BookCache(')
+          ..write('documentId: $documentId, ')
+          ..write('wordsJson: $wordsJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(documentId, wordsJson);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BookCache &&
+          other.documentId == this.documentId &&
+          other.wordsJson == this.wordsJson);
+}
+
+class BookCachesCompanion extends UpdateCompanion<BookCache> {
+  final Value<String> documentId;
+  final Value<String> wordsJson;
+  final Value<int> rowid;
+  const BookCachesCompanion({
+    this.documentId = const Value.absent(),
+    this.wordsJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BookCachesCompanion.insert({
+    required String documentId,
+    required String wordsJson,
+    this.rowid = const Value.absent(),
+  }) : documentId = Value(documentId),
+       wordsJson = Value(wordsJson);
+  static Insertable<BookCache> custom({
+    Expression<String>? documentId,
+    Expression<String>? wordsJson,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (documentId != null) 'document_id': documentId,
+      if (wordsJson != null) 'words_json': wordsJson,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BookCachesCompanion copyWith({
+    Value<String>? documentId,
+    Value<String>? wordsJson,
+    Value<int>? rowid,
+  }) {
+    return BookCachesCompanion(
+      documentId: documentId ?? this.documentId,
+      wordsJson: wordsJson ?? this.wordsJson,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (documentId.present) {
+      map['document_id'] = Variable<String>(documentId.value);
+    }
+    if (wordsJson.present) {
+      map['words_json'] = Variable<String>(wordsJson.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BookCachesCompanion(')
+          ..write('documentId: $documentId, ')
+          ..write('wordsJson: $wordsJson, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $BooksTable books = $BooksTable(this);
+  late final $BookCachesTable bookCaches = $BookCachesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [books];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [books, bookCaches];
 }
 
 typedef $$BooksTableCreateCompanionBuilder =
@@ -592,10 +812,154 @@ typedef $$BooksTableProcessedTableManager =
       Book,
       PrefetchHooks Function()
     >;
+typedef $$BookCachesTableCreateCompanionBuilder =
+    BookCachesCompanion Function({
+      required String documentId,
+      required String wordsJson,
+      Value<int> rowid,
+    });
+typedef $$BookCachesTableUpdateCompanionBuilder =
+    BookCachesCompanion Function({
+      Value<String> documentId,
+      Value<String> wordsJson,
+      Value<int> rowid,
+    });
+
+class $$BookCachesTableFilterComposer
+    extends Composer<_$AppDatabase, $BookCachesTable> {
+  $$BookCachesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get documentId => $composableBuilder(
+    column: $table.documentId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get wordsJson => $composableBuilder(
+    column: $table.wordsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$BookCachesTableOrderingComposer
+    extends Composer<_$AppDatabase, $BookCachesTable> {
+  $$BookCachesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get documentId => $composableBuilder(
+    column: $table.documentId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get wordsJson => $composableBuilder(
+    column: $table.wordsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$BookCachesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BookCachesTable> {
+  $$BookCachesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get documentId => $composableBuilder(
+    column: $table.documentId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get wordsJson =>
+      $composableBuilder(column: $table.wordsJson, builder: (column) => column);
+}
+
+class $$BookCachesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $BookCachesTable,
+          BookCache,
+          $$BookCachesTableFilterComposer,
+          $$BookCachesTableOrderingComposer,
+          $$BookCachesTableAnnotationComposer,
+          $$BookCachesTableCreateCompanionBuilder,
+          $$BookCachesTableUpdateCompanionBuilder,
+          (
+            BookCache,
+            BaseReferences<_$AppDatabase, $BookCachesTable, BookCache>,
+          ),
+          BookCache,
+          PrefetchHooks Function()
+        > {
+  $$BookCachesTableTableManager(_$AppDatabase db, $BookCachesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BookCachesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BookCachesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BookCachesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> documentId = const Value.absent(),
+                Value<String> wordsJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BookCachesCompanion(
+                documentId: documentId,
+                wordsJson: wordsJson,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String documentId,
+                required String wordsJson,
+                Value<int> rowid = const Value.absent(),
+              }) => BookCachesCompanion.insert(
+                documentId: documentId,
+                wordsJson: wordsJson,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$BookCachesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $BookCachesTable,
+      BookCache,
+      $$BookCachesTableFilterComposer,
+      $$BookCachesTableOrderingComposer,
+      $$BookCachesTableAnnotationComposer,
+      $$BookCachesTableCreateCompanionBuilder,
+      $$BookCachesTableUpdateCompanionBuilder,
+      (BookCache, BaseReferences<_$AppDatabase, $BookCachesTable, BookCache>),
+      BookCache,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$BooksTableTableManager get books =>
       $$BooksTableTableManager(_db, _db.books);
+  $$BookCachesTableTableManager get bookCaches =>
+      $$BookCachesTableTableManager(_db, _db.bookCaches);
 }
