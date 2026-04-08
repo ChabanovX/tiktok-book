@@ -235,7 +235,7 @@ return jumpToIndex(_that.index);case _:
 
 
 class InitializeReadingEvent implements ReadingEvent {
-  const InitializeReadingEvent({required final  List<RsvpBionicToken> tokens, this.initialWpm = 300, this.initialIndex = 0}): _tokens = tokens;
+  const InitializeReadingEvent({required final  List<RsvpBionicToken> tokens, this.initialWpm = defaultReadingWpm, this.initialIndex = 0}): _tokens = tokens;
   
 
  final  List<RsvpBionicToken> _tokens;

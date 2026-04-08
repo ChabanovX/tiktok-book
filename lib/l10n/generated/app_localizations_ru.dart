@@ -88,6 +88,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonBack => 'Назад';
 
   @override
+  String get commonCancel => 'Отмена';
+
+  @override
+  String get commonDone => 'Готово';
+
+  @override
   String get readingCompletedTitle => 'Поздравляем!';
 
   @override
@@ -172,6 +178,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsThemeDarkTitle => 'Тёмная';
+
+  @override
+  String get settingsReadingSpeedSectionTitle => 'Скорость чтения';
+
+  @override
+  String get settingsReadingSpeedSectionDescription =>
+      'Выберите скорость по умолчанию, с которой будут начинаться новые сессии чтения.';
+
+  @override
+  String get settingsReadingSpeedDefaultTitle => 'Скорость по умолчанию';
+
+  @override
+  String get readingSpeedPickerTitle => 'Скорость чтения';
 
   @override
   String get fullTextTitle => 'Полный текст';

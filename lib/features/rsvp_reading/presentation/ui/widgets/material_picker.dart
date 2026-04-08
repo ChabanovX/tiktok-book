@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rsvp_flutter_app/core/theme/theme.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/reading_speed.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
-
-const List<int> _speedOptions = [200, 250, 300, 350, 400, 450, 500, 550, 600];
 
 Future<void> showMaterialSpeedPicker(
   BuildContext context,
@@ -10,7 +9,7 @@ Future<void> showMaterialSpeedPicker(
   ValueChanged<int> onChangeWpm,
 ) async {
   var selectedWpm = wpm;
-  final initialIndex = _speedOptions.indexOf(wpm);
+  final initialIndex = readingSpeedOptions.indexOf(wpm);
   final pickerController = FixedExtentScrollController(
     initialItem: initialIndex >= 0 ? initialIndex : 0,
   );
@@ -46,7 +45,7 @@ Future<void> showMaterialSpeedPicker(
                     child: Row(
                       children: [
                         Text(
-                          l10n.readingSpeed,
+                          l10n.readingSpeedPickerTitle,
                           style: appTheme.buttonTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -71,13 +70,13 @@ Future<void> showMaterialSpeedPicker(
                       physics: const FixedExtentScrollPhysics(),
                       onSelectedItemChanged: (index) {
                         setModalState(() {
-                          selectedWpm = _speedOptions[index];
+                          selectedWpm = readingSpeedOptions[index];
                         });
                       },
                       childDelegate: ListWheelChildBuilderDelegate(
-                        childCount: _speedOptions.length,
+                        childCount: readingSpeedOptions.length,
                         builder: (context, index) {
-                          final value = _speedOptions[index];
+                          final value = readingSpeedOptions[index];
                           final isSelected = value == selectedWpm;
 
                           return Center(
@@ -101,7 +100,7 @@ Future<void> showMaterialSpeedPicker(
                         Expanded(
                           child: TextButton(
                             onPressed: () => Navigator.of(context).pop(),
-                            child: Text(l10n.cancel),
+                            child: Text(l10n.commonCancel),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -111,7 +110,7 @@ Future<void> showMaterialSpeedPicker(
                               onChangeWpm(selectedWpm);
                               Navigator.of(context).pop();
                             },
-                            child: Text(l10n.done),
+                            child: Text(l10n.commonDone),
                           ),
                         ),
                       ],

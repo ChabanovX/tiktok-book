@@ -224,6 +224,18 @@ abstract class AppLocalizations {
   /// **'Back'**
   String get commonBack;
 
+  /// Generic cancel button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
+
+  /// Generic done button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get commonDone;
+
   /// Reading completion dialog title.
   ///
   /// In en, this message translates to:
@@ -385,6 +397,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark'**
   String get settingsThemeDarkTitle;
+
+  /// Title of the default reading speed settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading speed'**
+  String get settingsReadingSpeedSectionTitle;
+
+  /// Description text on the reading speed settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the default speed used when a new reading session starts.'**
+  String get settingsReadingSpeedSectionDescription;
+
+  /// Title for the default reading speed option.
+  ///
+  /// In en, this message translates to:
+  /// **'Default speed'**
+  String get settingsReadingSpeedDefaultTitle;
+
+  /// Title shown in the reading speed picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading speed'**
+  String get readingSpeedPickerTitle;
 
   /// No description provided for @fullTextTitle.
   ///

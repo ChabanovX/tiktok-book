@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:rsvp_flutter_app/features/rsvp_reading/reading_speed.dart';
 import 'package:rsvp_flutter_app/l10n/l10n.dart';
-
-const List<int> _speedOptions = [200, 250, 300, 350, 400, 450, 500, 550, 600];
 
 Future<void> showCupertinoSpeedPicker(
   BuildContext context,
@@ -9,7 +8,7 @@ Future<void> showCupertinoSpeedPicker(
   ValueChanged<int> onChangeWpm,
 ) async {
   var selectedWpm = wpm;
-  final initialIndex = _speedOptions.indexOf(wpm);
+  final initialIndex = readingSpeedOptions.indexOf(wpm);
   final pickerController = FixedExtentScrollController(
     initialItem: initialIndex >= 0 ? initialIndex : 0,
   );
@@ -42,10 +41,10 @@ Future<void> showCupertinoSpeedPicker(
                       CupertinoButton(
                         padding: EdgeInsets.zero,
                         onPressed: () => Navigator.of(context).pop(),
-                        child: Text(l10n.cancel),
+                        child: Text(l10n.commonCancel),
                       ),
                       Text(
-                        l10n.readingSpeed,
+                        l10n.readingSpeedPickerTitle,
                         style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -57,7 +56,7 @@ Future<void> showCupertinoSpeedPicker(
                           onChangeWpm(selectedWpm);
                           Navigator.of(context).pop();
                         },
-                        child: Text(l10n.done),
+                        child: Text(l10n.commonDone),
                       ),
                     ],
                   ),
@@ -70,10 +69,10 @@ Future<void> showCupertinoSpeedPicker(
                     magnification: 1.06,
                     onSelectedItemChanged: (index) {
                       setModalState(() {
-                        selectedWpm = _speedOptions[index];
+                        selectedWpm = readingSpeedOptions[index];
                       });
                     },
-                    children: _speedOptions
+                    children: readingSpeedOptions
                         .map(
                           (value) => Center(
                             child: Text('$value WPM'),
