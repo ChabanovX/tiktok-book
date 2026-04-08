@@ -170,4 +170,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsThemeDarkTitle => 'Dark';
+
+  @override
+  String get fullTextTitle => 'Full text';
+
+  @override
+  String get readingControlFullText => 'Full text';
+
+  @override
+  String get fullTextButtonSemantic => 'View text';
 }

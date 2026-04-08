@@ -72,6 +72,21 @@ class RsvpEngine {
     }
   }
 
+  void jumpTo(int index) {
+    if (tokens.isEmpty) return;
+
+    final wasPlaying = isPlaying;
+
+    pause();
+
+    _currentIndex = index.clamp(0, tokens.length - 1);
+    onTokenChanged(tokens[_currentIndex]);
+
+    if (wasPlaying) {
+      resume();
+    }
+  }
+
   static int _normalizeIndex(List<RsvpBionicToken> tokens, int index) {
     if (tokens.isEmpty) {
       return 0;

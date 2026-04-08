@@ -25,6 +25,7 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
     on<UpdateCurrentTokenEvent>(_onUpdateCurrentToken);
     on<ReadingCompletedEvent>(_onReadingCompleted);
     on<DisposeReadingEvent>(_onDispose);
+    on<JumpToIndexEvent>(_onJumpToIndex);
   }
 
   RsvpEngine? _engine;
@@ -171,6 +172,30 @@ class ReadingBloc extends Bloc<ReadingEvent, ReadingState> {
           readyState.copyWith(
             currentToken: event.token,
             progress: progress,
+          ),
+        );
+      },
+      orElse: () {},
+    );
+  }
+
+  void _onJumpToIndex(
+    JumpToIndexEvent event,
+    Emitter<ReadingState> emit,
+  ) {
+    _engine?.jumpTo(event.index);
+
+    state.maybeMap(
+      ready: (readyState) {
+        final token = readyState.tokens[event.index];
+
+        final progress = (event.index + 1) / readyState.totalWords;
+
+        emit(
+          readyState.copyWith(
+            currentToken: token,
+            progress: progress,
+            isCompleted: false,
           ),
         );
       },

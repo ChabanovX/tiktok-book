@@ -215,5 +215,8 @@
   "settingsThemeDarkTitle": "Тёмная",
   "@settingsThemeDarkTitle": {
     "description": "Заголовок варианта тёмной темы."
-  }
+  },
+  "fullTextTitle": "Полный текст",
+  "readingControlFullText": "Текст",
+  "fullTextButtonSemantic": "Просмотр текста"
 }
