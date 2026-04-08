@@ -1,5 +1,6 @@
-import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/entities/book_file.dart';
 import 'package:rsvp_flutter_app/features/file_picking/domain/repositories/file_repository.dart';
@@ -101,7 +102,12 @@ void main() {
 }
 
 BookMetaModel _buildBook({required String name}) {
-  final file = File('/tmp/${name.toLowerCase().replaceAll(' ', '_')}.txt');
+  final filePath = '/tmp/${name.toLowerCase().replaceAll(' ', '_')}.txt';
+  final file = XFile.fromData(
+    Uint8List(0),
+    name: name,
+    path: filePath,
+  );
 
   return BookMetaModel(
     documentId: name.toLowerCase().replaceAll(' ', '_'),
@@ -165,12 +171,12 @@ class _FakeBookConverter extends BookConverter {
 
 class _FakePdfParser extends PdfParser {
   @override
-  Future<String> parse(File file) async => '';
+  Future<String> parse(XFile file) async => '';
 }
 
 class _FakeTxtParser extends TxtParser {
   @override
-  Future<String> parse(File file) async => '';
+  Future<String> parse(XFile file) async => '';
 }
 
 class _FakeTextProcessor extends TextProcessor {

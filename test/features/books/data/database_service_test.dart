@@ -1,6 +1,4 @@
-import 'dart:io';
-
-import 'package:flutter/services.dart';
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rsvp_flutter_app/core/db/app_database.dart';
 import 'package:rsvp_flutter_app/features/books/data/database_service.dart';
@@ -8,39 +6,17 @@ import 'package:rsvp_flutter_app/features/books/data/database_service.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  const channel = MethodChannel('plugins.flutter.io/path_provider');
-
   group('BookDbService', () {
     late AppDatabase database;
     late BookDbService service;
-    late Directory tempDir;
 
     setUp(() async {
-      tempDir = await Directory.systemTemp.createTemp('book_db_service_test');
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, (
-        methodCall,
-      ) async {
-        if (methodCall.method == 'getApplicationDocumentsDirectory') {
-          return tempDir.path;
-        }
-        return null;
-      });
-
-      database = AppDatabase();
+      database = AppDatabase.forTesting(NativeDatabase.memory());
       service = BookDbService(database);
     });
 
     tearDown(() async {
       await database.close();
-
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-        channel,
-        null,
-      );
-
-      if (tempDir.existsSync()) {
-        await tempDir.delete(recursive: true);
-      }
     });
 
     test('inserts and reads a book', () async {
