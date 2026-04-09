@@ -21,6 +21,7 @@ Future<void> main() async {
   ]);
 
   binding.allowFirstFrame();
+
   runApp(const MainApp());
 }
 
