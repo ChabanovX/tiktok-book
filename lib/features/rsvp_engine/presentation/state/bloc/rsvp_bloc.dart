@@ -76,7 +76,7 @@ class RsvpBloc extends Bloc<RsvpEvent, RsvpState> {
     try {
       bookFile = await _fileRepository.pickAndLoadFile();
     } on Exception catch (e) {
-      logger.e(e);
+      logger.e(e.toString());
       final error = RSVPError.parsingError(error: e);
       emit(
         state.copyWith(
